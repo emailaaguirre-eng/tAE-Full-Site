@@ -9,8 +9,8 @@ export async function GET() {
     console.error('Error fetching hero content:', error);
     // Return defaults if error
     return NextResponse.json({
-      headline1: 'Art just Got',
-      headline2: 'Personal',
+      headline1: 'Every image has a story.',
+      headline2: 'Embedded within is a treasure.',
       subtitle: 'Where fine art, prints & images\nmeet your personal expression.',
       description: 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
     });

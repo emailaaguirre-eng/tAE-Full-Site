@@ -17,8 +17,8 @@ export default function Hero() {
   const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
   
   const [heroContent, setHeroContent] = useState<HeroContent>({
-    headline1: 'Art just Got',
-    headline2: 'Personal',
+    headline1: 'Every image has a story.',
+    headline2: 'Embedded within is a treasure.',
     subtitle: 'Where fine art, prints & images\nmeet your personal expression.',
     description: 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
   });

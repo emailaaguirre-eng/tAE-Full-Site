@@ -69,11 +69,11 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
-            What Our Customers Say
+            What Our Friends & Family Say
           </h2>
           <div className="w-24 h-1 bg-brand-medium mx-auto mb-4"></div>
           <p className="text-lg text-brand-darkest max-w-2xl mx-auto">
-            Join thousands of happy customers who trust us with their memories
+            Hear from the people who mean the most to us
           </p>
         </div>
 

@@ -2,15 +2,40 @@ export default function AboutUs() {
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
-            About Us
-          </h2>
-          <div className="w-24 h-1 bg-brand-medium mx-auto mb-4"></div>
+        {/* Video Hero Section */}
+        <div className="relative mb-16 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="aspect-video bg-brand-darkest">
+            {/* Video placeholder - replace src with your video URL */}
+            <video
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster="/images/about-video-poster.jpg"
+            >
+              <source src="/videos/about-hero.mp4" type="video/mp4" />
+              {/* Fallback content */}
+              <div className="flex items-center justify-center h-full bg-gradient-to-br from-brand-dark to-brand-darkest">
+                <p className="text-white text-lg">Video coming soon</p>
+              </div>
+            </video>
+          </div>
+          {/* Optional overlay with text */}
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-darkest/70 via-transparent to-transparent flex items-end">
+            <div className="p-8 md:p-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-2 font-playfair">
+                About Us
+              </h2>
+              <p className="text-white/90 text-lg max-w-xl">
+                Every image has a story. Embedded within is a treasure.
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          {/* Placeholder for existing content */}
+          {/* About content */}
           <div className="bg-brand-lightest rounded-2xl p-8 md:p-12 shadow-lg mb-8">
             <p className="text-lg text-brand-darkest leading-relaxed mb-6">
               {/* Add your existing About Us content here */}
@@ -24,7 +49,7 @@ export default function AboutUs() {
             </p>
           </div>
 
-          {/* Placeholder for images/videos from existing site */}
+          {/* Vision & Mission cards */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-brand-light to-brand-medium rounded-xl p-8 text-center shadow-lg">
               <div className="text-6xl mb-4">🎨</div>

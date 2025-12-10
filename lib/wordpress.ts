@@ -307,8 +307,8 @@ export async function getHeroContent() {
       // If page exists, extract content from custom fields or page content
       // You can use ACF (Advanced Custom Fields) or page content
       return {
-        headline1: page.acf?.hero_headline_1 || page.acf?.headline_1 || 'Art just Got',
-        headline2: page.acf?.hero_headline_2 || page.acf?.headline_2 || 'Personal',
+        headline1: page.acf?.hero_headline_1 || page.acf?.headline_1 || 'Every image has a story.',
+        headline2: page.acf?.hero_headline_2 || page.acf?.headline_2 || 'Embedded within is a treasure.',
         subtitle: page.acf?.hero_subtitle || page.acf?.subtitle || 'Where fine art, prints & images\nmeet your personal expression.',
         description: page.acf?.hero_description || page.acf?.description || 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
       };
@@ -317,8 +317,8 @@ export async function getHeroContent() {
     // Fallback: Try to get from site options (requires authentication)
     // For now, return defaults
     return {
-      headline1: 'Art just Got',
-      headline2: 'Personal',
+      headline1: 'Every image has a story.',
+      headline2: 'Embedded within is a treasure.',
       subtitle: 'Where fine art, prints & images\nmeet your personal expression.',
       description: 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
     };
@@ -326,8 +326,8 @@ export async function getHeroContent() {
     console.error('Error fetching hero content:', error);
     // Return defaults if WordPress is unavailable
     return {
-      headline1: 'Art just Got',
-      headline2: 'Personal',
+      headline1: 'Every image has a story.',
+      headline2: 'Embedded within is a treasure.',
       subtitle: 'Where fine art, prints & images\nmeet your personal expression.',
       description: 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
     };

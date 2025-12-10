@@ -106,13 +106,13 @@ export default function ArtKeyHoverPreview({
     };
   }, []);
 
-  return (
-    <div className="relative">
+return (
+    <div className="relative group/product">
       {children}
 
-      {/* ArtKey Signature Icon - Like an artist signature in the corner */}
+      {/* ArtKey Signature Icon - Like an artist signature in the corner */}    
       <div
-        className="absolute cursor-pointer z-10 group/artkey"
+        className="absolute cursor-pointer z-10 group/artkey opacity-0 group-hover/product:opacity-100 transition-opacity duration-300"
         style={{ right: '8px', bottom: '8px' }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

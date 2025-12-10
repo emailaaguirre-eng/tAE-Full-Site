@@ -3,13 +3,21 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
-import GelatoEditor from "@/components/GelatoEditor";
+import dynamic from "next/dynamic";
+
+// Dynamic import to avoid SSR issues with Fabric.js
+const PersonalizationStudio = dynamic(
+  () => import("@/components/PersonalizationStudio"),
+  { ssr: false, loading: () => <div className="flex items-center justify-center h-96"><div className="animate-spin w-12 h-12 border-4 border-brand-medium border-t-transparent rounded-full"></div></div> }
+);
 
 interface DesignData {
-  designId: string;
-  previewUrl: string;
-  productUid: string;
-  variants: any[];
+  imageDataUrl: string;
+  imageBlob: Blob;
+  dimensions: { width: number; height: number };
+  dpi: number;
+  productType: string;
+  productSize: string;
 }
 
 function CustomizeContent() {
@@ -29,14 +37,26 @@ function CustomizeContent() {
   const [designData, setDesignData] = useState<DesignData | null>(null);
 
   // State for customization options
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>("8x10");
   const [selectedMaterial, setSelectedMaterial] = useState<string | null>(null);
   const [isFramed, setIsFramed] = useState<boolean | null>(null);
   const [frameColor, setFrameColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
 
+  const [showStudio, setShowStudio] = useState(false);
+  
+  // Get selected size for studio
+  const getStudioSize = () => {
+    if (selectedSize) {
+      const parts = selectedSize.split('x');
+      return { width: parseInt(parts[0]), height: parseInt(parts[1]), name: selectedSize };
+    }
+    return { width: 8, height: 10, name: '8x10' };
+  };
+  
   const handleDesignComplete = (data: DesignData) => {
     setDesignData(data);
+    setShowStudio(false);
     setCurrentStep(2); // Move to product options
   };
 
@@ -162,13 +182,76 @@ function CustomizeContent() {
           </div>
         </div>
 
-        {/* Step 1: Image Upload / Gelato Editor */}
+        {/* Personalization Studio Modal */}
+        {showStudio && (
+          <PersonalizationStudio
+            productType={productType as 'canvas' | 'print' | 'card' | 'poster' | 'photobook'}
+            productSize={getStudioSize()}
+            onComplete={handleDesignComplete}
+            onClose={() => setShowStudio(false)}
+          />
+        )}
+
+        {/* Step 1: Choose Size First, Then Open Studio */}
         {currentStep === 1 && (
           <div className="space-y-6">
-            <GelatoEditor
-              productUid={productType === 'card' ? 'cards_cl_dtc_prt_pt' : 'prints_pt_cl'}
-              onDesignComplete={handleDesignComplete}
-            />
+            {/* Size Selection First */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-brand-darkest mb-4 font-playfair">
+                Choose Your Size
+              </h2>
+              <p className="text-brand-dark mb-4">Select a size, then customize your design</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {printSizes.map((size) => (
+                  <button
+                    key={size.name}
+                    onClick={() => setSelectedSize(size.name)}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      selectedSize === size.name
+                        ? "border-brand-dark bg-brand-light shadow-lg scale-105"
+                        : "border-brand-light hover:border-brand-medium"
+                    }`}
+                  >
+                    <div className="font-bold text-lg text-brand-darkest mb-1">
+                      {size.name}&quot;
+                    </div>
+                    <div className="text-brand-medium font-semibold">
+                      ${size.price}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            {/* Open Studio Button */}
+            <div className="bg-gradient-to-br from-brand-dark to-brand-darkest rounded-2xl p-8 text-center shadow-xl">
+              <h2 className="text-2xl font-bold text-white mb-4 font-playfair">
+                Design Your Product
+              </h2>
+              <p className="text-white/80 mb-6">
+                Open our professional design studio to create your perfect product
+              </p>
+              <button
+                onClick={() => {
+                  if (!selectedSize) {
+                    alert('Please select a size first');
+                    return;
+                  }
+                  setShowStudio(true);
+                }}
+                disabled={!selectedSize}
+                className={`px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg ${
+                  selectedSize
+                    ? "bg-white text-brand-dark hover:bg-brand-light"
+                    : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                }`}
+              >
+                🎨 Open The Design Editor
+              </button>
+              {!selectedSize && (
+                <p className="text-white/60 mt-3 text-sm">↑ Select a size above first</p>
+              )}
+            </div>
           </div>
         )}
 
@@ -176,7 +259,7 @@ function CustomizeContent() {
         {currentStep === 2 && (
           <div className="space-y-6">
             {/* Image Preview */}
-            {designData?.previewUrl && (
+            {designData?.imageDataUrl && (
               <div className="bg-white rounded-2xl shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-brand-darkest font-playfair">Your Design</h2>
@@ -189,7 +272,7 @@ function CustomizeContent() {
                 </div>
                 <div className="flex justify-center">
                   <img 
-                    src={designData.previewUrl} 
+                    src={designData.imageDataUrl} 
                     alt="Your design" 
                     className="max-h-48 rounded-lg shadow-md"
                   />

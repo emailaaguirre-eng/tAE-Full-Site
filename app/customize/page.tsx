@@ -3,6 +3,14 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
+import GelatoEditor from "@/components/GelatoEditor";
+
+interface DesignData {
+  designId: string;
+  previewUrl: string;
+  productUid: string;
+  variants: any[];
+}
 
 function CustomizeContent() {
   const searchParams = useSearchParams();
@@ -14,12 +22,23 @@ function CustomizeContent() {
   const productName = searchParams.get("product_name") || "Product";
   const basePrice = parseFloat(searchParams.get("price") || "0");
 
+  // Step tracking
+  const [currentStep, setCurrentStep] = useState(1);
+  
+  // Design data from Gelato editor
+  const [designData, setDesignData] = useState<DesignData | null>(null);
+
   // State for customization options
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedMaterial, setSelectedMaterial] = useState<string | null>(null);
   const [isFramed, setIsFramed] = useState<boolean | null>(null);
   const [frameColor, setFrameColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+
+  const handleDesignComplete = (data: DesignData) => {
+    setDesignData(data);
+    setCurrentStep(2); // Move to product options
+  };
 
   // Product-specific options
   const printSizes = [
@@ -79,6 +98,7 @@ function CustomizeContent() {
       productId,
       productType,
       productName,
+      designData: designData, // Include the uploaded image/design
       customizations: {
         size: selectedSize,
         material: selectedMaterial,
@@ -113,16 +133,69 @@ function CustomizeContent() {
 
   return (
     <div className="min-h-screen bg-brand-lightest pt-24 pb-12">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-brand-darkest mb-2 font-playfair">
             Customize Your {productName}
           </h1>
           <p className="text-brand-dark">
-            Choose your options, then personalize with ArtKey
+            Upload your image, choose options, then personalize with ArtKey
           </p>
+          
+          {/* Step Indicator */}
+          <div className="flex items-center justify-center mt-6 gap-2">
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${currentStep >= 1 ? 'bg-brand-medium text-white' : 'bg-gray-200 text-gray-500'}`}>
+              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">1</span>
+              <span className="hidden sm:inline">Upload Image</span>
+            </div>
+            <div className="w-8 h-0.5 bg-gray-300"></div>
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${currentStep >= 2 ? 'bg-brand-medium text-white' : 'bg-gray-200 text-gray-500'}`}>
+              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">2</span>
+              <span className="hidden sm:inline">Product Options</span>
+            </div>
+            <div className="w-8 h-0.5 bg-gray-300"></div>
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${currentStep >= 3 ? 'bg-brand-medium text-white' : 'bg-gray-200 text-gray-500'}`}>
+              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">3</span>
+              <span className="hidden sm:inline">ArtKey</span>
+            </div>
+          </div>
         </div>
+
+        {/* Step 1: Image Upload / Gelato Editor */}
+        {currentStep === 1 && (
+          <div className="space-y-6">
+            <GelatoEditor
+              productUid={productType === 'card' ? 'cards_cl_dtc_prt_pt' : 'prints_pt_cl'}
+              onDesignComplete={handleDesignComplete}
+            />
+          </div>
+        )}
+
+        {/* Step 2: Product Options */}
+        {currentStep === 2 && (
+          <div className="space-y-6">
+            {/* Image Preview */}
+            {designData?.previewUrl && (
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-bold text-brand-darkest font-playfair">Your Design</h2>
+                  <button
+                    onClick={() => setCurrentStep(1)}
+                    className="text-brand-medium hover:text-brand-dark underline text-sm"
+                  >
+                    Change Image
+                  </button>
+                </div>
+                <div className="flex justify-center">
+                  <img 
+                    src={designData.previewUrl} 
+                    alt="Your design" 
+                    className="max-h-48 rounded-lg shadow-md"
+                  />
+                </div>
+              </div>
+            )}
 
         {/* Customization Options */}
         <div className="space-y-6">
@@ -358,6 +431,8 @@ function CustomizeContent() {
             </button>
           </div>
         </div>
+        </div>
+        )}
       </div>
     </div>
   );

@@ -110,22 +110,41 @@ export default function ArtKeyHoverPreview({
     <div className="relative">
       {children}
 
-      {/* Pulsing Hotspot */}
+      {/* ArtKey Signature Icon - Like an artist signature in the corner */}
       <div
-        className="absolute cursor-pointer z-10"
-        style={{ left: hotspotPosition.x, top: hotspotPosition.y, transform: 'translate(-50%, -50%)' }}
+        className="absolute cursor-pointer z-10 group/artkey"
+        style={{ right: '8px', bottom: '8px' }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={() => setIsPinned(!isPinned)}
       >
-        {/* Pulse rings */}
-        <div className="absolute inset-0 w-10 h-10 -m-2">
-          <div className="absolute inset-0 rounded-full bg-brand-medium opacity-30 animate-ping"></div>
-          <div className="absolute inset-0 rounded-full bg-brand-medium opacity-50"></div>
+        {/* Subtle pulse effect */}
+        <div className="absolute inset-0 w-12 h-12 -m-1.5">
+          <div className="absolute inset-0 rounded-lg bg-white/40 animate-pulse"></div>
         </div>
-        {/* Hotspot icon */}
-        <div className="relative w-6 h-6 bg-gradient-to-br from-brand-medium to-brand-dark rounded-full flex items-center justify-center shadow-lg border-2 border-white">
-          <span className="text-white text-xs">✨</span>
+        
+        {/* Mini phone/ArtKey signature icon */}
+        <div className="relative w-9 h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-md flex flex-col items-center justify-center shadow-lg border border-gray-600 overflow-hidden group-hover/artkey:scale-110 transition-transform">
+          {/* Mini notch */}
+          <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-3 h-1 bg-black rounded-full"></div>
+          
+          {/* Mini screen with gradient */}
+          <div 
+            className="w-7 h-9 mt-1 rounded-sm flex items-center justify-center"
+            style={{ background: bgColor }}
+          >
+            <span className="text-[8px] font-bold" style={{ color: titleColor }}>AK</span>
+          </div>
+          
+          {/* Scan indicator */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-medium to-brand-light opacity-80"></div>
+        </div>
+        
+        {/* Tooltip on hover */}
+        <div className="absolute bottom-full right-0 mb-1 opacity-0 group-hover/artkey:opacity-100 transition-opacity pointer-events-none">
+          <div className="bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">
+            ✨ Scan to Explore
+          </div>
         </div>
       </div>
 
@@ -134,10 +153,9 @@ export default function ArtKeyHoverPreview({
         <div
           className="absolute z-50 transition-all duration-300"
           style={{ 
-            left: hotspotPosition.x === '85%' ? 'auto' : hotspotPosition.x,
-            right: hotspotPosition.x === '85%' ? '0' : 'auto',
-            top: '100%',
-            marginTop: '10px',
+            right: '0',
+            bottom: '100%',
+            marginBottom: '10px',
           }}
           onMouseEnter={() => { if (timeoutRef.current) clearTimeout(timeoutRef.current); }}
           onMouseLeave={handleMouseLeave}

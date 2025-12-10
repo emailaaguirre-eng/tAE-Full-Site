@@ -257,13 +257,9 @@ export default function FeaturedProducts() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {currentProducts.map((product, index) => {
-              // Wrap every other product with ArtKey hover preview
-              const ProductCard = (
-                <div
-                  key={'id' in product ? product.id : index}
-                  className="bg-brand-lightest rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 cursor-pointer group"
-                >
-                <div className="bg-gradient-to-br from-brand-light to-brand-medium h-48 flex items-center justify-center group-hover:scale-110 transition-transform relative overflow-hidden">
+              // Image with ArtKey signature in corner
+              const ProductImage = (
+                <div className="bg-gradient-to-br from-brand-light to-brand-medium h-48 flex items-center justify-center group-hover:scale-105 transition-transform relative overflow-hidden">
                   {product.image ? (
                     <Image
                       src={product.image}
@@ -276,6 +272,20 @@ export default function FeaturedProducts() {
                     <span className="text-7xl">🖼️</span>
                   )}
                 </div>
+              );
+              
+              const ProductCard = (
+                <div
+                  key={'id' in product ? product.id : index}
+                  className="bg-brand-lightest rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 cursor-pointer group"
+                >
+                {/* Image with ArtKey signature overlay */}
+                <ArtKeyHoverPreview
+                  productName={product.name}
+                  productId={'id' in product ? product.id : `product-${index}`}
+                >
+                  {ProductImage}
+                </ArtKeyHoverPreview>
               <div className="p-5">
                 <h3 className="text-lg font-bold text-brand-darkest mb-2">
                   {product.name}

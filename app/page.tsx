@@ -1,0 +1,34 @@
+import Hero from "@/components/Hero";
+import VideoSection from "@/components/VideoSection";
+import AboutUs from "@/components/AboutUs";
+import CoCreators from "@/components/CoCreators";
+import ProductCategories from "@/components/ProductCategories";
+import CardsSection from "@/components/CardsSection";
+import PrintsSection from "@/components/PrintsSection";
+import FeaturedProducts from "@/components/FeaturedProducts";
+import HowItWorks from "@/components/HowItWorks";
+import Testimonials from "@/components/Testimonials";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-brand-lightest">
+      <Navbar />
+      <Hero />
+      <VideoSection />
+      <AboutUs />
+      <CoCreators />
+      <ProductCategories />
+      <CardsSection />
+      <PrintsSection />
+      <FeaturedProducts />
+      <HowItWorks />
+      <Testimonials />
+      <Contact />
+      <Footer />
+    </main>
+  );
+}
+

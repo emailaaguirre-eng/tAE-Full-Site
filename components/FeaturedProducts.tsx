@@ -54,6 +54,14 @@ export default function FeaturedProducts() {
         description: "Upload your photos or create a stunning collage with your favorite memories"
       },
       {
+        name: "Choose from Our Gallery",
+        price: "$14.99",
+        image: "🎭",
+        rating: 5,
+        reviews: 1654,
+        description: "Browse beautiful stock images or artist-designed templates (coming soon)"
+      },
+      {
         name: "Canvas Wall Print",
         price: "$49.99",
         image: "🎨",
@@ -68,14 +76,6 @@ export default function FeaturedProducts() {
         rating: 5,
         reviews: 1253,
         description: "8x8 inch hardcover with premium quality paper"
-      },
-      {
-        name: "Metal Print",
-        price: "$79.99",
-        image: "✨",
-        rating: 5,
-        reviews: 967,
-        description: "Modern aluminum print with vibrant colors"
       },
     ],
     new: [

@@ -46,6 +46,22 @@ export default function FeaturedProducts() {
   const fallbackProducts = {
     bestsellers: [
       {
+        name: "Upload Your Own Image(s)",
+        price: "$14.99",
+        image: "🖼️",
+        rating: 5,
+        reviews: 2847,
+        description: "Upload your photos or create a stunning collage with your favorite memories"
+      },
+      {
+        name: "Canvas Wall Print",
+        price: "$49.99",
+        image: "🎨",
+        rating: 5,
+        reviews: 1876,
+        description: "Gallery-wrapped canvas in multiple sizes"
+      },
+      {
         name: "Classic Photo Book",
         price: "$29.99",
         image: "📕",
@@ -54,28 +70,12 @@ export default function FeaturedProducts() {
         description: "8x8 inch hardcover with premium quality paper"
       },
       {
-        name: "Holiday Cards Set",
-        price: "$19.99",
-        image: "🎄",
+        name: "Metal Print",
+        price: "$79.99",
+        image: "✨",
         rating: 5,
-        reviews: 892,
-        description: "Pack of 25 premium holiday cards"
-      },
-      {
-        name: "Canvas Wall Print",
-        price: "$49.99",
-        image: "🖼️",
-        rating: 5,
-        reviews: 1876,
-        description: "16x20 inch gallery-wrapped canvas"
-      },
-      {
-        name: "Photo Mug",
-        price: "$14.99",
-        image: "☕",
-        rating: 4,
-        reviews: 654,
-        description: "Dishwasher safe ceramic mug"
+        reviews: 967,
+        description: "Modern aluminum print with vibrant colors"
       },
     ],
     new: [
@@ -88,12 +88,12 @@ export default function FeaturedProducts() {
         description: "12x12 inch seamless layflat design"
       },
       {
-        name: "Metal Print",
-        price: "$79.99",
-        image: "🔲",
+        name: "Acrylic Print",
+        price: "$89.99",
+        image: "💎",
         rating: 5,
         reviews: 167,
-        description: "Modern aluminum print with float mount"
+        description: "Stunning museum-quality acrylic display"
       },
       {
         name: "Photo Puzzle",
@@ -104,12 +104,12 @@ export default function FeaturedProducts() {
         description: "500-piece custom photo puzzle"
       },
       {
-        name: "Phone Case",
-        price: "$17.99",
-        image: "📱",
-        rating: 4,
-        reviews: 412,
-        description: "Slim protective case with custom photo"
+        name: "Wood Print",
+        price: "$59.99",
+        image: "🪵",
+        rating: 5,
+        reviews: 312,
+        description: "Rustic wood panel with your photo"
       },
     ],
     sale: [
@@ -150,6 +150,72 @@ export default function FeaturedProducts() {
         description: "50x60 inch ultra-soft fleece"
       },
     ],
+    cards: [
+      {
+        name: "Holiday Cards",
+        price: "$19.99",
+        image: "🎄",
+        rating: 5,
+        reviews: 1892,
+        description: "Christmas, Hanukkah, New Year & seasonal designs - Pack of 25"
+      },
+      {
+        name: "Birthday Cards",
+        price: "$17.99",
+        image: "🎂",
+        rating: 5,
+        reviews: 1456,
+        description: "Fun & elegant birthday templates for all ages"
+      },
+      {
+        name: "Wedding Invitations",
+        price: "$49.99",
+        image: "💒",
+        rating: 5,
+        reviews: 987,
+        description: "Elegant save-the-dates, invitations & thank you cards"
+      },
+      {
+        name: "Birth Announcements",
+        price: "$24.99",
+        image: "👶",
+        rating: 5,
+        reviews: 1234,
+        description: "Welcome your new arrival with beautiful photo cards"
+      },
+      {
+        name: "Graduation Announcements",
+        price: "$22.99",
+        image: "🎓",
+        rating: 5,
+        reviews: 876,
+        description: "High school, college & milestone graduation designs"
+      },
+      {
+        name: "Bar & Bat Mitzvah",
+        price: "$29.99",
+        image: "✡️",
+        rating: 5,
+        reviews: 543,
+        description: "Elegant invitations & thank you cards for your celebration"
+      },
+      {
+        name: "Thank You Cards",
+        price: "$14.99",
+        image: "💌",
+        rating: 5,
+        reviews: 2341,
+        description: "Express gratitude with personalized photo thank you cards"
+      },
+      {
+        name: "Sympathy Cards",
+        price: "$16.99",
+        image: "🕊️",
+        rating: 5,
+        reviews: 432,
+        description: "Thoughtful memorial & condolence cards"
+      },
+    ],
   };
 
   // Transform WooCommerce products to our format
@@ -176,16 +242,28 @@ export default function FeaturedProducts() {
     };
   };
 
-  // Get products based on active tab
+// Get products based on active tab
   const getCurrentProducts = () => {
     if (wooProducts.length > 0) {
       const transformed = wooProducts.map(transformWooProduct);
-      
+
       if (activeTab === 'sale') {
         return transformed.filter(p => p.onSale).slice(0, 8);
       } else if (activeTab === 'new') {
-        // For new, show first 8 products (you can sort by date if available)
+        // For new, show first 8 products (you can sort by date if available)   
         return transformed.slice(0, 8);
+      } else if (activeTab === 'cards') {
+        // Filter products that contain "card" or "invitation" in name
+        const cardProducts = transformed.filter(p => 
+          p.name.toLowerCase().includes('card') || 
+          p.name.toLowerCase().includes('invitation') ||
+          p.name.toLowerCase().includes('announcement')
+        );
+        // If no card products from WooCommerce, use fallback
+        if (cardProducts.length === 0) {
+          return fallbackProducts.cards;
+        }
+        return cardProducts.slice(0, 8);
       } else {
         // For bestsellers, show products with highest ratings
         return transformed
@@ -193,9 +271,9 @@ export default function FeaturedProducts() {
           .slice(0, 8);
       }
     }
-    
+
     // Fallback to static products
-    return fallbackProducts[activeTab as keyof typeof fallbackProducts] || [];
+    return fallbackProducts[activeTab as keyof typeof fallbackProducts] || [];  
   };
 
   const currentProducts = getCurrentProducts();
@@ -210,34 +288,44 @@ export default function FeaturedProducts() {
           <div className="w-24 h-1 bg-brand-medium mx-auto"></div>
         </div>
 
-        {/* Tabs */}
+{/* Tabs */}
         <div className="flex justify-center gap-4 mb-12 flex-wrap">
           <button
             onClick={() => setActiveTab("bestsellers")}
-            className={`px-6 py-3 rounded-full font-semibold transition-all ${
+            className={`px-6 py-3 rounded-full font-semibold transition-all ${  
               activeTab === "bestsellers"
                 ? "bg-brand-dark text-white shadow-lg"
-                : "bg-brand-lightest text-brand-darkest hover:bg-brand-light"
+                : "bg-brand-lightest text-brand-darkest hover:bg-brand-light"   
             }`}
           >
             ⭐ Bestsellers
           </button>
           <button
+            onClick={() => setActiveTab("cards")}
+            className={`px-6 py-3 rounded-full font-semibold transition-all ${  
+              activeTab === "cards"
+                ? "bg-brand-dark text-white shadow-lg"
+                : "bg-brand-lightest text-brand-darkest hover:bg-brand-light"   
+            }`}
+          >
+            💌 Cards &amp; Invitations
+          </button>
+          <button
             onClick={() => setActiveTab("new")}
-            className={`px-6 py-3 rounded-full font-semibold transition-all ${
+            className={`px-6 py-3 rounded-full font-semibold transition-all ${  
               activeTab === "new"
                 ? "bg-brand-dark text-white shadow-lg"
-                : "bg-brand-lightest text-brand-darkest hover:bg-brand-light"
+                : "bg-brand-lightest text-brand-darkest hover:bg-brand-light"   
             }`}
           >
             ✨ New Arrivals
           </button>
           <button
             onClick={() => setActiveTab("sale")}
-            className={`px-6 py-3 rounded-full font-semibold transition-all ${
+            className={`px-6 py-3 rounded-full font-semibold transition-all ${  
               activeTab === "sale"
                 ? "bg-brand-dark text-white shadow-lg"
-                : "bg-brand-lightest text-brand-darkest hover:bg-brand-light"
+                : "bg-brand-lightest text-brand-darkest hover:bg-brand-light"   
             }`}
           >
             🔥 On Sale

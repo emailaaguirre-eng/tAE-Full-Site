@@ -18,8 +18,8 @@ export default function LayoutWrapper({ children, className = "" }: LayoutWrappe
           className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #58668b 1px, transparent 1px),
-              linear-gradient(to bottom, #58668b 1px, transparent 1px)
+              linear-gradient(to right, #918c86 1px, transparent 1px),
+              linear-gradient(to bottom, #918c86 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px',
           }}

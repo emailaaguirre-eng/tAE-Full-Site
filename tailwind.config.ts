@@ -10,15 +10,18 @@ const config: Config = {
     extend: {
       colors: {
         'brand': {
-          'lightest': '#ebf4f6',
-          'light': '#bdeaeb',
-          'medium': '#76b4bd',
-          'dark': '#58668b',
-          'darkest': '#5e5656',
+          'lightest': '#f3f3f3',   // Light background
+          'light': '#ded8d3',      // Light beige
+          'medium': '#918c86',     // Gray
+          'dark': '#000000',       // Black (main text)
+          'darkest': '#000000',    // Black
+          'accent': '#e0c9af',     // Tan/beige accent
+          'white': '#ffffff',      // White
         },
       },
       fontFamily: {
         'playfair': ['var(--font-playfair)', 'serif'],
+        'nunito': ['var(--font-nunito)', 'sans-serif'],
       },
     },
   },

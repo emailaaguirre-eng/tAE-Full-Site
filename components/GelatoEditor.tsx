@@ -44,8 +44,8 @@ export default function GelatoEditor({ productUid, onDesignComplete, onClose }: 
           productUid: productUid,
           locale: 'en-US',
           theme: {
-            primaryColor: '#76b4bd', // brand-medium
-            secondaryColor: '#58668b', // brand-dark
+            primaryColor: '#918c86', // brand-medium (gray)
+            secondaryColor: '#000000', // brand-dark (black)
           },
           onReady: () => {
             setIsLoading(false);

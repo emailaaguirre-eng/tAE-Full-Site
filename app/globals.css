@@ -3,11 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --brand-lightest: #ebf4f6;
-  --brand-light: #bdeaeb;
-  --brand-medium: #76b4bd;
-  --brand-dark: #58668b;
-  --brand-darkest: #5e5656;
+  --brand-lightest: #f3f3f3;
+  --brand-light: #ded8d3;
+  --brand-medium: #918c86;
+  --brand-dark: #000000;
+  --brand-darkest: #000000;
+  --brand-accent: #e0c9af;
+  --background: #f3f3f3;
 }
 
 body {
@@ -16,6 +18,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f3f3f3;
 }
 
 html {

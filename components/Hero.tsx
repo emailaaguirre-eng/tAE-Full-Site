@@ -55,24 +55,18 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative pt-16 min-h-screen flex items-center bg-brand-lightest overflow-hidden"
+      className="relative pt-16 min-h-screen flex items-center bg-[#f3f3f3] overflow-hidden"
     >
-      {/* Organic background shapes - more artistic */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-light/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-medium/30 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
-        <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-brand-dark/10 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2"></div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Typography with more personality */}
           <div className="space-y-8">
-            <div className="space-y-2">
-              <h1 className="text-6xl md:text-8xl font-extrabold text-brand-dark leading-[0.9] tracking-tight font-playfair">
+            <div className="space-y-3">
+              <h1 className="text-5xl md:text-7xl font-bold text-brand-dark leading-[0.95] tracking-tight font-playfair">
                 {heroContent.headline1}
               </h1>
-              <h2 className="text-7xl md:text-9xl font-black text-brand-darkest leading-[0.85] tracking-tighter font-playfair">
+              <h2 className="text-2xl md:text-4xl font-normal text-brand-darkest leading-relaxed tracking-wide font-playfair">
                 {heroContent.headline2}
               </h2>
             </div>

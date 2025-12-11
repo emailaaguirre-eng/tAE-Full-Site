@@ -63,10 +63,10 @@ export default function Hero() {
           {/* Left side - Typography with more personality */}
           <div className="space-y-8">
             <div className="space-y-3">
-              <h1 className="text-5xl md:text-7xl font-bold text-brand-dark leading-[0.95] tracking-tight font-playfair">
+              <h1 className="text-5xl md:text-7xl font-bold text-brand-dark leading-[0.95] tracking-tight">
                 {heroContent.headline1}
               </h1>
-              <h2 className="text-2xl md:text-4xl font-normal text-brand-darkest leading-relaxed tracking-wide font-playfair">
+              <h2 className="text-2xl md:text-4xl font-normal text-brand-darkest leading-relaxed tracking-wide">
                 {heroContent.headline2}
               </h2>
             </div>

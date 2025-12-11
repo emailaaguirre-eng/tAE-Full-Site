@@ -131,6 +131,87 @@ export async function getMedia(mediaId: number) {
 }
 
 /**
+ * Fetch all media (images) from WordPress Media Library
+ * @param limit - Number of images to fetch (default: 100)
+ * @param mimeType - Filter by MIME type (e.g., 'image/jpeg', 'image/png')
+ */
+export async function getAllMedia(limit = 100, mimeType?: string) {
+  try {
+    let url = `${WP_URL}/wp-json/wp/v2/media?per_page=${limit}&_embed`;
+    
+    if (mimeType) {
+      url += `&media_type=${mimeType}`;
+    }
+
+    const response = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch media');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching media:', error);
+    return [];
+  }
+}
+
+/**
+ * Get image URL in specific size from WordPress media object
+ * @param media - WordPress media object
+ * @param size - Image size ('thumbnail', 'medium', 'large', 'full', or custom size)
+ */
+export function getImageUrl(media: any, size: string = 'full'): string | null {
+  if (!media) return null;
+
+  // If size is 'full', return source_url
+  if (size === 'full') {
+    return media.source_url || media.guid?.rendered || null;
+  }
+
+  // Check media_details for size
+  if (media.media_details?.sizes?.[size]?.source_url) {
+    return media.media_details.sizes[size].source_url;
+  }
+
+  // Fallback to full size
+  return media.source_url || media.guid?.rendered || null;
+}
+
+/**
+ * Get all available image sizes from WordPress media object
+ */
+export function getImageSizes(media: any): Record<string, { url: string; width: number; height: number }> {
+  if (!media?.media_details?.sizes) {
+    return {};
+  }
+
+  const sizes: Record<string, { url: string; width: number; height: number }> = {};
+  
+  Object.keys(media.media_details.sizes).forEach((sizeName) => {
+    const size = media.media_details.sizes[sizeName];
+    sizes[sizeName] = {
+      url: size.source_url,
+      width: size.width,
+      height: size.height,
+    };
+  });
+
+  // Add full size
+  if (media.source_url) {
+    sizes.full = {
+      url: media.source_url,
+      width: media.media_details?.width || 0,
+      height: media.media_details?.height || 0,
+    };
+  }
+
+  return sizes;
+}
+
+/**
  * Get featured image from post/page
  */
 export function getFeaturedImage(post: any) {

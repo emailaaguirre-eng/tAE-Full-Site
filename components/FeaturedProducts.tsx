@@ -371,6 +371,11 @@ export default function FeaturedProducts() {
                 <ArtKeyHoverPreview
                   productName={product.name}
                   productId={'id' in product ? product.id : `product-${index}`}
+                  productInfo={{
+                    description: product.description,
+                    price: product.price,
+                    image: typeof product.image === 'string' ? product.image : undefined,
+                  }}
                 >
                   {ProductImage}
                 </ArtKeyHoverPreview>

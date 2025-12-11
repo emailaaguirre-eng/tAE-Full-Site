@@ -57,6 +57,14 @@ export async function POST(request: Request) {
         size: config.hotspot?.size || '40px',
       },
       
+      // Product information (for mini ArtKey display)
+      productInfo: {
+        description: config.productInfo?.description || '',
+        price: config.productInfo?.price || '',
+        image: config.productInfo?.image || '',
+        category: config.productInfo?.category || '',
+      },
+      
       // ArtKey content (matches WordPress plugin structure)
       artKeyData: {
         title: config.artKeyData?.title || 'Sample ArtKey',

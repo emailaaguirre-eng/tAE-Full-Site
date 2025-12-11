@@ -1,0 +1,37 @@
+/*
+Theme Name: The Artful WP
+Version: 0.1.0
+Author: Your Team
+Description: Theme starter matching the dev site palette (white/beige alternation, black text, teal accents).
+*/
+:root {
+  --bg-main: #ffffff;
+  --bg-alt: #ecece9;
+  --text-main: #000000;
+  --accent-1: #0ccca2;
+  --accent-2: #7ebec5;
+}
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+}
+.section-main { background: var(--bg-main); }
+.section-alt  { background: var(--bg-alt); }
+a { color: var(--text-main); text-decoration: none; }
+a:hover { opacity: 0.85; }
+button,
+.wp-block-button__link {
+  background: var(--text-main);
+  color: #fff;
+  border: 1px solid var(--text-main);
+  padding: 0.75rem 1.5rem;
+}
+button.secondary,
+.wp-block-button__link.is-style-outline {
+  background: #fff;
+  color: var(--text-main);
+  border: 1px solid var(--text-main);
+}
+

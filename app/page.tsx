@@ -6,6 +6,7 @@ import ProductCategories from "@/components/ProductCategories";
 import CardsSection from "@/components/CardsSection";
 import PrintsSection from "@/components/PrintsSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
+import CommissionedArt from "@/components/CommissionedArt";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
@@ -24,6 +25,7 @@ export default function Home() {
       <CardsSection />
       <PrintsSection />
       <FeaturedProducts />
+      <CommissionedArt />
       <HowItWorks />
       <Testimonials />
       <Contact />

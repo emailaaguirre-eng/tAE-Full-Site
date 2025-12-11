@@ -3,10 +3,16 @@
  * Plugin Name: ArtKey Editor
  * Description: ArtKey editor shortcode/block with REST + CPT. Enqueue React bundle on demand. Generates shareable ArtKey URLs with a 32-char token.
  * Version: 0.1.0
- * Requires PHP: 8.4
+ * Requires PHP: 7.4
+ * Requires at least: 5.0
  */
 
 if (!defined('ABSPATH')) exit;
+
+// Composer autoload (for endroid/qr-code)
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require __DIR__ . '/vendor/autoload.php';
+}
 
 // ----------------------------
 // Helpers

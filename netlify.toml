@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Note: The @netlify/plugin-nextjs will handle Next.js routing automatically
+# No manual redirects needed for Next.js 14
+

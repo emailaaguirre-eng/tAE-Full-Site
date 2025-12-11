@@ -3,10 +3,36 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 export default function AdminDashboard() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [activeTab, setActiveTab] = useState("overview");
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    router.push("/admin/login");
+    router.refresh();
+  };
+
+  // Show loading state while checking session
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-brand-lightest flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-brand-darkest mb-2">Loading...</div>
+          <div className="text-gray-600">Checking authentication...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated (though middleware should handle this)
+  if (status === "unauthenticated") {
+    router.push("/admin/login");
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-brand-lightest">
@@ -26,10 +52,7 @@ export default function AdminDashboard() {
                 👁️ View Website
               </Link>
               <button
-                onClick={() => {
-                  // Add logout functionality
-                  router.push("/");
-                }}
+                onClick={handleLogout}
                 className="px-4 py-2 bg-white/20 text-white rounded-lg font-semibold hover:bg-white/30 transition-all border border-white/30"
               >
                 🚪 Logout
@@ -63,6 +86,12 @@ export default function AdminDashboard() {
             >
               📦 Products
             </button>
+            <Link
+              href="/admin/artkey-config"
+              className={`px-6 py-4 font-semibold transition-all border-b-2 border-transparent text-gray-600 hover:text-brand-dark`}
+            >
+              ✨ ArtKey Config
+            </Link>
             <button
               onClick={() => setActiveTab("orders")}
               className={`px-6 py-4 font-semibold transition-all border-b-2 ${
@@ -133,12 +162,12 @@ export default function AdminDashboard() {
                     <div className="text-sm opacity-90 mt-1">Edit or delete products</div>
                   </Link>
                   <Link
-                    href="/admin/orders"
+                    href="/admin/artkey-config"
                     className="bg-brand-lightest border-2 border-brand-medium text-brand-darkest p-6 rounded-xl hover:border-brand-dark transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
-                    <div className="text-3xl mb-2">🛒</div>
-                    <div className="font-bold text-lg">View Orders</div>
-                    <div className="text-sm opacity-90 mt-1">Check order status</div>
+                    <div className="text-3xl mb-2">✨</div>
+                    <div className="font-bold text-lg">ArtKey Config</div>
+                    <div className="text-sm opacity-90 mt-1">Configure mini ArtKey hover</div>
                   </Link>
                 </div>
               </div>

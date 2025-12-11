@@ -3,6 +3,7 @@ import { Playfair_Display, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/contexts/CartContext";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import { Providers } from "./providers";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -29,11 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfairDisplay.variable} ${nunitoSans.variable}`}>
       <body className="antialiased">
-        <CartProvider>
-          <LayoutWrapper>
-            {children}
-          </LayoutWrapper>
-        </CartProvider>
+        <Providers>
+          <CartProvider>
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
+          </CartProvider>
+        </Providers>
       </body>
     </html>
   );

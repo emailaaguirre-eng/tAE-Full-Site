@@ -30,6 +30,12 @@ export default function ArtKeyConfigPage() {
   const [showGuestbook, setShowGuestbook] = useState(true);
   const [allowImgUploads, setAllowImgUploads] = useState(true);
   
+  // Product Information (for mini ArtKey)
+  const [productDescription, setProductDescription] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productImage, setProductImage] = useState('');
+  const [productCategory, setProductCategory] = useState('');
+  
   const [saveStatus, setSaveStatus] = useState('');
 
   const templates = [
@@ -48,6 +54,12 @@ export default function ArtKeyConfigPage() {
           x: hotspotX,
           y: hotspotY,
           size: hotspotSize,
+        },
+        productInfo: {
+          description: productDescription,
+          price: productPrice,
+          image: productImage,
+          category: productCategory,
         },
         artKeyData: {
           title,
@@ -111,6 +123,14 @@ export default function ArtKeyConfigPage() {
         setEnableVideo(c.artKeyData.features.enable_video);
         setShowGuestbook(c.artKeyData.features.show_guestbook);
         setAllowImgUploads(c.artKeyData.features.allow_img_uploads);
+        
+        // Load product info if available
+        if (c.productInfo) {
+          setProductDescription(c.productInfo.description || '');
+          setProductPrice(c.productInfo.price || '');
+          setProductImage(c.productInfo.image || '');
+          setProductCategory(c.productInfo.category || '');
+        }
         setSaveStatus('✅ Configuration loaded');
         setTimeout(() => setSaveStatus(''), 2000);
       }
@@ -250,6 +270,68 @@ export default function ArtKeyConfigPage() {
                     onChange={(e) => setHotspotSize(e.target.value)}
                     className="w-full px-4 py-2 border-2 border-brand-light rounded-lg focus:border-brand-medium focus:outline-none"
                     placeholder="e.g., 40px"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Product Information (for Mini ArtKey Display) */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-brand-dark mb-4">
+                Product Information
+              </h2>
+              <p className="text-sm text-gray-600 mb-4">
+                This information will appear in the mini ArtKey popup when customers hover over the product.
+              </p>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-brand-darkest mb-2">
+                    Product Description
+                  </label>
+                  <textarea
+                    value={productDescription}
+                    onChange={(e) => setProductDescription(e.target.value)}
+                    className="w-full px-4 py-2 border-2 border-brand-light rounded-lg focus:border-brand-medium focus:outline-none"
+                    placeholder="Brief product description (appears in mini ArtKey)"
+                    rows={3}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-semibold text-brand-darkest mb-2">
+                      Price
+                    </label>
+                    <input
+                      type="text"
+                      value={productPrice}
+                      onChange={(e) => setProductPrice(e.target.value)}
+                      className="w-full px-4 py-2 border-2 border-brand-light rounded-lg focus:border-brand-medium focus:outline-none"
+                      placeholder="e.g., $29.99"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-brand-darkest mb-2">
+                      Category
+                    </label>
+                    <input
+                      type="text"
+                      value={productCategory}
+                      onChange={(e) => setProductCategory(e.target.value)}
+                      className="w-full px-4 py-2 border-2 border-brand-light rounded-lg focus:border-brand-medium focus:outline-none"
+                      placeholder="e.g., Cards, Prints"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-brand-darkest mb-2">
+                    Product Image URL (Optional)
+                  </label>
+                  <input
+                    type="url"
+                    value={productImage}
+                    onChange={(e) => setProductImage(e.target.value)}
+                    className="w-full px-4 py-2 border-2 border-brand-light rounded-lg focus:border-brand-medium focus:outline-none"
+                    placeholder="https://..."
                   />
                 </div>
               </div>

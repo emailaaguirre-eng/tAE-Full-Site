@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useCart } from '@/contexts/CartContext';
+import ArtKeySelector from './ArtKeySelector';
 
 interface ArtKeyData {
   title: string;
@@ -128,6 +129,10 @@ export default function ArtKeyEditor() {
 
   const [selectedTemplate, setSelectedTemplate] = useState('classic');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  
+  // ArtKey reuse state
+  const [showArtKeySelector, setShowArtKeySelector] = useState(false);
+  const [currentArtKeyId, setCurrentArtKeyId] = useState<string | undefined>();
 
   // 32 Templates with variations of background, button, and title colors
   const templates = [
@@ -399,31 +404,38 @@ export default function ArtKeyEditor() {
     }
   };
 
-  // Handle image upload
+  // Handle image upload (using new WordPress/Cloudinary backend)
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
-    const formData = new FormData();
-    Array.from(files).forEach(file => {
+    // Upload files one by one (new API handles single file per request)
+    for (const file of Array.from(files)) {
+      const formData = new FormData();
       formData.append('file', file);
-    });
 
-    try {
-      const response = await fetch('/api/gelato/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      try {
+        // Use new image upload API with WordPress backend
+        const response = await fetch('/api/upload/image?backend=wordpress', {
+          method: 'POST',
+          body: formData,
+        });
 
-      if (response.ok) {
-        const result = await response.json();
-        setArtKeyData(prev => ({
-          ...prev,
-          uploadedImages: [...prev.uploadedImages, result.fileUrl],
-        }));
+        if (response.ok) {
+          const result = await response.json();
+          setArtKeyData(prev => ({
+            ...prev,
+            uploadedImages: [...prev.uploadedImages, result.url],
+          }));
+        } else {
+          const error = await response.json();
+          console.error('Upload failed:', error);
+          alert(`Failed to upload ${file.name}: ${error.error || 'Unknown error'}`);
+        }
+      } catch (error) {
+        console.error('Upload failed:', error);
+        alert(`Failed to upload ${file.name}`);
       }
-    } catch (error) {
-      console.error('Upload failed:', error);
     }
   };
 
@@ -455,7 +467,7 @@ export default function ArtKeyEditor() {
     }
   };
 
-  // Handle background image upload
+  // Handle background image upload (using new WordPress/Cloudinary backend)
   const handleBackgroundUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || !files[0]) return;
@@ -464,7 +476,8 @@ export default function ArtKeyEditor() {
     formData.append('file', files[0]);
 
     try {
-      const response = await fetch('/api/gelato/upload', {
+      // Use new image upload API with WordPress backend
+      const response = await fetch('/api/upload/image?backend=wordpress', {
         method: 'POST',
         body: formData,
       });
@@ -473,11 +486,20 @@ export default function ArtKeyEditor() {
         const result = await response.json();
         setArtKeyData(prev => ({
           ...prev,
-          theme: { ...prev.theme, bg_image_url: result.fileUrl, bg_image_id: 1 },
+          theme: { 
+            ...prev.theme, 
+            bg_image_url: result.url, 
+            bg_image_id: result.id || 1 
+          },
         }));
+      } else {
+        const error = await response.json();
+        console.error('Upload failed:', error);
+        alert(`Failed to upload background: ${error.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Upload failed:', error);
+      alert('Failed to upload background image');
     }
   };
 
@@ -515,13 +537,54 @@ export default function ArtKeyEditor() {
     }));
   };
 
+  // State for saved ArtKey info (QR code, share URL)
+  const [savedArtKey, setSavedArtKey] = useState<{
+    id: string;
+    shareUrl: string;
+    qrCodeUrl?: string;
+  } | null>(null);
+
+  // Get or create session ID for ArtKey reuse
+  const getSessionId = (): string => {
+    if (typeof window === 'undefined') return 'server-session';
+    let sessionId = sessionStorage.getItem('artkey_session_id');
+    if (!sessionId) {
+      sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      sessionStorage.setItem('artkey_session_id', sessionId);
+    }
+    return sessionId;
+  };
+
+  // Load existing ArtKey
+  const loadExistingArtKey = async (artKeyId: string) => {
+    try {
+      const response = await fetch(`/api/artkey/store?id=${artKeyId}`);
+      if (response.ok) {
+        const data = await response.json();
+        const artKey = data.artKey;
+        
+        // Load ArtKey data into editor
+        setArtKeyData(artKey.artKeyData);
+        setCustomLinks(artKey.artKeyData.links || []);
+        setCurrentArtKeyId(artKey.id);
+        setShowArtKeySelector(false);
+      }
+    } catch (error) {
+      console.error('Failed to load ArtKey:', error);
+      alert('Failed to load ArtKey. Please try again.');
+    }
+  };
+
   // Handle save and checkout
   const handleSaveAndCheckout = async () => {
     try {
+      const sessionId = getSessionId();
+      
       const response = await fetch('/api/artkey/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          sessionId,
           productId,
           cartItemId,
           artKeyData: {
@@ -533,13 +596,34 @@ export default function ArtKeyEditor() {
       });
 
       if (response.ok) {
+        const result = await response.json();
+        
+        // Store saved ArtKey info (includes QR code and share URL)
+        setSavedArtKey({
+          id: result.artKeyId,
+          shareUrl: result.shareUrl || '',
+          qrCodeUrl: result.qrCodeUrl,
+        });
+
         if (typeof window !== 'undefined') {
           sessionStorage.removeItem('productCustomization');
+          
+          // Show success message with QR code, then redirect
+          // You can customize this to show a modal instead
+          if (result.shareUrl) {
+            alert(`ArtKey saved! Share URL: ${result.shareUrl}`);
+          }
+          
           window.location.href = '/checkout';
         }
+      } else {
+        const error = await response.json();
+        console.error('Save failed:', error);
+        alert(`Failed to save ArtKey: ${error.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Save failed:', error);
+      alert('Failed to save ArtKey. Please try again.');
     }
   };
 
@@ -583,6 +667,13 @@ export default function ArtKeyEditor() {
           <div className="flex justify-between items-center flex-wrap gap-4">
             <h1 className="text-2xl font-bold font-playfair">✨ Edit Your ArtKey Page</h1>
             <div className="flex gap-3">
+              <button
+                onClick={() => setShowArtKeySelector(true)}
+                className="px-4 py-2 bg-white/20 text-white rounded-lg font-semibold hover:bg-white/30 transition-all border border-white/30"
+                title="Use an existing ArtKey design"
+              >
+                🔄 Use Existing ArtKey
+              </button>
               <a
                 href="#"
                 target="_blank"
@@ -1794,6 +1885,16 @@ export default function ArtKeyEditor() {
           </div>
         </div>
       </div>
+
+      {/* ArtKey Selector Modal */}
+      {showArtKeySelector && (
+        <ArtKeySelector
+          sessionId={getSessionId()}
+          onSelect={(artKey) => loadExistingArtKey(artKey.id)}
+          onCancel={() => setShowArtKeySelector(false)}
+          currentArtKeyId={currentArtKeyId}
+        />
+      )}
     </div>
   );
 }

@@ -5,6 +5,12 @@ import { useState, useRef, useEffect } from 'react';
 interface ArtKeyHoverPreviewProps {
   productName: string;
   productId?: string | number;
+  productInfo?: {
+    description?: string;
+    price?: string;
+    image?: string;
+    category?: string;
+  };
   initialData?: {
     title: string;
     theme: {
@@ -25,28 +31,86 @@ interface ArtKeyHoverPreviewProps {
 export default function ArtKeyHoverPreview({
   productName,
   productId,
-  initialData = {
-    title: 'Your ArtKey',
-    theme: {
-      template: 'classic',
-      bg_color: '#F6F7FB',
-      button_color: '#4f46e5',
-      title_color: '#4f46e5',
-    },
-  },
+  productInfo,
+  initialData,
   hotspotPosition = { x: '85%', y: '85%' },
   children,
 }: ArtKeyHoverPreviewProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [configData, setConfigData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [effectiveHotspotPosition, setEffectiveHotspotPosition] = useState(hotspotPosition);
+  
+  // Use config data if available, otherwise use initialData or defaults
+  const defaultData = {
+    title: productName || 'Your ArtKey',
+    theme: {
+      template: 'classic',
+      bg_color: '#F6F7FB',
+      button_color: '#4f46e5',
+      title_color: '#4f46e5',
+    },
+  };
+  
+  const effectiveData = configData?.artKeyData || initialData || defaultData;
   
   // Mini Editor State
-  const [title, setTitle] = useState(initialData.title);
-  const [bgColor, setBgColor] = useState(initialData.theme.bg_color);
-  const [buttonColor, setButtonColor] = useState(initialData.theme.button_color);
-  const [titleColor, setTitleColor] = useState(initialData.theme.title_color);
-  const [selectedTemplate, setSelectedTemplate] = useState(initialData.theme.template);
+  const [title, setTitle] = useState(effectiveData.title);
+  const [bgColor, setBgColor] = useState(effectiveData.theme.bg_color);
+  const [buttonColor, setButtonColor] = useState(effectiveData.theme.button_color);
+  const [titleColor, setTitleColor] = useState(effectiveData.theme.title_color);
+  const [selectedTemplate, setSelectedTemplate] = useState(effectiveData.theme.template);
+  
+  // Fetch product-specific ArtKey config from backend
+  useEffect(() => {
+    if (productId) {
+      fetchProductConfig();
+    }
+  }, [productId]);
+  
+  const fetchProductConfig = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/artkey/config?productId=${productId}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.config && data.config.enabled) {
+          setConfigData(data.config);
+          // Update state with config data
+          if (data.config.artKeyData) {
+            setTitle(data.config.artKeyData.title || productName);
+            setBgColor(data.config.artKeyData.theme?.bg_color || '#F6F7FB');
+            setButtonColor(data.config.artKeyData.theme?.button_color || '#4f46e5');
+            setTitleColor(data.config.artKeyData.theme?.title_color || '#4f46e5');
+            setSelectedTemplate(data.config.artKeyData.theme?.template || 'classic');
+            if (data.config.artKeyData.features) {
+              setFeatures({
+                showGallery: data.config.artKeyData.features.enable_gallery || false,
+                showGuestbook: data.config.artKeyData.features.show_guestbook || false,
+                showPlaylist: data.config.artKeyData.spotify?.url ? true : false,
+              });
+            }
+          }
+          // Update hotspot position if configured
+          if (data.config.hotspot) {
+            setEffectiveHotspotPosition({
+              x: data.config.hotspot.x || hotspotPosition.x,
+              y: data.config.hotspot.y || hotspotPosition.y,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch product config:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Merge productInfo from props with config data
+  const effectiveProductInfo = configData?.productInfo || productInfo;
   
   // Features state
   const [features, setFeatures] = useState({
@@ -113,18 +177,28 @@ return (
       {/* ArtKey Signature Icon - Like an artist signature in the corner */}    
       <div
         className="absolute cursor-pointer z-10 group/artkey opacity-0 group-hover/product:opacity-100 transition-opacity duration-300"
-        style={{ right: '8px', bottom: '8px' }}
+        style={{ 
+          right: effectiveHotspotPosition.x === '85%' ? '8px' : effectiveHotspotPosition.x,
+          bottom: effectiveHotspotPosition.y === '85%' ? '8px' : effectiveHotspotPosition.y,
+        }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={() => setIsPinned(!isPinned)}
       >
-        {/* Subtle pulse effect */}
-        <div className="absolute inset-0 w-12 h-12 -m-1.5">
-          <div className="absolute inset-0 rounded-lg bg-white/40 animate-pulse"></div>
+        {/* Radiating Halo Effect - Multiple concentric rings */}
+        <div className="absolute inset-0 w-16 h-16 -m-3.5 flex items-center justify-center">
+          {/* Outer ring - slow pulse */}
+          <div className="absolute w-16 h-16 rounded-full border-2 border-brand-medium/30 animate-ping" style={{ animationDuration: '3s' }}></div>
+          {/* Middle ring - medium pulse */}
+          <div className="absolute w-12 h-12 rounded-full border-2 border-brand-medium/50 animate-ping" style={{ animationDuration: '2s', animationDelay: '0.5s' }}></div>
+          {/* Inner ring - fast pulse */}
+          <div className="absolute w-8 h-8 rounded-full border-2 border-brand-medium/70 animate-ping" style={{ animationDuration: '1s', animationDelay: '1s' }}></div>
+          {/* Glow effect */}
+          <div className="absolute w-10 h-10 rounded-full bg-brand-medium/20 blur-sm animate-pulse"></div>
         </div>
         
         {/* Mini phone/ArtKey signature icon */}
-        <div className="relative w-9 h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-md flex flex-col items-center justify-center shadow-lg border border-gray-600 overflow-hidden group-hover/artkey:scale-110 transition-transform">
+        <div className="relative w-9 h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-md flex flex-col items-center justify-center shadow-lg border border-gray-600 overflow-hidden group-hover/artkey:scale-110 transition-transform z-10">
           {/* Mini notch */}
           <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-3 h-1 bg-black rounded-full"></div>
           
@@ -148,7 +222,7 @@ return (
         </div>
       </div>
 
-      {/* Mini ArtKey Phone Popup */}
+      {/* Mini ArtKey Phone Popup - Larger Size */}
       {isOpen && (
         <div
           className="absolute z-50 transition-all duration-300"
@@ -160,25 +234,38 @@ return (
           onMouseEnter={() => { if (timeoutRef.current) clearTimeout(timeoutRef.current); }}
           onMouseLeave={handleMouseLeave}
         >
-          <div className="bg-white rounded-2xl shadow-2xl border border-brand-light overflow-hidden" style={{ width: '320px' }}>
-            {/* Header */}
-            <div className="bg-gradient-to-r from-brand-medium to-brand-dark p-3 flex justify-between items-center">
-              <div>
-                <h4 className="text-white font-bold text-sm font-playfair">✨ ArtKey Preview</h4>
-                <p className="text-white/70 text-xs">{productName}</p>
+          <div className="rounded-2xl shadow-2xl border border-brand-light overflow-hidden" style={{ width: '420px', maxWidth: '90vw', backgroundColor: '#ffffff' }}>
+            {/* Header with Product Info */}
+            <div className="bg-gradient-to-r from-brand-medium to-brand-dark p-4 flex justify-between items-start">
+              <div className="flex-1">
+                <h4 className="text-white font-bold text-base font-playfair mb-1">✨ ArtKey Preview</h4>
+                <p className="text-white font-semibold text-sm mb-1">{productName}</p>
+                {effectiveProductInfo && (
+                  <div className="space-y-0.5">
+                    {effectiveProductInfo.description && (
+                      <p className="text-white/80 text-xs line-clamp-2">{effectiveProductInfo.description}</p>
+                    )}
+                    {effectiveProductInfo.price && (
+                      <p className="text-white/90 text-sm font-semibold">{effectiveProductInfo.price}</p>
+                    )}
+                    {effectiveProductInfo.category && (
+                      <p className="text-white/70 text-xs">Category: {effectiveProductInfo.category}</p>
+                    )}
+                  </div>
+                )}
               </div>
               <button
                 onClick={() => { setIsOpen(false); setIsPinned(false); }}
-                className="text-white/70 hover:text-white text-lg"
+                className="text-white/70 hover:text-white text-xl ml-2 flex-shrink-0"
               >
                 ×
               </button>
             </div>
 
-            <div className="p-4">
-              {/* Mini Phone Frame */}
-              <div className="flex justify-center mb-4">
-                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-[24px] p-1.5 shadow-xl relative" style={{ width: '180px' }}>
+            <div className="p-5" style={{ backgroundColor: '#ffffff' }}>
+              {/* Mini Phone Frame - Larger */}
+              <div className="flex justify-center mb-5">
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-[24px] p-2 shadow-xl relative" style={{ width: '240px' }}>
                   {/* Notch / Dynamic Island */}
                   <div className="absolute top-2.5 left-1/2 transform -translate-x-1/2 z-10">
                     <div className="bg-black rounded-full w-16 h-5 flex items-center justify-center gap-1">
@@ -187,10 +274,10 @@ return (
                     </div>
                   </div>
                   
-                  {/* Phone Screen */}
+                  {/* Phone Screen - Larger */}
                   <div 
                     className="rounded-[20px] overflow-hidden relative"
-                    style={{ height: '280px' }}
+                    style={{ height: '380px' }}
                   >
                     <div
                       className="h-full w-full pt-8 pb-4 px-4 flex flex-col items-center justify-center text-center"
@@ -200,19 +287,35 @@ return (
                         backgroundPosition: 'center',
                       }}
                     >
-                      {/* Title */}
+                      {/* Title - Larger */}
                       <h1 
-                        className="text-base font-bold mb-3 font-playfair px-2"
+                        className="text-xl font-bold mb-4 font-playfair px-3"
                         style={{ color: titleColor }}
                       >
-                        {title || 'Your Title'}
+                        {title || productName || 'Your Title'}
                       </h1>
                       
-                      {/* Mini Buttons Preview */}
-                      <div className="flex flex-col gap-1.5 w-full px-2">
+                      {/* Product Info in ArtKey (if available) */}
+                      {effectiveProductInfo && (
+                        <div className="mb-4 px-3 space-y-2">
+                          {effectiveProductInfo.description && (
+                            <p className="text-xs opacity-80" style={{ color: titleColor }}>
+                              {effectiveProductInfo.description}
+                            </p>
+                          )}
+                          {effectiveProductInfo.price && (
+                            <p className="text-sm font-semibold" style={{ color: titleColor }}>
+                              {effectiveProductInfo.price}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* Mini Buttons Preview - Larger */}
+                      <div className="flex flex-col gap-2 w-full px-3">
                         {features.showGallery && (
                           <button
-                            className="w-full py-1.5 px-3 rounded-full text-xs font-semibold shadow-sm"
+                            className="w-full py-2 px-4 rounded-full text-sm font-semibold shadow-sm"
                             style={{ backgroundColor: buttonColor, color: getButtonTextColor(buttonColor) }}
                           >
                             🖼️ Gallery
@@ -220,7 +323,7 @@ return (
                         )}
                         {features.showGuestbook && (
                           <button
-                            className="w-full py-1.5 px-3 rounded-full text-xs font-semibold shadow-sm"
+                            className="w-full py-2 px-4 rounded-full text-sm font-semibold shadow-sm"
                             style={{ backgroundColor: buttonColor, color: getButtonTextColor(buttonColor) }}
                           >
                             📝 Guestbook
@@ -228,10 +331,23 @@ return (
                         )}
                         {features.showPlaylist && (
                           <button
-                            className="w-full py-1.5 px-3 rounded-full text-xs font-semibold shadow-sm"
+                            className="w-full py-2 px-4 rounded-full text-sm font-semibold shadow-sm"
                             style={{ backgroundColor: buttonColor, color: getButtonTextColor(buttonColor) }}
                           >
                             🎵 Playlist
+                          </button>
+                        )}
+                        {/* Product Info Button (if available) */}
+                        {effectiveProductInfo && (
+                          <button
+                            className="w-full py-2 px-4 rounded-full text-sm font-semibold shadow-sm border-2"
+                            style={{ 
+                              backgroundColor: 'transparent', 
+                              borderColor: buttonColor,
+                              color: buttonColor 
+                            }}
+                          >
+                            ℹ️ Product Info
                           </button>
                         )}
                         {!features.showGallery && !features.showGuestbook && !features.showPlaylist && (
@@ -245,24 +361,25 @@ return (
                 </div>
               </div>
 
-              {/* Quick Customization */}
-              <div className="space-y-3">
+              {/* Quick Customization - Larger spacing */}
+              <div className="space-y-4">
                 {/* Title Input */}
                 <div>
-                  <label className="block text-xs font-semibold text-brand-darkest mb-1">Title</label>
+                  <label className="block text-sm font-semibold text-brand-darkest mb-2">Title</label>
                   <input
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3 py-2 border border-brand-light rounded-lg text-sm focus:border-brand-medium focus:outline-none"
+                    className="w-full px-4 py-2.5 border border-brand-light rounded-lg text-sm focus:border-brand-medium focus:outline-none"
+                    style={{ backgroundColor: '#ffffff' }}
                     placeholder="Enter your title..."
                   />
                 </div>
 
-                {/* Quick Templates */}
+                {/* Quick Templates - Larger */}
                 <div>
-                  <label className="block text-xs font-semibold text-brand-darkest mb-1">Quick Theme</label>
-                  <div className="grid grid-cols-6 gap-1">
+                  <label className="block text-sm font-semibold text-brand-darkest mb-2">Quick Theme</label>
+                  <div className="grid grid-cols-6 gap-2">
                     {templates.map((tpl) => (
                       <button
                         key={tpl.id}
@@ -277,13 +394,13 @@ return (
                   </div>
                 </div>
 
-                {/* Quick Feature Toggles */}
+                {/* Quick Feature Toggles - Larger */}
                 <div>
-                  <label className="block text-xs font-semibold text-brand-darkest mb-1">Features</label>
+                  <label className="block text-sm font-semibold text-brand-darkest mb-2">Features</label>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setFeatures(f => ({ ...f, showGallery: !f.showGallery }))}
-                      className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium border-2 transition-all ${
+                      className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-medium border-2 transition-all ${
                         features.showGallery ? 'border-brand-dark bg-brand-light' : 'border-brand-light hover:border-brand-medium'
                       }`}
                     >
@@ -291,7 +408,7 @@ return (
                     </button>
                     <button
                       onClick={() => setFeatures(f => ({ ...f, showGuestbook: !f.showGuestbook }))}
-                      className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium border-2 transition-all ${
+                      className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-medium border-2 transition-all ${
                         features.showGuestbook ? 'border-brand-dark bg-brand-light' : 'border-brand-light hover:border-brand-medium'
                       }`}
                     >
@@ -299,7 +416,7 @@ return (
                     </button>
                     <button
                       onClick={() => setFeatures(f => ({ ...f, showPlaylist: !f.showPlaylist }))}
-                      className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium border-2 transition-all ${
+                      className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-medium border-2 transition-all ${
                         features.showPlaylist ? 'border-brand-dark bg-brand-light' : 'border-brand-light hover:border-brand-medium'
                       }`}
                     >
@@ -310,21 +427,22 @@ return (
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="p-3 bg-gray-50 border-t border-brand-light flex gap-2">
+            {/* Action Buttons - Larger */}
+            <div className="p-4 border-t border-brand-light flex gap-3" style={{ backgroundColor: '#ecece9' }}>
               <button
                 onClick={handleOpenFullEditor}
-                className="flex-1 bg-gradient-to-r from-brand-medium to-brand-dark text-white py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition-all"
+                className="flex-1 bg-gradient-to-r from-brand-medium to-brand-dark text-white py-3 rounded-lg font-semibold text-sm hover:shadow-lg transition-all"
               >
                 🎨 Full Editor
               </button>
               <button
                 onClick={() => {
                   // Add to cart with customization
-                  console.log('Adding to cart:', { title, bgColor, buttonColor, titleColor, features });
+                  console.log('Adding to cart:', { title, bgColor, buttonColor, titleColor, features, productInfo });
                   alert('Added to cart! (Demo)');
                 }}
-                className="flex-1 bg-white border-2 border-brand-medium text-brand-dark py-2 rounded-lg font-semibold text-sm hover:bg-brand-lightest transition-all"
+                className="flex-1 border-2 border-brand-medium text-brand-dark py-3 rounded-lg font-semibold text-sm transition-all"
+                style={{ backgroundColor: '#ecece9' }}
               >
                 🛒 Add to Cart
               </button>

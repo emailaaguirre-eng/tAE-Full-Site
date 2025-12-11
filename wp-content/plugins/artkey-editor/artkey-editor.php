@@ -145,6 +145,15 @@ add_shortcode('artkey_editor', function ($atts) {
 add_action('woocommerce_checkout_create_order_line_item', function ($item, $cart_item_key, $values, $order) {
     if (!empty($values['artkey_id'])) {
         $item->add_meta_data('artkey_id', $values['artkey_id']);
+        // Optional: carry token/share_url if present on cart item
+        if (!empty($values['artkey_token'])) {
+            $item->add_meta_data('artkey_token', $values['artkey_token']);
+        }
+        if (!empty($values['artkey_share_url'])) {
+            $item->add_meta_data('artkey_share_url', $values['artkey_share_url']);
+        } elseif (!empty($values['artkey_token'])) {
+            $item->add_meta_data('artkey_share_url', home_url('/artkey/' . $values['artkey_token']));
+        }
     }
 }, 10, 4);
 
@@ -182,4 +191,67 @@ add_action('template_redirect', function () {
     <?php
     exit;
 });
+
+// ----------------------------
+// QR generation at order creation (uses endroid/qr-code if available)
+// ----------------------------
+add_action('woocommerce_checkout_create_order_line_item', function ($item, $cart_item_key, $values, $order) {
+    // Need share URL
+    $share_url = $item->get_meta('artkey_share_url', true);
+    if (!$share_url) {
+        $token = $item->get_meta('artkey_token', true);
+        if ($token) {
+            $share_url = home_url('/artkey/' . $token);
+            $item->update_meta_data('artkey_share_url', $share_url);
+        }
+    }
+    if (!$share_url) {
+        return;
+    }
+
+    // Check QR already set
+    if ($item->get_meta('_artkey_qr_url', true)) {
+        return;
+    }
+
+    // Require endroid/qr-code
+    if (!class_exists('\\Endroid\\QrCode\\QrCode')) {
+        return; // Library not present; install with composer require endroid/qr-code
+    }
+
+    try {
+        $order_id = $order->get_id();
+        $item_id  = $item->get_id();
+
+        $qr   = new \Endroid\QrCode\QrCode($share_url);
+        $qr->setSize(400);
+        $qr->setMargin(10);
+        $qr->setEncoding(new \Endroid\QrCode\Encoding\Encoding('UTF-8'));
+        $qr->setErrorCorrectionLevel(new \Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium());
+
+        $writer = new \Endroid\QrCode\Writer\PngWriter();
+        $result = $writer->write($qr);
+
+        $upload_dir = wp_upload_dir();
+        if (!empty($upload_dir['error'])) {
+            return;
+        }
+
+        $dir = trailingslashit($upload_dir['basedir']) . 'artkey-qr/';
+        if (!wp_mkdir_p($dir)) {
+            return;
+        }
+
+        $filename = "artkey-qr-{$order_id}-{$item_id}.png";
+        $path     = $dir . $filename;
+
+        $result->saveToFile($path);
+
+        $url = trailingslashit($upload_dir['baseurl']) . 'artkey-qr/' . $filename;
+        $item->update_meta_data('_artkey_qr_url', esc_url_raw($url));
+    } catch (\Throwable $e) {
+        // swallow errors to not break checkout
+        return;
+    }
+}, 20, 4);
 

@@ -44,6 +44,29 @@ function CustomizeContent() {
   const [quantity, setQuantity] = useState(1);
 
   const [showStudio, setShowStudio] = useState(false);
+  const [existingArtKeyId, setExistingArtKeyId] = useState<string | null>(null);
+  const [reuseExistingArtKey, setReuseExistingArtKey] = useState(false);
+
+  // Generate short alphanumeric ArtKey IDs for portal URLs
+  const generateArtKeyId = (length = 8) => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  // Auto-open design editor on load and load any existing ArtKey ID to reuse
+  useEffect(() => {
+    setShowStudio(true);
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("lastArtKeyId");
+      if (stored) {
+        setExistingArtKeyId(stored);
+      }
+    }
+  }, []);
   
   // Get selected size for studio
   const getStudioSize = () => {
@@ -133,11 +156,22 @@ function CustomizeContent() {
     // Store in sessionStorage
     sessionStorage.setItem("productCustomization", JSON.stringify(customization));
 
+    // Choose ArtKey portal ID (reuse or new)
+    const artKeyId =
+      reuseExistingArtKey && existingArtKeyId
+        ? existingArtKeyId
+        : generateArtKeyId();
+    sessionStorage.setItem("artKeyPortalId", artKeyId);
+    if (!reuseExistingArtKey || !existingArtKeyId) {
+      localStorage.setItem("lastArtKeyId", artKeyId);
+    }
+
     // Navigate to ArtKey Editor
     const params = new URLSearchParams({
       product_id: productId,
       product_type: productType,
       from_customize: "true",
+      artkey_id: artKeyId,
     });
     router.push(`/artkey/editor?${params}`);
   };
@@ -160,14 +194,14 @@ function CustomizeContent() {
             Customize Your {productName}
           </h1>
           <p className="text-brand-dark">
-            Upload your image, choose options, then personalize with ArtKey
+            Start in the design editor, then pick options and finish in the ArtKey portal.
           </p>
           
           {/* Step Indicator */}
           <div className="flex items-center justify-center mt-6 gap-2">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${currentStep >= 1 ? 'bg-brand-medium text-white' : 'bg-gray-200 text-gray-500'}`}>
               <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">1</span>
-              <span className="hidden sm:inline">Upload Image</span>
+              <span className="hidden sm:inline">Design Editor</span>
             </div>
             <div className="w-8 h-0.5 bg-gray-300"></div>
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${currentStep >= 2 ? 'bg-brand-medium text-white' : 'bg-gray-200 text-gray-500'}`}>
@@ -192,15 +226,15 @@ function CustomizeContent() {
           />
         )}
 
-        {/* Step 1: Choose Size First, Then Open Studio */}
+        {/* Step 1: Design editor opens first; size can be adjusted and reopened */}
         {currentStep === 1 && (
           <div className="space-y-6">
-            {/* Size Selection First */}
+            {/* Size Selection (optional before/after editing) */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-brand-darkest mb-4 font-playfair">
-                Choose Your Size
+                Choose Your Size (defaults to 8x10)
               </h2>
-              <p className="text-brand-dark mb-4">Select a size, then customize your design</p>
+              <p className="text-brand-dark mb-4">Design editor opens automatically. Adjust size and reopen if needed.</p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {printSizes.map((size) => (
                   <button
@@ -221,36 +255,17 @@ function CustomizeContent() {
                   </button>
                 ))}
               </div>
-            </div>
-            
-            {/* Open Studio Button */}
-            <div className="bg-gradient-to-br from-brand-dark to-brand-darkest rounded-2xl p-8 text-center shadow-xl">
-              <h2 className="text-2xl font-bold text-white mb-4 font-playfair">
-                Design Your Product
-              </h2>
-              <p className="text-white/80 mb-6">
-                Open our professional design studio to create your perfect product
-              </p>
-              <button
-                onClick={() => {
-                  if (!selectedSize) {
-                    alert('Please select a size first');
-                    return;
-                  }
-                  setShowStudio(true);
-                }}
-                disabled={!selectedSize}
-                className={`px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg ${
-                  selectedSize
-                    ? "bg-white text-brand-dark hover:bg-brand-light"
-                    : "bg-gray-400 text-gray-200 cursor-not-allowed"
-                }`}
-              >
-                🎨 Open The Design Editor
-              </button>
-              {!selectedSize && (
-                <p className="text-white/60 mt-3 text-sm">↑ Select a size above first</p>
-              )}
+              <div className="mt-6 p-4 rounded-xl bg-brand-light text-brand-dark">
+                Design editor is active now; relaunch it anytime after changing size.
+              </div>
+              <div className="mt-4">
+                <button
+                  onClick={() => setShowStudio(true)}
+                  className="px-6 py-3 rounded-full font-semibold bg-brand-dark text-white hover:bg-brand-darkest transition-all shadow-md"
+                >
+                  Reopen Design Editor
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -501,6 +516,22 @@ function CustomizeContent() {
                 </div>
               </div>
             </div>
+            {existingArtKeyId && (
+              <label className="flex items-center gap-2 mb-4 text-sm text-white/90">
+                <input
+                  type="checkbox"
+                  checked={reuseExistingArtKey}
+                  onChange={(e) => setReuseExistingArtKey(e.target.checked)}
+                  className="w-4 h-4"
+                />
+                Use existing ArtKey Portal ({existingArtKeyId}) for this product
+              </label>
+            )}
+            {!existingArtKeyId && (
+              <p className="text-sm text-white/80 mb-4">
+                A new ArtKey Portal ID will be generated automatically in the next step.
+              </p>
+            )}
             <button
               onClick={handleContinueToArtKey}
               disabled={!canProceed()}

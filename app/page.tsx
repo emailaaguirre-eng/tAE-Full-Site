@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import VideoSection from "@/components/VideoSection";
+import GiftIdeas from "@/components/GiftIdeas";
 import AboutUs from "@/components/AboutUs";
 import CoCreators from "@/components/CoCreators";
 import ProductCategories from "@/components/ProductCategories";
@@ -18,13 +19,14 @@ export default function Home() {
       <Navbar />
       <Hero />
       <VideoSection />
+      <GiftIdeas />
+      <HowItWorks />
       <AboutUs />
       <CoCreators />
       <ProductCategories />
       <CardsSection />
       <PrintsSection />
       <FeaturedProducts />
-      <HowItWorks />
       <Testimonials />
       <Contact />
       <Footer />

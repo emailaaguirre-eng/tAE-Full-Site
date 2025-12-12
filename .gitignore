@@ -35,3 +35,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# large video files
+public/images/Hero-PROMO-VIDEO (1).mp4
+public/videos/*.mp4
+

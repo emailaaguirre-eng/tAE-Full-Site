@@ -13,7 +13,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0">
             <a href="#home" className="text-xl md:text-2xl font-bold text-brand-dark font-playfair">
-              The Artful Experience
+              TheAE
             </a>
           </div>
 

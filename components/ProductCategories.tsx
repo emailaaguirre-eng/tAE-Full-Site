@@ -1,59 +1,53 @@
 export default function ProductCategories() {
   const categories = [
     {
-      title: "Photo Books",
-      description: "Preserve your memories in beautifully crafted photo books",
-      image: "📚",
-      items: ["Hardcover Books", "Softcover Books", "Layflat Books", "Mini Books"],
+      title: "Upload Your Image",
+      description: "Transform your own photo into a personalized art print or card with embedded media.",
+      image: "📤",
+      items: [
+        "Choose size: art prints, postcards, book covers",
+        "Paper, canvas, or framed options",
+        "Layer video, music, e-gift certificates",
+        "Time-released messages via Art Key"
+      ],
       color: "from-brand-light to-brand-medium"
     },
     {
-      title: "Cards & Stationery",
-      description: "Send heartfelt messages with custom cards",
-      image: "💌",
-      items: ["Holiday Cards", "Birthday Cards", "Thank You Cards", "Invitations"],
-      color: "from-brand-medium to-brand-dark"
-    },
-    {
-      title: "Wall Art & Prints",
-      description: "Transform your space with stunning photo prints",
+      title: "Select From Our Gallery",
+      description: "Curated art and photography—ready to personalize for any occasion.",
       image: "🖼️",
-      items: ["Canvas Prints", "Framed Prints", "Photo Panels", "Metal Prints"],
+      items: [
+        "Artist narratives and inspiration included",
+        "Option to add your own media to the piece",
+        "Discreet Art Key/QR for your story",
+        "Ready-to-gift prints and paintings"
+      ],
       color: "from-brand-light to-brand-medium"
     },
     {
-      title: "Home Decor",
-      description: "Personalize your home with custom decor",
-      image: "🏠",
-      items: ["Pillows", "Blankets", "Mugs", "Calendars"],
-      color: "from-brand-medium to-brand-dark"
-    },
-    {
-      title: "Gifts",
-      description: "Create unique personalized gifts for loved ones",
+      title: "Cards, Announcements & Invites",
+      description: "Perfect for postcards, holidays, thank yous, invitations, announcements, weddings, baby and graduation milestones, client follow-ups, and more.",
       image: "🎁",
-      items: ["Photo Gifts", "Ornaments", "Puzzles", "Phone Cases"],
-      color: "from-brand-light to-brand-medium"
-    },
-    {
-      title: "Photo Prints",
-      description: "High-quality prints in various sizes",
-      image: "📸",
-      items: ["Standard Prints", "Large Prints", "Photo Strips", "Retro Prints"],
+      items: [
+        "Holiday, birthday, thank you, sympathy, seasonal cards",
+        "Birth, engagement, wedding, graduation announcements",
+        "Invitations: parties, showers, retirements, open houses",
+        "Client welcome/thank-you, just listed/just sold postcards"
+      ],
       color: "from-brand-medium to-brand-dark"
     },
   ];
 
   return (
-    <section id="products" className="py-20 bg-brand-lightest">
+    <section id="products" className="py-20" style={{ backgroundColor: '#ecece9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
-            Our Products
+            Purchase Options
           </h2>
           <div className="w-24 h-1 bg-brand-medium mx-auto mb-4"></div>
           <p className="text-lg text-brand-darkest max-w-2xl mx-auto">
-            Explore our wide range of personalized photo products and gifts
+            Start with your own image or choose from our gallery, then layer music, video, or messages with the Art Key.
           </p>
         </div>
 
@@ -92,10 +86,10 @@ export default function ProductCategories() {
         <div className="text-center mt-12">
           <div className="inline-block bg-white p-8 rounded-2xl shadow-lg">
             <p className="text-brand-darkest text-lg mb-4">
-              🎉 <strong>Special Offer:</strong> Get 25% off your first order!
+              Ready to begin? Upload your image or browse the gallery to start crafting your living artwork.
             </p>
             <button className="bg-brand-dark text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-darkest transition-colors">
-              Claim Your Discount
+              Start Creating
             </button>
           </div>
         </div>

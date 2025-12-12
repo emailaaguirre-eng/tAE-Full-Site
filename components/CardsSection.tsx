@@ -6,7 +6,7 @@ export default function CardsSection() {
   const [uploadMethod, setUploadMethod] = useState<"upload" | "gallery" | null>(null);
 
   return (
-    <section id="cards" className="py-20 bg-white">
+    <section id="cards" className="py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">💌</div>

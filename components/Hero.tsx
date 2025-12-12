@@ -19,8 +19,8 @@ export default function Hero() {
   const [heroContent, setHeroContent] = useState<HeroContent>({
     headline1: 'Every image has a story.',
     headline2: 'Embedded within is a treasure.',
-    subtitle: 'Where fine art, prints & images\nmeet your personal expression.',
-    description: 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
+    subtitle: 'Where soul-stirring art and images become a living portal.',
+    description: 'Give a gift that will never be forgotten—even if that gift is for you.\nUpload a photo or choose from our gallery and layer in video, music, or time-released messages.',
   });
 
   // Fetch hero content from WordPress
@@ -55,7 +55,8 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative pt-16 min-h-screen flex items-center bg-brand-lightest overflow-hidden"
+      className="relative pt-16 min-h-screen flex items-center overflow-hidden"
+      style={{ backgroundColor: '#f3f3f3' }}
     >
       {/* Organic background shapes - more artistic */}
       <div className="absolute inset-0 overflow-hidden">
@@ -69,10 +70,10 @@ export default function Hero() {
           {/* Left side - Typography with more personality */}
           <div className="space-y-8">
             <div className="space-y-2">
-              <h1 className="text-6xl md:text-8xl font-extrabold text-brand-dark leading-[0.9] tracking-tight font-playfair">
+              <h1 className="text-7xl md:text-9xl font-extrabold text-brand-dark leading-[0.9] tracking-tight font-playfair">
                 {heroContent.headline1}
               </h1>
-              <h2 className="text-7xl md:text-9xl font-black text-brand-darkest leading-[0.85] tracking-tighter font-playfair">
+              <h2 className="text-[3.15rem] md:text-[5.6rem] font-normal text-brand-darkest leading-[0.85] tracking-tighter font-playfair">
                 {heroContent.headline2}
               </h2>
             </div>
@@ -252,11 +253,12 @@ export default function Hero() {
                 </div>
               </div>
             ) : (
-              <div className="aspect-square bg-gradient-to-br from-brand-light/50 to-brand-medium/30 border-2 border-brand-dark/10 flex items-center justify-center">
-                <div className="text-center space-y-4 p-8">
-                  <div className="text-6xl font-black text-brand-dark/20 font-playfair">tAE</div>
-                  <p className="text-sm text-brand-dark/60 uppercase tracking-widest font-playfair">The Artful Experience</p>
-                </div>
+              <div className="aspect-square bg-gradient-to-br from-brand-light/50 to-brand-medium/30 border-2 border-brand-dark/10 flex items-center justify-center overflow-hidden rounded-lg">
+                <img 
+                  src="/images/tAE_Holiday_Hero.png" 
+                  alt="TheAE Hero" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             )}
           </div>

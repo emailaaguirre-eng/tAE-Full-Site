@@ -1,70 +1,46 @@
 export default function AboutUs() {
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20" style={{ backgroundColor: '#ecece9' }}>
+      <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8 text-center font-playfair">
+        About Us
+      </h2>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Video Hero Section */}
+        {/* Image Hero Section */}
         <div className="relative mb-16 rounded-2xl overflow-hidden shadow-2xl">
-          <div className="aspect-video bg-brand-darkest">
-            {/* Video placeholder - replace src with your video URL */}
-            <video
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/images/about-video-poster.jpg"
-            >
-              <source src="/videos/about-hero.mp4" type="video/mp4" />
-              {/* Fallback content */}
-              <div className="flex items-center justify-center h-full bg-gradient-to-br from-brand-dark to-brand-darkest">
-                <p className="text-white text-lg">Video coming soon</p>
-              </div>
-            </video>
-          </div>
-          {/* Optional overlay with text */}
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-darkest/70 via-transparent to-transparent flex items-end">
-            <div className="p-8 md:p-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-2 font-playfair">
-                About Us
-              </h2>
-              <p className="text-white/90 text-lg max-w-xl">
-                Every image has a story. Embedded within is a treasure.
-              </p>
-            </div>
+          <div className="relative w-full aspect-video bg-brand-darkest">
+            {/* Collage image - fits perfectly inside the container */}
+            <img
+              src="/images/collage (1).png"
+              alt="About Us collage"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
           </div>
         </div>
 
         <div className="max-w-4xl mx-auto">
           {/* About content */}
-          <div className="bg-brand-lightest rounded-2xl p-8 md:p-12 shadow-lg mb-8">
-            <p className="text-lg text-brand-darkest leading-relaxed mb-6">
-              {/* Add your existing About Us content here */}
-              At The Artful Experience, we believe every image tells a story. Our mission is to help you 
-              transform your precious memories and artistic visions into beautiful, tangible products that 
-              you can treasure for a lifetime.
+          <div className="bg-brand-lightest rounded-2xl p-8 md:p-12 shadow-lg mb-8 space-y-4">
+            <p className="text-lg text-brand-darkest leading-relaxed">
+              Welcome to The Artful Experience Gallery and Upload Center—where soul-stirring art and images become a living portal.
+              Give a gift that will never be forgotten, even if that gift is for you.
             </p>
             <p className="text-lg text-brand-darkest leading-relaxed">
-              With our innovative ArtKey technology and commitment to quality, we make it easy to turn 
-              your photos and art into personalized masterpieces.
+              Discover our “Art Key” technology that lets you upload videos, music, and time-released gift certificates embedded in the art.
+              When the recipient scans the Art Key or QR code, they unlock your message, video, song, or surprise.
+            </p>
+            <p className="text-lg text-brand-darkest leading-relaxed">
+              Choose your path: upload your own image and personalize it, or select art from our gallery of internationally recognized artists.
+              Every option supports layered media so your story travels with the piece.
             </p>
           </div>
 
-          {/* Vision & Mission cards */}
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Vision card */}
+          <div className="grid md:grid-cols-1 gap-6">
             <div className="bg-gradient-to-br from-brand-light to-brand-medium rounded-xl p-8 text-center shadow-lg">
               <div className="text-6xl mb-4">🎨</div>
               <h3 className="text-xl font-bold text-white mb-2">Our Vision</h3>
               <p className="text-white">
-                {/* Add your vision statement */}
                 Making personal expression accessible through art and technology
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-brand-medium to-brand-dark rounded-xl p-8 text-center shadow-lg">
-              <div className="text-6xl mb-4">💡</div>
-              <h3 className="text-xl font-bold text-white mb-2">Our Mission</h3>
-              <p className="text-white">
-                {/* Add your mission statement */}
-                Empowering creativity with quality products and innovative tools
               </p>
             </div>
           </div>

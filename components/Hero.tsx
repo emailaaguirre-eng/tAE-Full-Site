@@ -70,7 +70,7 @@ export default function Hero() {
           {/* Left side - Typography with more personality */}
           <div className="space-y-8">
             <div className="space-y-2">
-              <h1 className="text-7xl md:text-9xl font-extrabold text-brand-dark leading-[0.9] tracking-tight font-playfair">
+              <h1 className="text-7xl md:text-9xl font-normal text-brand-dark leading-[0.9] tracking-tight font-playfair">
                 {heroContent.headline1}
               </h1>
               <h2 className="text-[3.15rem] md:text-[5.6rem] font-normal text-brand-darkest leading-[0.85] tracking-tighter font-playfair">

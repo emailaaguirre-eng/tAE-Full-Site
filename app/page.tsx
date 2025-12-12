@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
 export default function Home() {
+  // Updated: Section backgrounds now alternate between #ecece9 and #ffffff
   return (
     <main className="min-h-screen bg-brand-lightest">
       <Navbar />

@@ -20,13 +20,48 @@ export default function HowItWorks() {
             {/* Option 1: Upload Your Image */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
               <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                <Image
-                  src="/images/uploadyourprint.png"
-                  alt="Upload your image"
-                  fill
-                  className="object-cover"
-                  style={{ top: 0 }}
-                />
+                {/* Design Editor Preview - Show multiple images in a grid */}
+                <div className="absolute inset-0 grid grid-cols-2 gap-2 p-2">
+                  <div className="relative rounded overflow-hidden">
+                    <Image
+                      src="/images/uploadyourprint.png"
+                      alt="Design editor preview 1"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative rounded overflow-hidden">
+                    <Image
+                      src="/images/doginthepark.png"
+                      alt="Design editor preview 2"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative rounded overflow-hidden">
+                    <Image
+                      src="/images/forweddings.jpeg"
+                      alt="Design editor preview 3"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative rounded overflow-hidden bg-brand-light flex items-center justify-center">
+                    <div className="text-center p-4">
+                      <div className="text-4xl mb-2">+</div>
+                      <div className="text-sm text-brand-dark">Upload</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Overlay with design tools icon */}
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-brand-medium rounded flex items-center justify-center">
+                      <span className="text-white text-sm">✎</span>
+                    </div>
+                    <span className="text-xs font-semibold text-brand-darkest">Design Editor</span>
+                  </div>
+                </div>
               </div>
               <div className="p-6">
                 <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
@@ -36,7 +71,7 @@ export default function HowItWorks() {
                   Upload Your Image
                 </h4>
                 <p className="text-brand-darkest">
-                  Personalize your art with a message. Upload your own photo and transform it into a beautiful piece of art.
+                  Personalize your art with a message. Upload your own photo and transform it into a beautiful piece of art using our design editor.
                 </p>
               </div>
             </div>

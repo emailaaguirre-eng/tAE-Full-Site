@@ -35,7 +35,9 @@ export default function ArtKeySaveDemo() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type, checked } = e.target;
+    const target = e.target as HTMLInputElement;
+    const { name, value, type } = target;
+    const checked = 'checked' in target ? target.checked : undefined;
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,

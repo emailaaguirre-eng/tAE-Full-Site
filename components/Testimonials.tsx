@@ -14,25 +14,25 @@ export default function Testimonials() {
       name: "Morgan",
       location: "Rio de Janeiro",
       text: "Rio de Janeiro has a special place in my heart. When I visited Ipanema Beach in Rio, it captivated me and made me feel alive. I wanted to memorialize this special moment, so I uploaded my picture to theAE. My image was artfully enhanced by world renowned artist, Deanna Lankin, and now I can relive that memory every time I see it. I also enjoyed the interactivity of the art key, being able to preview Deanna's other works, suggested play list and other fun things like the mediative ideas and images. It's an image that has been captured for a lifetime.",
-      image: "/images/river-1.jpg" // Will need actual Morgan image
+      image: "/images/morgantestimonial.jpeg"
     },
     {
       name: "Grant A",
       location: "Russ Lyon's Sotheby's International",
       text: "I wanted memorable gifts for my real estate clients. The art was amazing and the Art Keys let me deliver time-released messages and e-gift cards—perfect for VIPs. The customization options and the ability to add personalized content made each gift truly special.",
-      image: "/images/chair-and-artwork.jpg" // Will need actual Grant A image
+      image: "/images/grantatestimonial.jpeg"
     },
     {
       name: "Connie Upham",
       location: "Broker at Harcourts The Garner Group Real Estate, Bend, Oregon",
       text: "The Artful Experience transforms a simple image into a gift that feels truly meaningful and made especially for your client. The ordering process is simple and seamless, yet delivers remarkable impact - thoughtful, creative, entirely unique, and sure to leave a lasting impression. The accompanying Spotify playlist is the perfect finishing touch.",
-      image: "/images/river-1.jpg" // Will need actual Connie Upham image
+      image: "/images/connietestimonial.png"
     },
     {
       name: "Mary H",
       location: "Family Keepsake",
       text: "I wanted to capture a special moment of time with my daughter. I found the perfect picture of us on my iPhone, uploaded the image to theAE site, and described the feeling that I was after. When I received the art in the mail, it was better than I had imagined. I now have something that symbolizes that special moment of time with my daughter that I will cherish forever.",
-      image: "/images/river-1.jpg" // Will need actual Mary H image
+      image: "/images/maryhtestimonial.jpeg"
     },
   ];
 
@@ -54,7 +54,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div 
               key={index} 
-              className="group bg-white rounded-2xl shadow-lg overflow-visible hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:-translate-y-4 relative z-0"
+              className="group bg-white rounded-2xl shadow-lg overflow-visible hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:-translate-y-4 relative z-0 flex flex-col"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden rounded-t-2xl">
@@ -67,7 +67,7 @@ export default function Testimonials() {
               </div>
               
               {/* Content - expands on hover */}
-              <div className="p-6 transition-all duration-500 group-hover:p-8">
+              <div className="p-6 transition-all duration-500 group-hover:p-8 flex-1 flex flex-col">
                 <div className="mb-4">
                   <h3 className="text-xl font-bold text-brand-darkest mb-1 group-hover:text-2xl transition-all duration-500">
                     {testimonial.name}
@@ -83,7 +83,7 @@ export default function Testimonials() {
                   ))}
                 </div>
                 
-                <p className="text-brand-darkest leading-relaxed italic text-sm group-hover:text-base group-hover:leading-loose transition-all duration-500">
+                <p className="text-brand-darkest leading-relaxed italic text-sm group-hover:text-base group-hover:leading-loose transition-all duration-500 flex-1">
                   &quot;{testimonial.text}&quot;
                 </p>
               </div>

@@ -39,10 +39,10 @@ export default function VideoSection() {
               Give a gift that will never be forgotten, even if that gift is for you.
             </p>
             <p>
-              Discover our "Art Key" technology that allows you to upload videos, music and time-rleeased gift certificates that are embedded in the art.
+              Discover our &quot;Art Key&quot; technology that allows you to upload videos, music and time-rleeased gift certificates that are embedded in the art.
             </p>
             <p>
-              When the giftee scans the "Art Key/QR Code," they will be surprised by the unique message, video, song, or gift certificate you have uploaded for them.
+              When the giftee scans the &quot;Art Key/QR Code,&quot; they will be surprised by the unique message, video, song, or gift certificate you have uploaded for them.
             </p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function VideoSection() {
                 Or select art and photography from our gallery of internationally recognized artists.
               </p>
               <p className="text-brand-darkest">
-                All paintings, photography, and reproductions include the artist's narrative, background, and inspiration behind the piece.
+                All paintings, photography, and reproductions include the artist&apos;s narrative, background, and inspiration behind the piece.
               </p>
               <p className="text-brand-darkest italic">
                 This option also allows for the upload of your own media.

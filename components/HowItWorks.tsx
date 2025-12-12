@@ -119,7 +119,7 @@ export default function HowItWorks() {
                 Send the Gift
               </h4>
               <p className="text-brand-darkest">
-                We'll carefully package and ship your personalized art. Your gift will arrive ready to be displayed and enjoyed.
+                We&apos;ll carefully package and ship your personalized art. Your gift will arrive ready to be displayed and enjoyed.
               </p>
             </div>
           </div>

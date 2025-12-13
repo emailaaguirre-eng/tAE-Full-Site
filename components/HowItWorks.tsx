@@ -26,15 +26,6 @@ export default function HowItWorks() {
                   fill
                   className="object-cover"
                 />
-                {/* Overlay with design tools icon */}
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-brand-medium rounded flex items-center justify-center">
-                      <span className="text-white text-sm">✎</span>
-                    </div>
-                    <span className="text-xs font-semibold text-brand-darkest">Design Editor</span>
-                  </div>
-                </div>
               </div>
               <div className="p-6">
                 <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">

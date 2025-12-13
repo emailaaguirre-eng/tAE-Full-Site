@@ -9,4 +9,4 @@
   NODE_VERSION = "18"
 
 # Note: The @netlify/plugin-nextjs will handle Next.js routing automatically
-# No manual redirects needed for Next.js 14
+# No manual redirects needed for Next.js 15

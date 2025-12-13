@@ -111,7 +111,7 @@ export default function ArtKeySelector({
         <div className="flex-1 overflow-y-auto p-6">
           {artKeys.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 mb-4">You don't have any saved ArtKeys yet.</p>
+              <p className="text-gray-600 mb-4">You don&apos;t have any saved ArtKeys yet.</p>
               <p className="text-sm text-gray-500">Create your first ArtKey to get started!</p>
             </div>
           ) : (

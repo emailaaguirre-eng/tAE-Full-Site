@@ -119,7 +119,7 @@ export default function CommissionedArt() {
                 </li>
                 <li className="flex gap-3">
                   <span className="font-bold text-brand-medium">2.</span>
-                  <span className="text-brand-darkest">We'll match you with the perfect artist</span>
+                  <span className="text-brand-darkest">We&apos;ll match you with the perfect artist</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="font-bold text-brand-medium">3.</span>

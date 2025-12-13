@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function CoCreators() {
   return (
     <section id="cocreators" className="py-20" style={{ backgroundColor: '#ffffff' }}>
@@ -15,6 +17,37 @@ export default function CoCreators() {
         <div className="max-w-6xl mx-auto">
           {/* CoCreator profiles */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Deanna Lankin */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all">
+              <div className="relative h-48 bg-gradient-to-br from-brand-light to-brand-medium overflow-hidden">
+                <Image
+                  src="/images/deanna-lankin.jpg"
+                  alt="Deanna Lankin"
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    // Fallback placeholder if image doesn't exist
+                    const target = e.currentTarget as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-light to-brand-medium" style={{ display: 'none' }} id="deanna-placeholder">
+                  <div className="text-7xl">👤</div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-brand-darkest mb-2">
+                  Deanna Lankin
+                </h3>
+                <p className="text-brand-darkest mb-4">
+                  World renowned artist specializing in artful image enhancement and personalized art experiences.
+                </p>
+                <button className="text-brand-medium font-semibold hover:text-brand-dark transition-colors">
+                  Learn More →
+                </button>
+              </div>
+            </div>
+
             {/* Kimber */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all">
               <div className="bg-gradient-to-br from-brand-light to-brand-medium h-48 flex items-center justify-center">

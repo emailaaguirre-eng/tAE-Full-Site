@@ -45,13 +45,13 @@ export default function Navbar() {
                 </a>
                 {shopDropdownOpen && (
                   <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[180px] z-50">
-                    <a
-                      href="#gallery"
-                      className="block px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 transition-colors font-playfair"
-                      onClick={() => setShopDropdownOpen(false)}
-                    >
-                      TheAE Gallery
-                    </a>
+                <a
+                  href="/gallery"
+                  className="block px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 transition-colors font-playfair"
+                  onClick={() => setShopDropdownOpen(false)}
+                >
+                  TheAE Gallery
+                </a>
                   </div>
                 )}
               </div>
@@ -135,7 +135,7 @@ export default function Navbar() {
               Shop
             </a>
             <a
-              href="#gallery"
+              href="/gallery"
               className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 pl-6 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
             >

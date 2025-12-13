@@ -9,7 +9,7 @@ export default function Gallery() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section id="gallery" className="py-20" style={{ backgroundColor: '#ecece9' }}>
+    <section className="py-20" style={{ backgroundColor: '#ecece9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
@@ -21,11 +21,11 @@ export default function Gallery() {
           </p>
         </div>
 
-        {/* Featured Artist Section */}
+        {/* Featured Artist: Deanna Lankin */}
         <div className="mb-16">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="grid md:grid-cols-2 gap-0">
-              {/* Artist Image */}
+              {/* Artist Profile Picture */}
               <div className="relative h-96 md:h-auto">
                 <Image
                   src={featuredArtist.image}
@@ -35,7 +35,7 @@ export default function Gallery() {
                 />
               </div>
               
-              {/* Artist Info */}
+              {/* Artist Bio */}
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <div className="mb-4">
                   <span className="text-sm uppercase tracking-wide text-brand-medium font-semibold">
@@ -48,12 +48,12 @@ export default function Gallery() {
                 <p className="text-lg text-brand-darkest leading-relaxed mb-4">
                   {featuredArtist.bio}
                 </p>
-                <p className="text-base text-brand-dark leading-relaxed">
+                <p className="text-base text-brand-dark leading-relaxed mb-6">
                   {featuredArtist.description}
                 </p>
                 <button 
                   onClick={() => setIsModalOpen(true)}
-                  className="mt-6 bg-brand-medium text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all shadow-lg w-fit"
+                  className="bg-brand-medium text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all shadow-lg w-fit"
                 >
                   {featuredArtist.buttonText}
                 </button>
@@ -62,28 +62,42 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {artworks.map((artwork) => (
-            <div key={artwork.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group">
-              <div className="relative aspect-square overflow-hidden">
-                <Image
-                  src={artwork.image}
-                  alt={artwork.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
+        {/* Deanna Lankin's Artwork for Sale */}
+        <div className="mb-12">
+          <h3 className="text-2xl md:text-3xl font-bold text-brand-darkest mb-8 text-center">
+            Artwork by {featuredArtist.name}
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {artworks.map((artwork) => (
+              <div key={artwork.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group">
+                <div className="relative aspect-square overflow-hidden">
+                  <Image
+                    src={artwork.image}
+                    alt={artwork.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                    {artwork.title}
+                  </h4>
+                  <p className="text-brand-dark mb-4">
+                    by {artwork.artist}
+                  </p>
+                  {/* Format options */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">8x10 Print</span>
+                    <span className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">12x16 Print</span>
+                    <span className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">Canvas</span>
+                  </div>
+                  <button className="w-full bg-brand-medium text-white px-6 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all">
+                    View Details
+                  </button>
+                </div>
               </div>
-              <div className="p-6">
-                <h4 className="text-xl font-bold text-brand-darkest mb-2">
-                  {artwork.title}
-                </h4>
-                <p className="text-brand-dark">
-                  by {artwork.artist}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Coming Soon Message */}
@@ -99,7 +113,7 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* Deanna Lankin Modal */}
+      {/* Deanna Lankin Artist Modal */}
       {isModalOpen && (
         <div 
           className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
@@ -144,4 +158,3 @@ export default function Gallery() {
     </section>
   );
 }
-

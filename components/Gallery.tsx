@@ -65,12 +65,13 @@ export default function Gallery() {
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="grid md:grid-cols-2 gap-0">
               {/* Artist Profile Picture */}
-              <div className="relative h-96 md:h-auto">
+              <div className="relative h-96 md:h-auto min-h-[400px]">
                 <Image
                   src={featuredArtist.image}
                   alt={featuredArtist.name}
                   fill
-                  className="object-cover"
+                  className="object-contain"
+                  style={{ objectPosition: 'center top' }}
                 />
               </div>
               
@@ -124,12 +125,13 @@ export default function Gallery() {
                 
                 return (
                   <div key={product.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group">
-                    <div className="relative aspect-square overflow-hidden">
+                    <div className="relative aspect-square overflow-hidden bg-gray-50">
                       <Image
                         src={productImage}
                         alt={product.name}
                         fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="object-contain group-hover:scale-110 transition-transform duration-500"
+                        style={{ objectPosition: 'center' }}
                       />
                     </div>
                     <div className="p-6">
@@ -202,12 +204,13 @@ export default function Gallery() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <div className="relative h-96 md:h-[500px]">
+              <div className="relative h-96 md:h-[500px] bg-gray-50">
                 <Image
                   src="/images/deanna-lankin-artist.jpg"
                   alt={`${featuredArtist.name} - Artist at work`}
                   fill
-                  className="object-cover rounded-t-2xl"
+                  className="object-contain rounded-t-2xl"
+                  style={{ objectPosition: 'center top' }}
                 />
               </div>
               <div className="p-8">

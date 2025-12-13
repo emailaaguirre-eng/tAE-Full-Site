@@ -4,9 +4,11 @@
   "cocreators": [
     {
       "id": "kimber",
-      "name": "Kimber",
+      "name": "Kimber Cross",
       "image": "/images/kimber.jpg",
-      "bio": "Bio will be added here - please provide Kimber's bio",
+      "modalImage": "/images/kimber-modal.jpg",
+      "bio": "Please provide Kimber Cross's bio here",
+      "extendedBio": "Please provide Kimber Cross's extended bio here",
       "link": "#"
     }
   ],

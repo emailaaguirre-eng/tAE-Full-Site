@@ -1,0 +1,35 @@
+# Stackbit configuration for Netlify Visual Editor
+# This enables visual editing capabilities in Netlify
+
+stackbitVersion: ~0.6.0
+
+# Site configuration
+siteName: "The Artful Experience"
+siteUrl: "https://your-site.netlify.app" # Update with your actual Netlify URL
+
+# Framework configuration
+framework: nextjs
+ssgName: nextjs
+nodeVersion: "18"
+
+# Pages configuration
+pagesDir: "app"
+dataDir: "content" # Optional: if you want to store content separately
+
+# Models for editable content
+models:
+  - name: Page
+    type: page
+    urlPath: "/{slug}"
+    filePath: "app/{slug}/page.tsx"
+    fields:
+      - name: title
+        type: string
+        label: Title
+      - name: content
+        type: markdown
+        label: Content
+
+# Component mapping (optional - helps Visual Editor understand your components)
+# You can add more component mappings as needed
+

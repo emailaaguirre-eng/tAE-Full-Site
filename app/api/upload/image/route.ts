@@ -40,7 +40,7 @@ export async function POST(request: Request) {
       );
     }
 
-    let result;
+    let result: { url: string; id: string | number; metadata?: any };
 
     switch (backend) {
       case 'wordpress':
@@ -172,7 +172,7 @@ async function uploadToCloudinary(file: File) {
  * Upload to local storage (for development/testing)
  * Note: This won't work on Netlify - use WordPress or Cloudinary for production
  */
-async function uploadToLocal(file: File) {
+async function uploadToLocal(file: File): Promise<{ url: string; id: string | number; metadata?: any }> {
   // For production, you'd want to use a proper storage solution
   // This is just for development/testing
   throw new Error('Local upload not supported in production. Use WordPress or Cloudinary backend.');

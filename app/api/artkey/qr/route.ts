@@ -17,7 +17,8 @@ export async function GET(request: Request) {
     const url = searchParams.get('url');
     const size = parseInt(searchParams.get('size') || '400');
     const artKeyId = searchParams.get('artKeyId');
-    const format = searchParams.get('format') || 'dataurl'; // 'dataurl' or 'wordpress'
+    const formatParam = searchParams.get('format') || 'dataurl'; // 'dataurl' or 'wordpress'
+    const format: 'dataurl' | 'wordpress' = (formatParam === 'wordpress' ? 'wordpress' : 'dataurl');
 
     if (!url && !artKeyId) {
       return NextResponse.json(
@@ -118,7 +119,7 @@ async function generateQRCode(
     // - width: size - matches setSize(400)
     const qrBuffer = await QRCode.toBuffer(url, {
       errorCorrectionLevel: 'M', // Medium error correction
-      type: 'image/png',
+      type: 'png',
       width: size,
       margin: 1, // 4 modules (1 * 4 = 4 modules, similar to margin 10 in endroid)
       color: {
@@ -165,7 +166,7 @@ async function uploadQRToWordPress(buffer: Buffer, originalUrl: string): Promise
 
   // Create form data
   const formData = new FormData();
-  const blob = new Blob([buffer], { type: 'image/png' });
+  const blob = new Blob([new Uint8Array(buffer)], { type: 'image/png' });
   formData.append('file', blob, filename);
 
   // Upload to WordPress

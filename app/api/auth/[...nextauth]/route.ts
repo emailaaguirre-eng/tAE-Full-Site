@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import type { NextRequest } from "next/server";
 
-const handler = NextAuth({
+const { handlers } = NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -52,5 +53,5 @@ const handler = NextAuth({
   },
 });
 
-export { handler as GET, handler as POST };
+export const { GET, POST } = handlers;
 

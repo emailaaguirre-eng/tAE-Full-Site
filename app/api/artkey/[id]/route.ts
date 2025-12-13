@@ -3,10 +3,9 @@ import { artKeyStore } from '@/lib/artKeyStore';
 
 export async function GET(
   _req: Request,
-  { params }: { params: Promise<{ id: string }> | { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const resolvedParams = await Promise.resolve(params);
-  const id = resolvedParams.id;
+  const { id } = await params;
   const record = artKeyStore.get(id);
 
   if (!record) {

@@ -4,10 +4,6 @@
   "framework": "nextjs",
   "installCommand": "npm install",
   "devCommand": "npm run dev",
-  "regions": ["iad1"],
-  "env": {
-    "NEXT_PUBLIC_WOOCOMMERCE_URL": "@woocommerce_url",
-    "NEXT_PUBLIC_WORDPRESS_URL": "@wordpress_url"
-  }
+  "regions": ["iad1"]
 }
 

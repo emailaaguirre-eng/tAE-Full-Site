@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import * as fabric from 'fabric';
+import AIEffectsPanel from './AIEffectsPanel';
 import {
   LayoutGrid,
   Image as ImageIcon,
@@ -446,15 +447,125 @@ export default function PersonalizationStudio({
   // AI FEATURES
   // =============================================================================
   
-  const applyAIEffect = async (effectName: string) => {
+  const applyAIEffect = async (effectId: string, imageDataUrl: string): Promise<string | null> => {
     setIsProcessingAI(true);
-    setAiStatus(`Applying ${effectName}...`);
+    setAiStatus(`Processing AI effect...`);
     
-    setTimeout(() => {
-      setAiStatus(`${effectName} applied successfully`);
+    try {
+      const response = await fetch('/api/ai-effects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          effectId,
+          imageDataUrl,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to process effect');
+      }
+
+      if (data.success && data.imageUrl) {
+        // Load the processed image onto canvas
+        const canvas = fabricRef.current;
+        if (canvas) {
+          const activeObj = canvas.getActiveObject();
+          
+          // Create new image from result
+          const img = await fabric.FabricImage.fromURL(data.imageUrl, { crossOrigin: 'anonymous' });
+          
+          if (activeObj) {
+            // Replace the active object with the new image
+            img.set({
+              left: activeObj.left,
+              top: activeObj.top,
+              scaleX: activeObj.scaleX,
+              scaleY: activeObj.scaleY,
+              angle: activeObj.angle,
+            });
+            canvas.remove(activeObj);
+          }
+          
+          canvas.add(img);
+          canvas.setActiveObject(img);
+          canvas.renderAll();
+        }
+
+        setAiStatus('Effect applied successfully!');
+        setTimeout(() => setAiStatus(''), 2000);
+        return data.imageUrl;
+      }
+
+      throw new Error('No image returned from API');
+    } catch (error) {
+      console.error('AI Effect error:', error);
+      setAiStatus(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setTimeout(() => setAiStatus(''), 3000);
+      return null;
+    } finally {
       setIsProcessingAI(false);
+    }
+  };
+
+  // Legacy effect handler for backward compatibility
+  const applyLegacyAIEffect = async (effectName: string) => {
+    // Map old effect names to new effect IDs
+    const effectMap: Record<string, string> = {
+      'Van Gogh': 'vangogh',
+      'Monet': 'monet',
+      'Picasso': 'picasso',
+      'Warhol': 'warhol',
+      'Pencil Sketch': 'pencil',
+      'Watercolor': 'watercolor',
+      'Cartoonify': 'cartoon',
+      'Rotoscope': 'rotoscope',
+      'Background Removal': 'removebg',
+      'Face Detection': 'facefix',
+      'Magic Enhancement': 'upscale',
+    };
+
+    const effectId = effectMap[effectName];
+    if (!effectId) {
+      setAiStatus(`Unknown effect: ${effectName}`);
+      return;
+    }
+
+    // Get current image from canvas
+    const canvas = fabricRef.current;
+    if (!canvas) return;
+
+    const activeObj = canvas.getActiveObject();
+    if (!activeObj || activeObj.type !== 'image') {
+      setAiStatus('Please select an image first');
       setTimeout(() => setAiStatus(''), 2000);
-    }, 2000);
+      return;
+    }
+
+    const imageDataUrl = (activeObj as fabric.FabricImage).toDataURL({ format: 'png' });
+    await applyAIEffect(effectId, imageDataUrl);
+  };
+
+  // Get current image data URL for AI effects
+  const getCurrentImageDataUrl = (): string | null => {
+    const canvas = fabricRef.current;
+    if (!canvas) return null;
+
+    const activeObj = canvas.getActiveObject();
+    if (activeObj && activeObj.type === 'image') {
+      return (activeObj as fabric.FabricImage).toDataURL({ format: 'png' });
+    }
+
+    // If no active object, try to get any image on canvas
+    const images = canvas.getObjects().filter(obj => obj.type === 'image');
+    if (images.length > 0) {
+      return (images[0] as fabric.FabricImage).toDataURL({ format: 'png' });
+    }
+
+    return null;
   };
   
   const applyMoodTheme = (mood: MoodTheme) => {
@@ -811,80 +922,12 @@ export default function PersonalizationStudio({
           
           {/* AI STUDIO TAB */}
           {activeTab === 'ai' && (
-            <div className="space-y-4">
-              {aiStatus && (
-                <div className="p-3 bg-gray-100 rounded-xl text-gray-700 text-sm font-medium flex items-center gap-2">
-                  {isProcessingAI && <div className="w-4 h-4 border-2 border-gray-400 border-t-gray-900 rounded-full animate-spin" />}
-                  {aiStatus}
-                </div>
-              )}
-              
-              {/* Background Removal */}
-              <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                    <Eraser className="w-5 h-5 text-gray-700" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Background Removal</h4>
-                    <p className="text-xs text-gray-500">Remove backgrounds instantly</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => applyAIEffect('Background Removal')} 
-                  disabled={isProcessingAI} 
-                  className="w-full py-2.5 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 disabled:opacity-50 transition-all"
-                >
-                  Remove Background
-                </button>
-              </div>
-              
-              {/* Style Transfer */}
-              <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                    <Paintbrush className="w-5 h-5 text-gray-700" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Art Styles</h4>
-                    <p className="text-xs text-gray-500">Transform into famous styles</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 gap-1.5">
-                  {artStyles.map(style => (
-                    <button 
-                      key={style.id} 
-                      onClick={() => applyAIEffect(style.name)} 
-                      disabled={isProcessingAI} 
-                      className="p-2 bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 flex flex-col items-center gap-1 border border-gray-200"
-                    >
-                      {style.icon}
-                      <span className="text-[8px] text-gray-500 font-medium">{style.name}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Face Detection */}
-              <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                    <ScanFace className="w-5 h-5 text-gray-700" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Face Detection</h4>
-                    <p className="text-xs text-gray-500">Auto-center faces</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => applyAIEffect('Face Detection')} 
-                  disabled={isProcessingAI} 
-                  className="w-full py-2.5 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 disabled:opacity-50 transition-all"
-                >
-                  Detect Faces
-                </button>
-              </div>
-            </div>
+            <AIEffectsPanel
+              onApplyEffect={applyAIEffect}
+              currentImageDataUrl={getCurrentImageDataUrl()}
+              isProcessing={isProcessingAI}
+              setIsProcessing={setIsProcessingAI}
+            />
           )}
           
           {/* THEMES/MAGIC TAB */}
@@ -896,7 +939,7 @@ export default function PersonalizationStudio({
                 <h4 className="font-bold text-white mb-2">One-Click Magic</h4>
                 <p className="text-xs text-gray-400 mb-4">Auto-enhance your design</p>
                 <button 
-                  onClick={() => applyAIEffect('Magic Enhancement')} 
+                  onClick={() => applyLegacyAIEffect('Magic Enhancement')} 
                   disabled={isProcessingAI} 
                   className="px-6 py-3 bg-white text-gray-900 rounded-full font-bold hover:bg-gray-100 disabled:opacity-50 transition-all"
                 >

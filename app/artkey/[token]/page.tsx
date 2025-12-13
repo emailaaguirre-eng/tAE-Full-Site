@@ -7,9 +7,9 @@ import { notFound } from 'next/navigation';
 export default async function ArtKeyViewPage({
   params,
 }: {
-  params: { token: string };
+  params: Promise<{ token: string }>;
 }) {
-  const { token } = params;
+  const { token } = await params;
 
   // Fetch ArtKey data
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 

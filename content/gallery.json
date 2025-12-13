@@ -12,15 +12,52 @@
   "artworks": [
     {
       "id": 1,
-      "title": "Artwork 1",
-      "image": "/images/artwork1.jpg",
-      "artist": "Deanna Lankin"
+      "title": "Upload Your Own Image(s)",
+      "image": "/images/uploadyourprint.png",
+      "artist": "Deanna Lankin",
+      "formats": ["8x10 Print", "12x16 Print", "Canvas", "Photo Book"]
     },
     {
       "id": 2,
-      "title": "Artwork 2",
-      "image": "/images/artwork2.jpg",
-      "artist": "Deanna Lankin"
+      "title": "Choose from Our Gallery",
+      "image": "/images/buyanexistingprint.jpg",
+      "artist": "Deanna Lankin",
+      "formats": ["8x10 Print", "12x16 Print", "Canvas"]
+    },
+    {
+      "id": 3,
+      "title": "Canvas Wall Print",
+      "image": "/images/chair-and-artwork.jpg",
+      "artist": "Deanna Lankin",
+      "formats": ["8x10 Canvas", "12x16 Canvas", "16x20 Canvas"]
+    },
+    {
+      "id": 4,
+      "title": "Classic Photo Book",
+      "image": "/images/couch.jpg",
+      "artist": "Deanna Lankin",
+      "formats": ["8x8 Hardcover", "12x12 Hardcover"]
+    },
+    {
+      "id": 5,
+      "title": "Layflat Photo Book",
+      "image": "/images/forweddings.jpeg",
+      "artist": "Deanna Lankin",
+      "formats": ["12x12 Layflat"]
+    },
+    {
+      "id": 6,
+      "title": "Acrylic Print",
+      "image": "/images/doginthepark.png",
+      "artist": "Deanna Lankin",
+      "formats": ["8x10 Acrylic", "12x16 Acrylic", "16x20 Acrylic"]
+    },
+    {
+      "id": 7,
+      "title": "Photo Puzzle",
+      "image": "/images/uploadyourprint.png",
+      "artist": "Deanna Lankin",
+      "formats": ["500 pieces", "1000 pieces"]
     }
   ],
   "comingSoon": {

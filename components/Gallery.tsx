@@ -86,11 +86,15 @@ export default function Gallery() {
                     by {artwork.artist}
                   </p>
                   {/* Format options */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">8x10 Print</span>
-                    <span className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">12x16 Print</span>
-                    <span className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">Canvas</span>
-                  </div>
+                  {artwork.formats && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {artwork.formats.map((format, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">
+                          {format}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <button className="w-full bg-brand-medium text-white px-6 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all">
                     View Details
                   </button>

@@ -1,0 +1,31 @@
+{
+  "title": "TheAE Gallery",
+  "subtitle": "Explore our curated collection of art and photography from internationally recognized artists",
+  "featuredArtist": {
+    "name": "Deanna Lankin",
+    "title": "Featured Artist",
+    "image": "/images/deanna-lankin.jpg",
+    "bio": "World renowned artist specializing in artful image enhancement and personalized art experiences.",
+    "description": "Deanna Lankin brings years of artistic expertise to transform your images into stunning works of art.",
+    "buttonText": "View Portfolio →"
+  },
+  "artworks": [
+    {
+      "id": 1,
+      "title": "Artwork 1",
+      "image": "/images/artwork1.jpg",
+      "artist": "Deanna Lankin"
+    },
+    {
+      "id": 2,
+      "title": "Artwork 2",
+      "image": "/images/artwork2.jpg",
+      "artist": "Deanna Lankin"
+    }
+  ],
+  "comingSoon": {
+    "title": "More Artworks Coming Soon",
+    "description": "We're continuously adding new pieces from talented artists. Check back soon!"
+  }
+}
+

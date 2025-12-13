@@ -1,0 +1,19 @@
+{
+  "title": "CoCreators",
+  "subtitle": "Meet the talented artists and creators who make The Artful Experience possible",
+  "cocreators": [
+    {
+      "id": "kimber",
+      "name": "Kimber",
+      "image": "/images/kimber.jpg",
+      "bio": "Bio will be added here - please provide Kimber's bio",
+      "link": "#"
+    }
+  ],
+  "cta": {
+    "title": "Interested in Becoming a CoCreator?",
+    "description": "Join our community of talented artists and creators",
+    "buttonText": "Apply Now"
+  }
+}
+

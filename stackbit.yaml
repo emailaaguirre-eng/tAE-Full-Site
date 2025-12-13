@@ -14,22 +14,161 @@ nodeVersion: "18"
 
 # Pages configuration
 pagesDir: "app"
-dataDir: "content" # Optional: if you want to store content separately
+dataDir: "content"
 
-# Models for editable content
+# Content models for Visual Editor
 models:
-  - name: Page
-    type: page
-    urlPath: "/{slug}"
-    filePath: "app/{slug}/page.tsx"
+  # Hero Section Content
+  - name: HeroContent
+    type: data
+    filePath: "content/hero.json"
+    fields:
+      - name: headline1
+        type: string
+        label: "Headline 1"
+      - name: headline2
+        type: string
+        label: "Headline 2"
+      - name: subtitle
+        type: string
+        label: "Subtitle"
+      - name: description
+        type: text
+        label: "Description"
+      - name: heroImage
+        type: image
+        label: "Hero Image"
+
+  # CoCreators Section Content
+  - name: CoCreatorsContent
+    type: data
+    filePath: "content/cocreators.json"
     fields:
       - name: title
         type: string
-        label: Title
-      - name: content
-        type: markdown
-        label: Content
+        label: "Section Title"
+      - name: subtitle
+        type: string
+        label: "Section Subtitle"
+      - name: cocreators
+        type: list
+        label: "CoCreators"
+        items:
+          type: object
+          fields:
+            - name: id
+              type: string
+              label: "ID"
+            - name: name
+              type: string
+              label: "Name"
+            - name: image
+              type: image
+              label: "Image"
+            - name: bio
+              type: text
+              label: "Bio"
+            - name: link
+              type: string
+              label: "Link"
+      - name: cta
+        type: object
+        label: "Call to Action"
+        fields:
+          - name: title
+            type: string
+            label: "CTA Title"
+          - name: description
+            type: string
+            label: "CTA Description"
+          - name: buttonText
+            type: string
+            label: "Button Text"
 
-# Component mapping (optional - helps Visual Editor understand your components)
-# You can add more component mappings as needed
+  # Gallery Section Content
+  - name: GalleryContent
+    type: data
+    filePath: "content/gallery.json"
+    fields:
+      - name: title
+        type: string
+        label: "Gallery Title"
+      - name: subtitle
+        type: string
+        label: "Gallery Subtitle"
+      - name: featuredArtist
+        type: object
+        label: "Featured Artist"
+        fields:
+          - name: name
+            type: string
+            label: "Artist Name"
+          - name: title
+            type: string
+            label: "Artist Title"
+          - name: image
+            type: image
+            label: "Artist Image"
+          - name: bio
+            type: text
+            label: "Artist Bio"
+          - name: description
+            type: text
+            label: "Artist Description"
+          - name: buttonText
+            type: string
+            label: "Button Text"
+      - name: artworks
+        type: list
+        label: "Artworks"
+        items:
+          type: object
+          fields:
+            - name: id
+              type: number
+              label: "ID"
+            - name: title
+              type: string
+              label: "Title"
+            - name: image
+              type: image
+              label: "Image"
+            - name: artist
+              type: string
+              label: "Artist"
+      - name: comingSoon
+        type: object
+        label: "Coming Soon Message"
+        fields:
+          - name: title
+            type: string
+            label: "Title"
+          - name: description
+            type: string
+            label: "Description"
 
+# Component mappings (helps Visual Editor understand your React components)
+components:
+  - name: Hero
+    type: page
+    filePath: "components/Hero.tsx"
+    fields:
+      - name: heroContent
+        type: reference
+        models: ["HeroContent"]
+
+  - name: CoCreators
+    type: page
+    filePath: "components/CoCreators.tsx"
+    fields:
+      - name: cocreatorsData
+        type: reference
+        models: ["CoCreatorsContent"]
+
+  - name: Gallery
+    type: page
+    filePath: "components/Gallery.tsx"
+    fields:
+      - name: galleryData
+        type: reference
+        models: ["GalleryContent"]

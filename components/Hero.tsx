@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import heroData from "@/content/hero.json";
 
 interface HeroContent {
   headline1: string;
@@ -16,19 +17,18 @@ export default function Hero() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
   
-  const [heroContent, setHeroContent] = useState<HeroContent>({
-    headline1: 'Every image has a story.',
-    headline2: 'Embedded within is a treasure.',
-    subtitle: 'Where soul-stirring art and images become a living portal.',
-    description: 'Give a gift that will never be forgotten—even if that gift is for you.\nUpload a photo or choose from our gallery and layer in video, music, or time-released messages.',
-  });
+  // Use hero content from JSON file (editable via Visual Editor)
+  const [heroContent, setHeroContent] = useState<HeroContent>(heroData);
 
-  // Fetch hero content from WordPress
+  // Fetch hero content from WordPress (fallback if API is available)
   useEffect(() => {
     fetch('/api/hero-content')
       .then(res => res.json())
       .then(data => setHeroContent(data))
-      .catch(err => console.error('Error fetching hero content:', err));
+      .catch(() => {
+        // Fallback to JSON file content if API fails
+        setHeroContent(heroData);
+      });
   }, []);
 
   // Generate QR code when images are selected
@@ -255,7 +255,7 @@ export default function Hero() {
             ) : (
               <div className="aspect-square bg-gradient-to-br from-brand-light/50 to-brand-medium/30 border-2 border-brand-dark/10 flex items-center justify-center overflow-hidden rounded-lg">
                 <img 
-                  src="/images/tAE_Holiday_Hero.png" 
+                  src={heroData.heroImage || "/images/tAE_Holiday_Hero.png"} 
                   alt="TheAE Hero" 
                   className="w-full h-full object-cover"
                 />

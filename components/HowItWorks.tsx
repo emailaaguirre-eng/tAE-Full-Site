@@ -20,39 +20,12 @@ export default function HowItWorks() {
             {/* Option 1: Upload Your Image */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
               <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                {/* Design Editor Preview - Show multiple images in a grid */}
-                <div className="absolute inset-0 grid grid-cols-2 gap-2 p-2">
-                  <div className="relative rounded overflow-hidden">
-                    <Image
-                      src="/images/uploadyourprint.png"
-                      alt="Design editor preview 1"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="relative rounded overflow-hidden">
-                    <Image
-                      src="/images/doginthepark.png"
-                      alt="Design editor preview 2"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="relative rounded overflow-hidden">
-                    <Image
-                      src="/images/forweddings.jpeg"
-                      alt="Design editor preview 3"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="relative rounded overflow-hidden bg-brand-light flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <div className="text-4xl mb-2">+</div>
-                      <div className="text-sm text-brand-dark">Upload</div>
-                    </div>
-                  </div>
-                </div>
+                <Image
+                  src="/images/design-editor-screenshot.jpg"
+                  alt="Design Editor - Upload Your Image"
+                  fill
+                  className="object-cover"
+                />
                 {/* Overlay with design tools icon */}
                 <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg">
                   <div className="flex items-center gap-2">
@@ -115,7 +88,7 @@ export default function HowItWorks() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
               <Image
-                src="/images/uploadyourprint.png"
+                src="/images/upload-media-screenshot.jpg"
                 alt="Upload your media"
                 fill
                 className="object-cover"
@@ -139,7 +112,7 @@ export default function HowItWorks() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
               <Image
-                src="/images/chair-and-artwork.jpg"
+                src="/images/send-gift-boxes.jpg"
                 alt="Send the gift"
                 fill
                 className="object-cover"

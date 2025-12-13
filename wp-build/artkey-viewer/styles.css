@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-alt: #ecece9;
+  --accent: #353535;
+  --text: #000000;
+}
+
+body {
+  font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-alt);
+}
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.card {
+  background: var(--bg-primary);
+  border: 1px solid #e2e2e0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-light {
+  background: var(--bg-primary);
+  color: var(--accent);
+  border: 1px solid #d8d8d6;
+}
+

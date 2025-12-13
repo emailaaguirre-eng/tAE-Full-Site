@@ -6,29 +6,46 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:wordpress": "webpack --config webpack.wordpress.config.js --mode production",
+    "build:wordpress:dev": "webpack --config webpack.wordpress.config.js --mode development --watch",
+    "build:wordpress:artkey": "webpack --config webpack.wordpress.config.js --mode production --entry ./wp-build/artkey-editor/index.js",
+    "build:wordpress:design": "webpack --config webpack.wordpress.config.js --mode production --entry ./wp-build/design-editor/index.js"
   },
   "dependencies": {
+    "@next/eslint-plugin-next": "^15.5.9",
     "@types/fabric": "^5.3.10",
     "@types/qrcode": "^1.5.6",
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
     "fabric": "^6.9.0",
     "lucide-react": "^0.556.0",
-    "next": "^14.2.18",
+    "next": "^15.5.9",
     "next-auth": "^5.0.0-beta.30",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
     "@types/node": "^22.9.3",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.18",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.5.9",
+    "html-webpack-plugin": "^5.6.5",
+    "mini-css-extract-plugin": "^2.9.4",
     "postcss": "^8.4.49",
+    "postcss-loader": "^8.2.0",
+    "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.15",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "webpack": "^5.103.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   }
 }

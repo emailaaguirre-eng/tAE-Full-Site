@@ -112,7 +112,7 @@ export default function HowItWorks() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
               <Image
-                src="/images/chair-and-artwork.jpg"
+                src="/images/send-gift-boxes.jpg"
                 alt="Send the gift"
                 fill
                 className="object-cover"

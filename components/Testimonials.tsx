@@ -62,7 +62,8 @@ export default function Testimonials() {
                   src={testimonial.image}
                   alt={testimonial.name}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-125"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
+                  style={{ objectPosition: 'center' }}
                 />
               </div>
               

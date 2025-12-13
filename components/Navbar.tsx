@@ -13,7 +13,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0">
             <a href="#home" className="text-xl md:text-2xl font-bold text-brand-dark font-playfair">
-              The Artful Experience
+              TheAE
             </a>
           </div>
 
@@ -22,41 +22,35 @@ export default function Navbar() {
             <div className="ml-10 flex items-baseline space-x-6">
               <a
                 href="#home"
-                className="text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-sm font-medium font-playfair"
+                className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
               >
                 Home
               </a>
               <a
                 href="#about"
-                className="text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-sm font-medium font-playfair"
+                className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
               >
                 About Us
               </a>
               <a
                 href="#cocreators"
-                className="text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-sm font-medium font-playfair"
+                className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
               >
                 CoCreators
               </a>
               <a
                 href="#products"
-                className="text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-sm font-medium font-playfair"
+                className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
               >
                 Product
               </a>
               <a
-                href="#commissioned"
-                className="text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-sm font-medium font-playfair"
-              >
-                Commissioned Art
-              </a>
-              <a
                 href="#contact"
-                className="text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-sm font-medium font-playfair"
+                className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
               >
                 Contact Us
               </a>
-              <button className="bg-brand-medium text-white hover:bg-brand-dark transition-colors px-6 py-2 rounded-full text-sm font-medium font-playfair flex items-center gap-2">
+              <button className="bg-green-600 text-white hover:bg-green-700 transition-colors px-6 py-2 rounded-full text-sm font-medium font-playfair flex items-center gap-2">
                 🛒 Cart ({getItemCount()})
               </button>
             </div>
@@ -64,7 +58,7 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-3">
-            <button className="text-brand-medium text-xl">
+            <button className="text-green-600 text-xl">
               🛒
             </button>
             <button
@@ -104,42 +98,35 @@ export default function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a
               href="#home"
-              className="block text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-base font-medium font-playfair"
+              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
             >
               Home
             </a>
             <a
               href="#about"
-              className="block text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-base font-medium font-playfair"
+              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
             >
               About Us
             </a>
             <a
               href="#cocreators"
-              className="block text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-base font-medium font-playfair"
+              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
             >
               CoCreators
             </a>
             <a
               href="#products"
-              className="block text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-base font-medium font-playfair"
+              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
             >
               Product
             </a>
             <a
-              href="#commissioned"
-              className="block text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-base font-medium font-playfair"
-              onClick={() => setIsOpen(false)}
-            >
-              Commissioned Art
-            </a>
-            <a
               href="#contact"
-              className="block text-brand-darkest hover:text-brand-medium transition-colors px-3 py-2 text-base font-medium font-playfair"
+              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
             >
               Contact Us

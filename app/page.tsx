@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import VideoSection from "@/components/VideoSection";
+import GiftIdeas from "@/components/GiftIdeas";
 import AboutUs from "@/components/AboutUs";
 import CoCreators from "@/components/CoCreators";
 import ProductCategories from "@/components/ProductCategories";
@@ -14,11 +15,14 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
 export default function Home() {
+  // Updated: Section backgrounds now alternate between #ecece9 and #ffffff
   return (
     <main className="min-h-screen bg-brand-lightest">
       <Navbar />
       <Hero />
       <VideoSection />
+      <GiftIdeas />
+      <HowItWorks />
       <AboutUs />
       <CoCreators />
       <ProductCategories />
@@ -26,7 +30,6 @@ export default function Home() {
       <PrintsSection />
       <FeaturedProducts />
       <CommissionedArt />
-      <HowItWorks />
       <Testimonials />
       <Contact />
       <Footer />

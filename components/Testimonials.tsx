@@ -1,163 +1,124 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 
 export default function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      location: "New York, NY",
-      rating: 5,
-      text: "Absolutely love my photo book! The quality is outstanding and the design process was so easy. I've already ordered three more for family gifts!",
-      product: "Premium Photo Book",
-      image: "👩‍💼"
+      name: "River",
+      location: "Madinah's Living Farmacy",
+      text: "There was an image of me where I felt totally empowered. I uploaded it with my intentions and music—now it's living imagery I use forever.",
+      image: "/images/river-1.jpg"
     },
     {
-      name: "Michael Chen",
-      location: "San Francisco, CA",
-      rating: 5,
-      text: "The holiday cards turned out perfect! Everyone at our party was asking where we got them. The print quality is amazing and shipping was super fast.",
-      product: "Holiday Cards",
-      image: "👨‍💻"
+      name: "Morgan",
+      location: "Rio de Janeiro",
+      text: "Rio de Janeiro has a special place in my heart. When I visited Ipanema Beach in Rio, it captivated me and made me feel alive. I wanted to memorialize this special moment, so I uploaded my picture to theAE. My image was artfully enhanced by world renowned artist, Deanna Lankin, and now I can relive that memory every time I see it. I also enjoyed the interactivity of the art key, being able to preview Deanna's other works, suggested play list and other fun things like the mediative ideas and images. It's an image that has been captured for a lifetime.",
+      image: "/images/morgantestimonial.jpeg"
     },
     {
-      name: "Emily Rodriguez",
-      location: "Austin, TX",
-      rating: 5,
-      text: "I ordered a canvas print for my living room and it's stunning! The colors are vibrant and it arrived perfectly packaged. Highly recommend!",
-      product: "Canvas Wall Print",
-      image: "👩‍🎨"
+      name: "Grant A",
+      location: "Russ Lyon's Sotheby's International",
+      text: "I wanted memorable gifts for my real estate clients. The art was amazing and the Art Keys let me deliver time-released messages and e-gift cards—perfect for VIPs. The customization options and the ability to add personalized content made each gift truly special.",
+      image: "/images/grantatestimonial.jpeg"
     },
     {
-      name: "David Thompson",
-      location: "Seattle, WA",
-      rating: 5,
-      text: "Made a custom calendar with family photos and it's the best gift I've ever given. My parents loved it! Will definitely be ordering again next year.",
-      product: "Photo Calendar",
-      image: "👨‍🏫"
+      name: "Connie Upham",
+      location: "Broker at Harcourts The Garner Group Real Estate, Bend, Oregon",
+      text: "The Artful Experience transforms a simple image into a gift that feels truly meaningful and made especially for your client. The ordering process is simple and seamless, yet delivers remarkable impact - thoughtful, creative, entirely unique, and sure to leave a lasting impression. The accompanying Spotify playlist is the perfect finishing touch.",
+      image: "/images/connietestimonial.png"
     },
     {
-      name: "Jennifer Lee",
-      location: "Boston, MA",
-      rating: 5,
-      text: "The photo mugs are adorable and great quality! I made a set for my team at work and everyone was thrilled. Perfect for personalized gifts.",
-      product: "Photo Mug Set",
-      image: "👩‍⚕️"
-    },
-    {
-      name: "Robert Martinez",
-      location: "Miami, FL",
-      rating: 5,
-      text: "Ordered prints for our wedding and they exceeded expectations. The colors are true to life and the finish is professional grade. A+ service!",
-      product: "Wedding Prints",
-      image: "👨‍✈️"
+      name: "Mary H",
+      location: "Family Keepsake",
+      text: "I wanted to capture a special moment of time with my daughter. I found the perfect picture of us on my iPhone, uploaded the image to theAE site, and described the feeling that I was after. When I received the art in the mail, it was better than I had imagined. I now have something that symbolizes that special moment of time with my daughter that I will cherish forever.",
+      image: "/images/maryhtestimonial.jpeg"
     },
   ];
 
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
   return (
-    <section id="testimonials" className="py-20 bg-white">
+    <section id="testimonials" className="py-20" style={{ backgroundColor: '#ecece9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
-            What Our Friends & Family Say
+            What Our Clients & Friends Say
           </h2>
           <div className="w-24 h-1 bg-brand-medium mx-auto mb-4"></div>
           <p className="text-lg text-brand-darkest max-w-2xl mx-auto">
-            Hear from the people who mean the most to us
+            Real stories from people who have experienced the magic of personalized art
           </p>
         </div>
 
-        {/* Main Featured Testimonial */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="bg-gradient-to-br from-brand-lightest to-brand-light rounded-2xl shadow-2xl p-8 md:p-12">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="text-6xl">{testimonials[currentIndex].image}</div>
-              <div>
-                <h3 className="text-2xl font-bold text-brand-darkest">
-                  {testimonials[currentIndex].name}
-                </h3>
-                <p className="text-brand-darkest">{testimonials[currentIndex].location}</p>
-                <div className="flex gap-1 mt-2">
-                  {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400 text-xl">★</span>
+        {/* Testimonials Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index} 
+              className="group bg-white rounded-2xl shadow-lg overflow-visible hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:-translate-y-4 relative z-0 flex flex-col"
+            >
+              {/* Image */}
+              <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden rounded-t-2xl">
+                <Image
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-125"
+                />
+              </div>
+              
+              {/* Content - expands on hover */}
+              <div className="p-6 transition-all duration-500 group-hover:p-8 flex-1 flex flex-col">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-brand-darkest mb-1 group-hover:text-2xl transition-all duration-500">
+                    {testimonial.name}
+                  </h3>
+                  <p className="text-sm text-brand-dark group-hover:text-base transition-all duration-500">
+                    {testimonial.location}
+                  </p>
+                </div>
+                
+                <div className="flex gap-1 mb-4 group-hover:mb-6 transition-all duration-500">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-lg group-hover:text-xl transition-all duration-500">★</span>
                   ))}
                 </div>
+                
+                <p className="text-brand-darkest leading-relaxed italic text-sm group-hover:text-base group-hover:leading-loose transition-all duration-500 flex-1">
+                  &quot;{testimonial.text}&quot;
+                </p>
               </div>
+              
+              {/* Hover overlay effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-darkest/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>
             </div>
-            <p className="text-lg text-brand-darkest mb-4 leading-relaxed italic">
-              &quot;{testimonials[currentIndex].text}&quot;
-            </p>
-            <div className="text-brand-medium font-semibold">
-              Product: {testimonials[currentIndex].product}
-            </div>
-
-            {/* Navigation */}
-            <div className="flex justify-center gap-4 mt-8">
-              <button
-                onClick={prevTestimonial}
-                className="bg-brand-dark text-white w-12 h-12 rounded-full hover:bg-brand-darkest transition-colors flex items-center justify-center text-xl"
-              >
-                ←
-              </button>
-              <div className="flex items-center gap-2">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentIndex(index)}
-                    className={`w-3 h-3 rounded-full transition-all ${
-                      index === currentIndex
-                        ? "bg-brand-dark w-8"
-                        : "bg-brand-medium hover:bg-brand-dark"
-                    }`}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={nextTestimonial}
-                className="bg-brand-dark text-white w-12 h-12 rounded-full hover:bg-brand-darkest transition-colors flex items-center justify-center text-xl"
-              >
-                →
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Stats */}
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="text-center bg-brand-lightest rounded-xl p-6">
+        {/* Stats Section */}
+        <div className="grid md:grid-cols-4 gap-6">
+          <div className="text-center bg-white rounded-xl p-6 shadow-md">
             <div className="text-4xl font-bold text-brand-dark mb-2">4.9/5</div>
-            <div className="text-brand-darkest font-semibold">Average Rating</div>
+            <div className="text-brand-darkest font-semibold text-sm">Average Rating</div>
             <div className="flex justify-center gap-1 mt-2">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-yellow-400">★</span>
+                <span key={i} className="text-yellow-400 text-sm">★</span>
               ))}
             </div>
           </div>
-          <div className="text-center bg-brand-lightest rounded-xl p-6">
+          <div className="text-center bg-white rounded-xl p-6 shadow-md">
             <div className="text-4xl font-bold text-brand-dark mb-2">50K+</div>
-            <div className="text-brand-darkest font-semibold">Happy Customers</div>
+            <div className="text-brand-darkest font-semibold text-sm">Happy Customers</div>
           </div>
-          <div className="text-center bg-brand-lightest rounded-xl p-6">
+          <div className="text-center bg-white rounded-xl p-6 shadow-md">
             <div className="text-4xl font-bold text-brand-dark mb-2">100K+</div>
-            <div className="text-brand-darkest font-semibold">Products Created</div>
+            <div className="text-brand-darkest font-semibold text-sm">Products Created</div>
           </div>
-          <div className="text-center bg-brand-lightest rounded-xl p-6">
+          <div className="text-center bg-white rounded-xl p-6 shadow-md">
             <div className="text-4xl font-bold text-brand-dark mb-2">99%</div>
-            <div className="text-brand-darkest font-semibold">Would Recommend</div>
+            <div className="text-brand-darkest font-semibold text-sm">Would Recommend</div>
           </div>
         </div>
       </div>
     </section>
   );
 }
-

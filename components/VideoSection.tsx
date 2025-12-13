@@ -24,80 +24,104 @@ export default function VideoSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-brand-lightest to-white">
+    <section className="py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
-            See How It Works
+          <h1 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
+            Welcome to The Artful Experience Gallery and Upload Center
+          </h1>
+          <h2 className="text-2xl md:text-3xl font-normal text-brand-dark mb-4">
+            Where soul-stirring art and images become a living portal.
           </h2>
           <div className="w-24 h-1 bg-brand-medium mx-auto mb-4"></div>
-          <p className="text-lg text-brand-darkest max-w-2xl mx-auto">
-            Watch our videos to learn how The Artful Experience makes creating personalized products simple and fun
-          </p>
-        </div>
-
-        {/* Main Video Player */}
-        <div className="max-w-5xl mx-auto mb-12">
-          <div className="bg-gradient-to-br from-brand-dark to-brand-darkest rounded-2xl shadow-2xl overflow-hidden">
-            {/* Video Player Container */}
-            <div className="relative aspect-video bg-black">
-              {/* Placeholder - Replace with actual video element */}
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-medium/50 to-brand-dark/50">
-                <div className="text-center text-white">
-                  <div className="text-8xl mb-4">{videos[activeVideo].thumbnail}</div>
-                  <p className="text-xl mb-4">Video Player</p>
-                  <p className="text-sm opacity-75">Replace with actual video embed</p>
-                  {/* 
-                    When you provide the video files, this will be replaced with:
-                    <video controls className="w-full h-full">
-                      <source src={videos[activeVideo].videoUrl} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  */}
-                </div>
-              </div>
-            </div>
-
-            {/* Video Info */}
-            <div className="p-8 bg-white">
-              <h3 className="text-2xl font-bold text-brand-dark mb-3">
-                {videos[activeVideo].title}
-              </h3>
-              <p className="text-brand-darkest leading-relaxed">
-                {videos[activeVideo].description}
-              </p>
-            </div>
+          <div className="text-lg text-brand-darkest max-w-2xl mx-auto space-y-4 text-left">
+            <p>
+              Give a gift that will never be forgotten, even if that gift is for you.
+            </p>
+            <p>
+              Discover our &quot;Art Key&quot; technology that allows you to upload videos, music and time-rleeased gift certificates that are embedded in the art.
+            </p>
+            <p>
+              When the giftee scans the &quot;Art Key/QR Code,&quot; they will be surprised by the unique message, video, song, or gift certificate you have uploaded for them.
+            </p>
           </div>
         </div>
 
-        {/* Video Selection Buttons */}
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
-          {videos.map((video, index) => (
-            <button
-              key={video.id}
-              onClick={() => setActiveVideo(index)}
-              className={`p-6 rounded-xl border-2 transition-all text-left ${
-                activeVideo === index
-                  ? "border-brand-dark bg-brand-light shadow-xl scale-105"
-                  : "border-brand-light bg-white hover:border-brand-medium hover:shadow-lg"
-              }`}
-            >
-              <div className="flex items-center gap-4 mb-3">
-                <div className="text-5xl">{video.thumbnail}</div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-lg text-brand-darkest mb-1">
-                    {video.title}
-                  </h4>
-                  <div className="text-brand-medium text-sm font-semibold">
-                    {activeVideo === index ? "▶ Now Playing" : "▷ Click to Play"}
-                  </div>
-                </div>
+        {/* Two Purchase Options */}
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8 mb-12">
+          {/* Left: Upload Your Image */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="relative">
+              <div className="absolute top-4 right-4 z-10">
+                <button className="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 text-gray-700 font-semibold text-sm">
+                  Upload Your Image
+                </button>
               </div>
-              <p className="text-brand-darkest text-sm">
-                {video.description}
+              <div className="aspect-[4/3] bg-gray-100 relative">
+                <img 
+                  src="/images/uploadyourprint.png" 
+                  alt="Upload your image" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="p-6 space-y-4">
+              <ul className="space-y-2 text-brand-darkest">
+                <li className="flex items-start gap-2">
+                  <span className="text-brand-medium">•</span>
+                  <span>Just upload a photo to create your own art print</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brand-medium">•</span>
+                  <span>Choose from one of our sizes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brand-medium">•</span>
+                  <span>Available on paper or canvas</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brand-medium">•</span>
+                  <span>Select unframed, or choose from our framing options</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brand-medium">•</span>
+                  <span>Follow our prompts to upload your own media</span>
+                </li>
+              </ul>
+              <p className="text-sm text-brand-dark italic">
+                You will have editing options available with our design tool.
               </p>
-            </button>
-          ))}
+            </div>
+          </div>
+
+          {/* Right: Buy an Existing Print or Painting */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="relative">
+              <div className="absolute top-4 right-4 z-10">
+                <button className="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 text-gray-700 font-semibold text-sm">
+                  Buy an Existing Print or Painting
+                </button>
+              </div>
+              <div className="aspect-[4/3] bg-gray-100 relative">
+                <img 
+                  src="/images/buyanexistingprint.jpg" 
+                  alt="Gallery art" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="p-6 space-y-4">
+              <p className="text-brand-darkest">
+                Or select art and photography from our gallery of internationally recognized artists.
+              </p>
+              <p className="text-brand-darkest">
+                All paintings, photography, and reproductions include the artist&apos;s narrative, background, and inspiration behind the piece.
+              </p>
+              <p className="text-brand-darkest italic">
+                This option also allows for the upload of your own media.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Call to Action */}

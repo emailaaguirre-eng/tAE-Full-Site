@@ -18,7 +18,7 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "The Artful Experience - Every Image Has a Story",
+  title: "TheAE - Every Image Has a Story",
   description: "Every image has a story. Embedded within is a treasure. Create custom photo products, personalized art, and unique gifts.",
 };
 

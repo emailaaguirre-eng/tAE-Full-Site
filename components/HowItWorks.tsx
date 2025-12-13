@@ -1,33 +1,8 @@
-export default function HowItWorks() {
-  const steps = [
-    {
-      number: "1",
-      title: "Choose Your Product",
-      description: "Browse our extensive collection of photo books, cards, prints, and gifts. Select the perfect item for your needs.",
-      icon: "🎯",
-    },
-    {
-      number: "2",
-      title: "Upload Your Photos",
-      description: "Easily upload photos from your computer, phone, or social media. Our smart editor makes arrangement simple.",
-      icon: "📤",
-    },
-    {
-      number: "3",
-      title: "Customize & Design",
-      description: "Use our intuitive design tools to personalize your product. Add text, filters, and creative layouts.",
-      icon: "🎨",
-    },
-    {
-      number: "4",
-      title: "Review & Order",
-      description: "Preview your creation, make final adjustments, and place your order. We'll handle the rest!",
-      icon: "✅",
-    },
-  ];
+import Image from "next/image";
 
+export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-20 bg-gradient-to-br from-brand-lightest to-white">
+    <section id="how-it-works" className="py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
@@ -35,64 +10,190 @@ export default function HowItWorks() {
           </h2>
           <div className="w-24 h-1 bg-brand-medium mx-auto mb-4"></div>
           <p className="text-lg text-brand-darkest max-w-2xl mx-auto">
-            Creating your personalized products is easy! Follow these simple steps:
+            Create personalized art with embedded memories in just a few simple steps
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
-            <div key={index} className="relative">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 text-center h-full">
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-brand-dark text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg">
-                  {step.number}
+        {/* Step 1 - Two Options */}
+        <div className="mb-16">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Option 1: Upload Your Image */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+              <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
+                {/* Design Editor Preview - Show multiple images in a grid */}
+                <div className="absolute inset-0 grid grid-cols-2 gap-2 p-2">
+                  <div className="relative rounded overflow-hidden">
+                    <Image
+                      src="/images/uploadyourprint.png"
+                      alt="Design editor preview 1"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative rounded overflow-hidden">
+                    <Image
+                      src="/images/doginthepark.png"
+                      alt="Design editor preview 2"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative rounded overflow-hidden">
+                    <Image
+                      src="/images/forweddings.jpeg"
+                      alt="Design editor preview 3"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative rounded overflow-hidden bg-brand-light flex items-center justify-center">
+                    <div className="text-center p-4">
+                      <div className="text-4xl mb-2">+</div>
+                      <div className="text-sm text-brand-dark">Upload</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-6xl mb-6 mt-4">{step.icon}</div>
-                <h3 className="text-xl font-bold text-brand-darkest mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-brand-darkest leading-relaxed">
-                  {step.description}
+                {/* Overlay with design tools icon */}
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-brand-medium rounded flex items-center justify-center">
+                      <span className="text-white text-sm">✎</span>
+                    </div>
+                    <span className="text-xs font-semibold text-brand-darkest">Design Editor</span>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+                  1
+                </div>
+                <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                  Upload Your Image
+                </h4>
+                <p className="text-brand-darkest">
+                  Personalize your art with a message. Upload your own photo and transform it into a beautiful piece of art using our design editor.
                 </p>
               </div>
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-brand-medium text-3xl">
-                  →
-                </div>
-              )}
             </div>
-          ))}
-        </div>
 
-        <div className="mt-16 bg-white rounded-2xl shadow-xl p-8 md:p-12">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-4xl mb-3">⚡</div>
-              <h4 className="font-bold text-brand-dark text-lg mb-2">Fast Shipping</h4>
-              <p className="text-brand-darkest">Get your order in 3-5 business days</p>
+            {/* OR Divider */}
+            <div className="flex items-center justify-center">
+              <div className="bg-brand-medium text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-xl shadow-lg">
+                OR
+              </div>
             </div>
-            <div>
-              <div className="text-4xl mb-3">💯</div>
-              <h4 className="font-bold text-brand-dark text-lg mb-2">Quality Guarantee</h4>
-              <p className="text-brand-darkest">100% satisfaction or your money back</p>
-            </div>
-            <div>
-              <div className="text-4xl mb-3">🎨</div>
-              <h4 className="font-bold text-brand-dark text-lg mb-2">Free Design Tools</h4>
-              <p className="text-brand-darkest">Professional design tools at no extra cost</p>
+
+            {/* Option 2: Choose from Gallery */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+              <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
+                <Image
+                  src="/images/buyanexistingprint.jpg"
+                  alt="Choose art from gallery"
+                  fill
+                  className="object-cover"
+                  style={{ top: 0 }}
+                />
+              </div>
+              <div className="p-6">
+                <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+                  1
+                </div>
+                <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                  Choose Art from Our Online Gallery
+                </h4>
+                <p className="text-brand-darkest">
+                  Explore our unique art collection. Select from curated pieces by internationally recognized artists.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="text-center mt-12">
+        {/* Steps 2-4 */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Step 2 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+            <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
+              <Image
+                src="/images/uploadyourprint.png"
+                alt="Upload your media"
+                fill
+                className="object-cover"
+                style={{ top: 0 }}
+              />
+            </div>
+            <div className="p-6">
+              <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+                2
+              </div>
+              <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                Upload Your Media
+              </h4>
+              <p className="text-brand-darkest">
+                Images, videos, music, gift certificate, or a time-released message. Add all the personal touches that make your gift unique.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+            <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
+              <Image
+                src="/images/chair-and-artwork.jpg"
+                alt="Send the gift"
+                fill
+                className="object-cover"
+                style={{ top: 0 }}
+              />
+            </div>
+            <div className="p-6">
+              <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+                3
+              </div>
+              <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                Send the Gift
+              </h4>
+              <p className="text-brand-darkest">
+                We&apos;ll carefully package and ship your personalized art. Your gift will arrive ready to be displayed and enjoyed.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 4 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+            <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
+              <Image
+                src="/images/couch.jpg"
+                alt="Find the perfect place"
+                fill
+                className="object-cover"
+                style={{ top: 0 }}
+              />
+            </div>
+            <div className="p-6">
+              <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+                4
+              </div>
+              <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                Interact with the Art Key
+              </h4>
+              <p className="text-brand-darkest">
+                Find the perfect place for your art and interact with the key. Scan the discreetly placed QR code to unlock all the personalized content.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-16">
           <a
-            href="#products"
+            href="#customize"
             className="inline-block bg-brand-medium text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-brand-dark transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
-            Start Creating Now
+            Start Creating Your Art
           </a>
         </div>
       </div>
     </section>
   );
 }
-

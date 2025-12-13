@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import crypto from 'crypto';
+import { artKeyStore } from '@/lib/artKeyStore';
 
 /**
  * ArtKey Save API (Legacy - redirects to new storage system)

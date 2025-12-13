@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 /**
  * ArtKey Shareable URL Page
  * Displays ArtKey at /artkey/{token}
+ * Also supports /artkey/{id} for backward compatibility
  */
 export default async function ArtKeyViewPage({
   params,
@@ -11,22 +12,32 @@ export default async function ArtKeyViewPage({
 }) {
   const { token } = await params;
 
-  // Fetch ArtKey data
+  // Fetch ArtKey data - try token first, then fall back to id
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
                  process.env.VERCEL_URL || 
+                 process.env.NEXT_PUBLIC_NETLIFY_URL ||
                  'http://localhost:3000';
   
   try {
-    const response = await fetch(`${baseUrl}/api/artkey/store?token=${token}`, {
-      cache: 'no-store', // Always fetch fresh data
+    // First try token-based lookup
+    let response = await fetch(`${baseUrl}/api/artkey/store?token=${token}`, {
+      cache: 'no-store',
     });
+
+    // If token lookup fails, try id-based lookup (backward compatibility)
+    if (!response.ok) {
+      response = await fetch(`${baseUrl}/api/artkey/${token}`, {
+        cache: 'no-store',
+      });
+    }
 
     if (!response.ok) {
       notFound();
     }
 
     const data = await response.json();
-    const artKey = data.artKey;
+    // Handle both response formats
+    const artKey = data.artKey || data;
 
     return (
       <div className="min-h-screen bg-gray-50">

@@ -1,12 +1,51 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import galleryData from "@/content/gallery.json";
 
+interface WooCommerceProduct {
+  id: number;
+  name: string;
+  price: string;
+  regular_price?: string;
+  sale_price?: string;
+  images?: Array<{ src: string; alt: string }>;
+  description?: string;
+  short_description?: string;
+  average_rating?: string;
+  rating_count?: number;
+  on_sale?: boolean;
+  permalink?: string;
+}
+
 export default function Gallery() {
-  const { title, subtitle, featuredArtist, artworks, comingSoon } = galleryData;
+  const { title, subtitle, featuredArtist, comingSoon } = galleryData;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [wooProducts, setWooProducts] = useState<WooCommerceProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products from WooCommerce API (excluding collage)
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products?limit=100');
+        if (response.ok) {
+          const data = await response.json();
+          // Filter out products with "collage" in the name (case-insensitive)
+          const filteredProducts = data.filter((product: WooCommerceProduct) => 
+            !product.name.toLowerCase().includes('collage')
+          );
+          setWooProducts(filteredProducts);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <section className="py-20" style={{ backgroundColor: '#ecece9' }}>
@@ -67,41 +106,68 @@ export default function Gallery() {
           <h3 className="text-2xl md:text-3xl font-bold text-brand-darkest mb-8 text-center">
             Artwork by {featuredArtist.name}
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {artworks.map((artwork) => (
-              <div key={artwork.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group">
-                <div className="relative aspect-square overflow-hidden">
-                  <Image
-                    src={artwork.image}
-                    alt={artwork.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <h4 className="text-xl font-bold text-brand-darkest mb-2">
-                    {artwork.title}
-                  </h4>
-                  <p className="text-brand-dark mb-4">
-                    by {artwork.artist}
-                  </p>
-                  {/* Format options */}
-                  {artwork.formats && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {artwork.formats.map((format, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-brand-lightest text-brand-darkest rounded-full text-sm">
-                          {format}
-                        </span>
-                      ))}
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-brand-dark">Loading artwork...</p>
+            </div>
+          ) : wooProducts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-brand-dark">No artwork available at this time.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {wooProducts.map((product) => {
+                const productImage = product.images && product.images.length > 0 
+                  ? product.images[0].src 
+                  : '/images/placeholder.jpg';
+                const price = product.sale_price || product.price || '0.00';
+                
+                return (
+                  <div key={product.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group">
+                    <div className="relative aspect-square overflow-hidden">
+                      <Image
+                        src={productImage}
+                        alt={product.name}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
                     </div>
-                  )}
-                  <button className="w-full bg-brand-medium text-white px-6 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all">
-                    View Details
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+                    <div className="p-6">
+                      <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                        {product.name}
+                      </h4>
+                      <p className="text-brand-dark mb-2">
+                        by {featuredArtist.name}
+                      </p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="text-lg font-bold text-brand-medium">
+                          ${price}
+                        </span>
+                        {product.on_sale && product.regular_price && (
+                          <span className="text-sm text-gray-500 line-through">
+                            ${product.regular_price}
+                          </span>
+                        )}
+                      </div>
+                      {product.short_description && (
+                        <p className="text-sm text-brand-darkest mb-4 line-clamp-2">
+                          {product.short_description}
+                        </p>
+                      )}
+                      <a 
+                        href={product.permalink || '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full bg-brand-medium text-white px-6 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all text-center"
+                      >
+                        View Details
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Coming Soon Message */}

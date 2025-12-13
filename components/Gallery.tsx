@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import galleryData from "@/content/gallery.json";
 
 export default function Gallery() {
   const { title, subtitle, featuredArtist, artworks, comingSoon } = galleryData;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <section id="gallery" className="py-20" style={{ backgroundColor: '#ecece9' }}>
@@ -47,7 +51,10 @@ export default function Gallery() {
                 <p className="text-base text-brand-dark leading-relaxed">
                   {featuredArtist.description}
                 </p>
-                <button className="mt-6 bg-brand-medium text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all shadow-lg w-fit">
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="mt-6 bg-brand-medium text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-dark transition-all shadow-lg w-fit"
+                >
                   {featuredArtist.buttonText}
                 </button>
               </div>
@@ -91,6 +98,49 @@ export default function Gallery() {
           </div>
         </div>
       </div>
+
+      {/* Deanna Lankin Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="relative h-96 md:h-[500px]">
+                <Image
+                  src="/images/deanna-lankin-artist.jpg"
+                  alt={`${featuredArtist.name} - Artist at work`}
+                  fill
+                  className="object-cover rounded-t-2xl"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="text-3xl font-bold text-brand-darkest mb-4">
+                  {featuredArtist.name}
+                </h3>
+                <p className="text-lg text-brand-darkest leading-relaxed mb-4">
+                  {featuredArtist.bio}
+                </p>
+                <p className="text-base text-brand-dark leading-relaxed">
+                  {featuredArtist.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

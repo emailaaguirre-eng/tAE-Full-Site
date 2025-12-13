@@ -5,6 +5,7 @@ import { useCart } from "@/contexts/CartContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
   const { getItemCount } = useCart();
 
   return (
@@ -26,6 +27,35 @@ export default function Navbar() {
               >
                 Home
               </a>
+              
+              {/* Shop Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setShopDropdownOpen(true)}
+                onMouseLeave={() => setShopDropdownOpen(false)}
+              >
+                <a
+                  href="#shop"
+                  className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair flex items-center gap-1"
+                >
+                  Shop
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </a>
+                {shopDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[180px] z-50">
+                    <a
+                      href="#gallery"
+                      className="block px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 transition-colors font-playfair"
+                      onClick={() => setShopDropdownOpen(false)}
+                    >
+                      TheAE Gallery
+                    </a>
+                  </div>
+                )}
+              </div>
+
               <a
                 href="#about"
                 className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
@@ -37,18 +67,6 @@ export default function Navbar() {
                 className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
               >
                 CoCreators
-              </a>
-              <a
-                href="#shop"
-                className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
-              >
-                Shop
-              </a>
-              <a
-                href="#gallery"
-                className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
-              >
-                Gallery
               </a>
               <a
                 href="#contact"

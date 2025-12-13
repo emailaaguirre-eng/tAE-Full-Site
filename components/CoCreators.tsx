@@ -25,15 +25,7 @@ export default function CoCreators() {
                   alt="Deanna Lankin"
                   fill
                   className="object-cover"
-                  onError={(e) => {
-                    // Fallback placeholder if image doesn't exist
-                    const target = e.currentTarget as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-light to-brand-medium" style={{ display: 'none' }} id="deanna-placeholder">
-                  <div className="text-7xl">👤</div>
-                </div>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-brand-darkest mb-2">

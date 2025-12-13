@@ -13,20 +13,18 @@ export default function CoCreators() {
         </div>
 
         <div className="max-w-6xl mx-auto">
-          {/* Placeholder for CoCreator profiles */}
+          {/* CoCreator profiles */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Example CoCreator Card - Replace with actual content */}
+            {/* Kimber */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all">
               <div className="bg-gradient-to-br from-brand-light to-brand-medium h-48 flex items-center justify-center">
                 <div className="text-7xl">👤</div>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-brand-darkest mb-2">
-                  {/* CoCreator Name */}
-                  Featured Artist
+                  Kimber
                 </h3>
                 <p className="text-brand-darkest mb-4">
-                  {/* CoCreator Bio */}
                   Bio and description will go here
                 </p>
                 <button className="text-brand-medium font-semibold hover:text-brand-dark transition-colors">

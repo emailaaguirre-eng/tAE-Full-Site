@@ -128,6 +128,20 @@ export default function Navbar() {
               Home
             </a>
             <a
+              href="#shop"
+              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
+              onClick={() => setIsOpen(false)}
+            >
+              Shop
+            </a>
+            <a
+              href="#gallery"
+              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 pl-6 text-base font-medium font-playfair"
+              onClick={() => setIsOpen(false)}
+            >
+              └ TheAE Gallery
+            </a>
+            <a
               href="#about"
               className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
@@ -140,20 +154,6 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               CoCreators
-            </a>
-            <a
-              href="#shop"
-              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
-              onClick={() => setIsOpen(false)}
-            >
-              Shop
-            </a>
-            <a
-              href="#gallery"
-              className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
-              onClick={() => setIsOpen(false)}
-            >
-              Gallery
             </a>
             <a
               href="#contact"

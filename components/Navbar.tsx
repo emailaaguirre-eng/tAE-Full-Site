@@ -39,10 +39,10 @@ export default function Navbar() {
                 CoCreators
               </a>
               <a
-                href="#products"
+                href="#shop"
                 className="text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-sm font-medium font-playfair"
               >
-                Product
+                Shop
               </a>
               <a
                 href="#gallery"
@@ -124,11 +124,11 @@ export default function Navbar() {
               CoCreators
             </a>
             <a
-              href="#products"
+              href="#shop"
               className="block text-blue-600 hover:text-blue-700 transition-colors px-3 py-2 text-base font-medium font-playfair"
               onClick={() => setIsOpen(false)}
             >
-              Product
+              Shop
             </a>
             <a
               href="#gallery"

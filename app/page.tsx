@@ -13,6 +13,7 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import Gallery from "@/components/Gallery";
 
 export default function Home() {
   // Updated: Section backgrounds now alternate between #ecece9 and #ffffff
@@ -25,6 +26,7 @@ export default function Home() {
       <HowItWorks />
       <AboutUs />
       <CoCreators />
+      <Gallery />
       <ProductCategories />
       <CardsSection />
       <PrintsSection />

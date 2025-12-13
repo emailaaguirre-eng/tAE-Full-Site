@@ -14,9 +14,9 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        {/* Step 1 - Two Options */}
+        {/* Step 1 - Two Options Side by Side */}
         <div className="mb-16">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-3 gap-4 items-stretch">
             {/* Option 1: Upload Your Image */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
               <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
@@ -49,7 +49,7 @@ export default function HowItWorks() {
               </div>
             </div>
 
-            {/* OR Divider */}
+            {/* OR Divider - Centered */}
             <div className="flex items-center justify-center">
               <div className="bg-brand-medium text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-xl shadow-lg">
                 OR
@@ -112,7 +112,7 @@ export default function HowItWorks() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
               <Image
-                src="/images/send-gift-boxes.jpg"
+                src="/images/chair-and-artwork.jpg"
                 alt="Send the gift"
                 fill
                 className="object-cover"

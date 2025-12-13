@@ -24,14 +24,18 @@ export default function FeaturedProducts() {
   const [wooProducts, setWooProducts] = useState<WooCommerceProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products from WordPress/WooCommerce
+  // Fetch products from WordPress/WooCommerce - only collage products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/products?limit=20');
+        const response = await fetch('/api/products?limit=100');
         if (response.ok) {
           const data = await response.json();
-          setWooProducts(data);
+          // Filter to show only products with "collage" in the name (case-insensitive)
+          const collageProducts = data.filter((product: WooCommerceProduct) => 
+            product.name.toLowerCase().includes('collage')
+          );
+          setWooProducts(collageProducts);
         }
       } catch (error) {
         console.error('Error fetching products:', error);

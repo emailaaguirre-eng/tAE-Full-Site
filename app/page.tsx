@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import WhatWeAre from "@/components/WhatWeAre";
 import VideoSection from "@/components/VideoSection";
 import GiftIdeas from "@/components/GiftIdeas";
 import AboutUs from "@/components/AboutUs";
@@ -20,6 +21,7 @@ export default function Home() {
     <main className="min-h-screen bg-brand-lightest">
       <Navbar />
       <Hero />
+      <WhatWeAre />
       <VideoSection />
       <GiftIdeas />
       <HowItWorks />

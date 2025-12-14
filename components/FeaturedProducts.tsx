@@ -247,7 +247,14 @@ export default function FeaturedProducts() {
   const transformWooProduct = (product: WooCommerceProduct) => {
     const price = product.sale_price || product.price || '0.00';
     const originalPrice = product.on_sale && product.regular_price ? product.regular_price : null;
-    const imageUrl = product.images?.[0]?.src || null;
+    
+    // Get image URL - use fallback for collage if WooCommerce doesn't have one
+    let imageUrl = product.images?.[0]?.src || null;
+    const productNameLower = product.name.toLowerCase();
+    if (!imageUrl && productNameLower.includes('collage')) {
+      imageUrl = '/images/collage-product.png';
+    }
+    
     const description = product.short_description || product.description || '';
     
     // Clean description: remove HTML tags, decode entities, preserve line breaks
@@ -292,6 +299,22 @@ export default function FeaturedProducts() {
       options: attr.options || [],
     })) || [];
     
+    // Debug logging for collage and wall art products
+    if (productNameLower.includes('collage') || productNameLower.includes('wall art')) {
+      console.log('Product data for', product.name, {
+        id: product.id,
+        name: product.name,
+        description: description,
+        cleanDescription: cleanDescription,
+        hasImage: !!imageUrl,
+        imageUrl: imageUrl,
+        variants: variants.length,
+        attributes: attributes.length,
+        price: price,
+        onSale: product.on_sale
+      });
+    }
+    
     return {
       id: product.id,
       name: product.name,
@@ -300,7 +323,7 @@ export default function FeaturedProducts() {
       image: imageUrl,
       rating: parseFloat(product.average_rating || '4.5'),
       reviews: product.rating_count || Math.floor(Math.random() * 500) + 50,
-      description: cleanDescription || 'Premium quality product',
+      description: cleanDescription || description || 'Premium quality product', // Use original if cleaned is empty
       permalink: product.permalink,
       onSale: product.on_sale || false,
       variants: variants,

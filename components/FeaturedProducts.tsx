@@ -531,7 +531,7 @@ export default function FeaturedProducts() {
                       });
                       window.location.href = `/customize?${params}`;
                     }}
-                    className="bg-brand-dark text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-brand-medium transition-colors"
+                    className="bg-brand-medium text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-brand-dark transition-colors"
                   >
                     Customize
                   </button>
@@ -558,7 +558,7 @@ export default function FeaturedProducts() {
         )}
 
         <div className="text-center mt-12">
-          <button className="bg-brand-dark text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-brand-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          <button className="bg-brand-dark text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-brand-darkest transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
             View All Products →
           </button>
         </div>

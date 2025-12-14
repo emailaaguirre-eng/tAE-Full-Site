@@ -60,15 +60,15 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Typography with more personality */}
-          <div className="space-y-4">
-            <div className="space-y-1">
-              <h1 className="text-4xl md:text-5xl font-normal text-brand-dark leading-[1.2] tracking-tight font-playfair">
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <h1 className="text-7xl md:text-9xl font-normal text-brand-dark leading-[0.9] tracking-tight font-playfair">
                 {heroContent.headline1} {heroContent.headline2}
               </h1>
             </div>
             
-            <div className="pl-2 border-l-4 border-brand-medium space-y-2">
-              <p className="text-sm md:text-base text-brand-darkest leading-relaxed font-light">
+            <div className="pl-2 border-l-4 border-brand-medium space-y-4">
+              <p className="text-lg md:text-xl text-brand-darkest leading-relaxed font-light">
                 {heroContent.subtitle.split('\n').map((line, i) => (
                   <span key={i}>
                     {line}
@@ -76,7 +76,7 @@ export default function Hero() {
                   </span>
                 ))}
               </p>
-              <p className="text-xs md:text-sm text-brand-dark leading-relaxed">
+              <p className="text-base md:text-lg text-brand-dark leading-relaxed">
                 {heroContent.description.split('\n').map((line, i) => (
                   <span key={i}>
                     {i === 0 && line.includes('ArtKey') ? (
@@ -98,7 +98,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <button
                 onClick={() => setSelectedOption("upload")}
-                className="group relative bg-brand-dark text-white px-8 py-4 text-base font-medium hover:bg-brand-medium transition-all duration-300 overflow-hidden"
+                className="group relative bg-brand-dark text-white px-8 py-4 text-base font-medium hover:bg-brand-darkest transition-all duration-300 overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,12 +126,18 @@ export default function Hero() {
           <div className="relative">
             {selectedOption === "upload" ? (
               <div className="bg-brand-lightest/95 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-brand-light animate-fade-in min-h-[500px]">
-                <h3 className="text-lg font-bold text-brand-darkest mb-6 font-playfair">Select a Photo</h3>
+                <h3 className="text-lg font-bold text-brand-darkest mb-4 font-playfair">Select Photo</h3>
                 
-                {/* Simple instruction */}
-                <p className="text-sm text-brand-darkest mb-6 font-playfair">
-                  Choose an image that you&apos;d love to share as a gift.
-                </p>
+                {/* Instructions */}
+                <div className="mb-6 p-4 bg-white/80 rounded-lg border border-brand-light">
+                  <p className="text-sm text-brand-darkest leading-relaxed font-playfair">
+                    Choose the photo that speaks to your heart&mdash;the one you&apos;d love to share as a gift. 
+                    In the Design Editor, you can create beautiful collages by adding more photos, 
+                    or enhance this single image with artistic touches. Remember, you&apos;ll also be able 
+                    to add photos to your ArtKey Portal, so select the image that truly captures 
+                    the moment you want to gift.
+                  </p>
+                </div>
                 
                 <div className="grid grid-cols-12 gap-4 h-full">
                   {/* Left: Action buttons sidebar */}
@@ -158,6 +164,7 @@ export default function Hero() {
                           // Navigate to customize page with selected image
                           const params = new URLSearchParams({
                             images: selectedImages.join(','),
+                            message: shareMessage,
                             from_hero: 'true',
                           });
                           window.location.href = `/customize?${params}`;
@@ -182,7 +189,7 @@ export default function Hero() {
                   </div>
 
                   {/* Center: Single photo placeholder or selected image */}
-                  <div className="col-span-9 space-y-3 flex flex-col">
+                  <div className="col-span-5 space-y-3 flex flex-col">
                     {selectedImages.length > 0 ? (
                       <div className="relative group flex-shrink-0">
                         <img
@@ -202,6 +209,17 @@ export default function Hero() {
                         <span className="text-brand-dark/20 text-sm font-playfair">Photo</span>
                       </div>
                     )}
+                  </div>
+
+                  {/* Right: Share message section */}
+                  <div className="col-span-4 bg-brand-lightest/60 rounded-lg p-4 space-y-4 flex flex-col">
+                    <textarea
+                      value={shareMessage}
+                      onChange={(e) => setShareMessage(e.target.value)}
+                      className="w-full bg-transparent text-brand-darkest text-sm resize-none border-none focus:outline-none font-playfair flex-1"
+                      rows={6}
+                      placeholder="I wanted to share moments with you"
+                    />
                   </div>
                 </div>
               </div>

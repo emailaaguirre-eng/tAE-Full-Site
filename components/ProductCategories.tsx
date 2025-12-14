@@ -75,7 +75,7 @@ export default function ProductCategories() {
                     </li>
                   ))}
                 </ul>
-                <button className="w-full bg-brand-dark text-white py-3 rounded-full font-semibold hover:bg-brand-medium transition-colors">
+                <button className="w-full bg-brand-medium text-white py-3 rounded-full font-semibold hover:bg-brand-dark transition-colors">
                   Shop Now
                 </button>
               </div>
@@ -88,7 +88,7 @@ export default function ProductCategories() {
             <p className="text-brand-darkest text-lg mb-4">
               Ready to begin? Upload your image or browse the gallery to start crafting your living artwork.
             </p>
-            <button className="bg-brand-dark text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-medium transition-colors">
+            <button className="bg-brand-dark text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-darkest transition-colors">
               Start Creating
             </button>
           </div>

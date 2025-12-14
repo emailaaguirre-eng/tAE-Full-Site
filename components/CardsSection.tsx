@@ -65,7 +65,7 @@ export default function CardsSection() {
                   <p className="text-brand-darkest mb-4 text-center">
                     Use the designer to customize your card
                   </p>
-                  <button className="w-full bg-brand-dark text-white py-4 rounded-full font-semibold hover:bg-brand-medium transition-all shadow-lg text-lg">
+                  <button className="w-full bg-brand-dark text-white py-4 rounded-full font-semibold hover:bg-brand-darkest transition-all shadow-lg text-lg">
                     🎨 Open ArtKey Designer
                   </button>
                   <div className="mt-4 text-sm text-brand-darkest text-center">
@@ -107,7 +107,7 @@ export default function CardsSection() {
                 >
                   🎨 Personalize with ArtKey
                 </button>
-                <button className="w-full mt-3 bg-brand-dark text-white py-4 rounded-full font-semibold hover:bg-brand-medium transition-all shadow-lg text-lg">
+                <button className="w-full mt-3 bg-brand-medium text-white py-4 rounded-full font-semibold hover:bg-brand-dark transition-all shadow-lg text-lg">
                   Add to Cart 🛒
                 </button>
               </div>

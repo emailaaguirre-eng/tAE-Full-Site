@@ -6,8 +6,8 @@ export default function Testimonials() {
   const testimonials = [
     {
       name: "River",
-      location: "Madinah's Living Farmacy",
-      text: "There was an image of me where I felt totally empowered. I uploaded it with my intentions and music—now it's living imagery I use forever.",
+      location: "River Madinah of Madinah's Living Farmacy",
+      text: "There was an image of me where I felt totally empowered, strong and playful.  I uploaded this image to theAE website along with my intentions for the new year, goals and inspirations.  What I received was totally what I had asked for and more.  I use this imagery to remind myself of that special moment and that when I am in that \"state\", nothing is impossible.  I am also able to use theAE platform to upload my \"power jams\", favorite quotes and inspirational thoughts.  It is more that artwork, it is living breathing imagery I will use forever.",
       image: "/images/river-1.jpg"
     },
     {

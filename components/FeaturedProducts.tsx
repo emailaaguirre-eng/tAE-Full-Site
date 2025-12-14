@@ -26,18 +26,21 @@ export default function FeaturedProducts() {
   const [wooProducts, setWooProducts] = useState<WooCommerceProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products from WordPress/WooCommerce - only collage products
+  // Fetch products from WordPress/WooCommerce - collage, test product, and wall art
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/products?limit=100');
         if (response.ok) {
           const data = await response.json();
-          // Filter to show only products with "collage" in the name (case-insensitive)
-          const collageProducts = data.filter((product: WooCommerceProduct) => 
-            product.name.toLowerCase().includes('collage')
-          );
-          setWooProducts(collageProducts);
+          // Filter to show collage, test product, and wall art
+          const shopProducts = data.filter((product: WooCommerceProduct) => {
+            const name = product.name.toLowerCase();
+            return name.includes('collage') || 
+                   name.includes('test product') || 
+                   name.includes('wall art');
+          });
+          setWooProducts(shopProducts);
         }
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -231,8 +234,19 @@ export default function FeaturedProducts() {
     const imageUrl = product.images?.[0]?.src || null;
     const description = product.short_description || product.description || '';
     
-    // Extract description (remove HTML tags) - show full description, not truncated
-    const cleanDescription = description.replace(/<[^>]*>/g, '');
+    // Clean description: remove HTML tags, decode entities, preserve line breaks
+    let cleanDescription = description
+      .replace(/<br\s*\/?>/gi, '\n') // Convert <br> to newlines
+      .replace(/<\/p>/gi, '\n\n') // Convert </p> to double newlines
+      .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
+      .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
+      .replace(/&amp;/g, '&') // Decode &amp;
+      .replace(/&lt;/g, '<') // Decode &lt;
+      .replace(/&gt;/g, '>') // Decode &gt;
+      .replace(/&quot;/g, '"') // Decode &quot;
+      .replace(/&#39;/g, "'") // Decode &#39;
+      .replace(/\n\s*\n\s*\n/g, '\n\n') // Remove excessive newlines
+      .trim();
     
     // Extract variants/attributes
     const variants = product.variations?.map(v => ({
@@ -404,7 +418,7 @@ export default function FeaturedProducts() {
                 <h3 className="text-lg font-bold text-brand-darkest mb-2">
                   {product.name}
                 </h3>
-                <p className="text-sm text-brand-darkest mb-3 line-clamp-3">
+                <p className="text-sm text-brand-darkest mb-3 whitespace-pre-line line-clamp-4">
                   {product.description}
                 </p>
                 {/* Display variants/attributes if available */}

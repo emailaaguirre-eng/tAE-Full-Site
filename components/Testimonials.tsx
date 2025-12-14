@@ -94,31 +94,6 @@ export default function Testimonials() {
             </div>
           ))}
         </div>
-
-        {/* Stats Section */}
-        <div className="grid md:grid-cols-4 gap-6">
-          <div className="text-center bg-white rounded-xl p-6 shadow-md">
-            <div className="text-4xl font-bold text-brand-dark mb-2">4.9/5</div>
-            <div className="text-brand-darkest font-semibold text-sm">Average Rating</div>
-            <div className="flex justify-center gap-1 mt-2">
-              {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-yellow-400 text-sm">★</span>
-              ))}
-            </div>
-          </div>
-          <div className="text-center bg-white rounded-xl p-6 shadow-md">
-            <div className="text-4xl font-bold text-brand-dark mb-2">50K+</div>
-            <div className="text-brand-darkest font-semibold text-sm">Happy Customers</div>
-          </div>
-          <div className="text-center bg-white rounded-xl p-6 shadow-md">
-            <div className="text-4xl font-bold text-brand-dark mb-2">100K+</div>
-            <div className="text-brand-darkest font-semibold text-sm">Products Created</div>
-          </div>
-          <div className="text-center bg-white rounded-xl p-6 shadow-md">
-            <div className="text-4xl font-bold text-brand-dark mb-2">99%</div>
-            <div className="text-brand-darkest font-semibold text-sm">Would Recommend</div>
-          </div>
-        </div>
       </div>
     </section>
   );

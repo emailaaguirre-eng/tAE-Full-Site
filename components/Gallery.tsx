@@ -25,17 +25,18 @@ export default function Gallery() {
   const [wooProducts, setWooProducts] = useState<WooCommerceProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products from WooCommerce API (excluding collage)
+  // Fetch products from WooCommerce API (only "first light" and "facing the storm")
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/products?limit=100');
         if (response.ok) {
           const data = await response.json();
-          // Filter out products with "collage" in the name (case-insensitive)
-          const filteredProducts = data.filter((product: WooCommerceProduct) => 
-            !product.name.toLowerCase().includes('collage')
-          );
+          // Filter to show only "first light" and "facing the storm"
+          const filteredProducts = data.filter((product: WooCommerceProduct) => {
+            const name = product.name.toLowerCase();
+            return name.includes('first light') || name.includes('facing the storm');
+          });
           setWooProducts(filteredProducts);
         }
       } catch (error) {
@@ -220,9 +221,23 @@ export default function Gallery() {
                 <p className="text-lg text-brand-darkest leading-relaxed mb-4">
                   {featuredArtist.bio}
                 </p>
-                <p className="text-base text-brand-dark leading-relaxed">
+                <p className="text-base text-brand-dark leading-relaxed mb-6">
                   {featuredArtist.description}
                 </p>
+                
+                {/* Portfolio Gallery */}
+                <div className="mt-8">
+                  <h4 className="text-2xl font-bold text-brand-darkest mb-4">Portfolio</h4>
+                  <div className="relative w-full aspect-video bg-gray-50 rounded-lg overflow-hidden">
+                    <Image
+                      src="/images/deanna-lankin-portfolio.jpg"
+                      alt={`${featuredArtist.name} - Portfolio`}
+                      fill
+                      className="object-contain"
+                      style={{ objectPosition: 'center' }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

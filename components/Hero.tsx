@@ -131,9 +131,9 @@ export default function Hero() {
                 {/* Instructions */}
                 <div className="mb-6 p-4 bg-white/80 rounded-lg border border-brand-light">
                   <p className="text-sm text-brand-darkest leading-relaxed font-playfair">
-                    Choose the photo that speaks to your heart—the one you'd love to share as a gift. 
+                    Choose the photo that speaks to your heart&mdash;the one you&apos;d love to share as a gift. 
                     In the Design Editor, you can create beautiful collages by adding more photos, 
-                    or enhance this single image with artistic touches. Remember, you'll also be able 
+                    or enhance this single image with artistic touches. Remember, you&apos;ll also be able 
                     to add photos to your ArtKey Portal, so select the image that truly captures 
                     the moment you want to gift.
                   </p>

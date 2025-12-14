@@ -364,14 +364,6 @@ export default function PersonalizationStudio({
     return () => { canvas.dispose(); };
   }, [canvasWidth, canvasHeight, backgroundColor]);
   
-  // Load initial images when component mounts
-  useEffect(() => {
-    if (initialImages.length > 0 && fabricRef.current && uploadedImages.length === 0) {
-      // Auto-add first image to canvas if provided
-      addImageToCanvas(initialImages[0]);
-    }
-  }, [initialImages, fabricRef.current]);
-  
   // =============================================================================
   // IMAGE HANDLING
   // =============================================================================
@@ -417,6 +409,15 @@ export default function PersonalizationStudio({
       console.error('Error loading image:', error);
     }
   };
+  
+  // Load initial images when component mounts and canvas is ready
+  useEffect(() => {
+    if (initialImages.length > 0 && fabricRef.current && uploadedImages.length === 0) {
+      // Auto-add first image to canvas if provided
+      addImageToCanvas(initialImages[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialImages.length, uploadedImages.length]);
   
   // =============================================================================
   // TEXT HANDLING

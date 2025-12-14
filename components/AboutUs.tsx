@@ -22,11 +22,11 @@ export default function AboutUs() {
           {/* About content */}
           <div className="bg-brand-lightest rounded-2xl p-8 md:p-12 shadow-lg space-y-4">
             <p className="text-lg text-brand-darkest leading-relaxed">
-              Welcome to The Artful Experience Gallery and Upload Center—where soul-stirring art and images become a living portal.
+              Welcome to The Artful Experience Gallery and Upload Center&mdash;where soul-stirring art and images become a living portal.
               Give a gift that will never be forgotten, even if that gift is for you.
             </p>
             <p className="text-lg text-brand-darkest leading-relaxed">
-              Discover our "Art Key" technology that lets you upload videos, music, and time-released gift certificates embedded in the art.
+              Discover our &quot;Art Key&quot; technology that lets you upload videos, music, and time-released gift certificates embedded in the art.
               When the recipient scans the Art Key or QR code, they unlock your message, video, song, or surprise.
             </p>
             <p className="text-lg text-brand-darkest leading-relaxed">

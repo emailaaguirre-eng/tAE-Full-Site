@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function WhatWeAre() {
   return (
-    <section className="py-20" style={{ backgroundColor: '#ecece9' }}>
+    <section className="py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Heading */}
         <div className="text-center mb-16">
@@ -15,44 +15,6 @@ export default function WhatWeAre() {
           <p className="text-xl text-brand-darkest max-w-3xl mx-auto">
             The Artful Experience transforms your images into personalized art products enhanced with ArtKey technology—creating a living, interactive portal for your memories.
           </p>
-        </div>
-
-        {/* What We Sell */}
-        <div className="mb-16">
-          <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-            <h3 className="text-3xl font-bold text-brand-darkest mb-6 text-center font-playfair">
-              We Sell Art Products
-            </h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">🖼️</span>
-                </div>
-                <h4 className="text-xl font-bold text-brand-darkest mb-2">Prints</h4>
-                <p className="text-brand-darkest">
-                  High-quality prints on paper, canvas, or metal in various sizes
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">💌</span>
-                </div>
-                <h4 className="text-xl font-bold text-brand-darkest mb-2">Cards</h4>
-                <p className="text-brand-darkest">
-                  Personalized greeting cards, invitations, and announcements
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">🎨</span>
-                </div>
-                <h4 className="text-xl font-bold text-brand-darkest mb-2">Artwork</h4>
-                <p className="text-brand-darkest">
-                  Original paintings and commissioned pieces from talented artists
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* ArtKey Technology */}

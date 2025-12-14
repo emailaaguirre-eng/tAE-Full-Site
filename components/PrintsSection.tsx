@@ -49,7 +49,7 @@ export default function PrintsSection() {
   };
 
   return (
-    <section id="prints" className="py-20" style={{ backgroundColor: '#ecece9' }}>
+    <section id="prints" className="py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">🖼️</div>

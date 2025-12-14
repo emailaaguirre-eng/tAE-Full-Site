@@ -391,7 +391,7 @@ export async function getHeroContent() {
         headline1: page.acf?.hero_headline_1 || page.acf?.headline_1 || 'Every image has a story.',
         headline2: page.acf?.hero_headline_2 || page.acf?.headline_2 || 'Embedded within is a treasure.',
         subtitle: page.acf?.hero_subtitle || page.acf?.subtitle || 'Where fine art, prints & images\nmeet your personal expression.',
-        description: page.acf?.hero_description || page.acf?.description || 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
+        description: page.acf?.hero_description || page.acf?.description || 'Upload an image or browse our gallery.',
       };
     }
     
@@ -401,7 +401,7 @@ export async function getHeroContent() {
       headline1: 'Every image has a story.',
       headline2: 'Embedded within is a treasure.',
       subtitle: 'Where fine art, prints & images\nmeet your personal expression.',
-      description: 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
+      description: 'Upload an image or browse our gallery.',
     };
   } catch (error) {
     console.error('Error fetching hero content:', error);
@@ -410,7 +410,7 @@ export async function getHeroContent() {
       headline1: 'Every image has a story.',
       headline2: 'Embedded within is a treasure.',
       subtitle: 'Where fine art, prints & images\nmeet your personal expression.',
-      description: 'Upload an image or browse our gallery.\nArtKey brings your vision to life.',
+      description: 'Upload an image or browse our gallery.',
     };
   }
 }

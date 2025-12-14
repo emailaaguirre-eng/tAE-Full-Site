@@ -1,6 +1,6 @@
 export default function AboutUs() {
   return (
-    <section id="about" className="py-20" style={{ backgroundColor: '#ecece9' }}>
+    <section id="about" className="py-20" style={{ backgroundColor: '#ffffff' }}>
       <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8 text-center font-playfair">
         About Us
       </h2>

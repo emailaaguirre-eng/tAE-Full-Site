@@ -251,8 +251,9 @@ export default function FeaturedProducts() {
     // Get image URL - use fallback for collage if WooCommerce doesn't have one
     let imageUrl = product.images?.[0]?.src || null;
     const productNameLower = product.name.toLowerCase();
-    if (!imageUrl && productNameLower.includes('collage')) {
-      imageUrl = '/images/collage-product.png';
+    // Always use fallback image for collage product
+    if (productNameLower.includes('collage')) {
+      imageUrl = imageUrl || '/images/collage-product.png';
     }
     
     const description = product.short_description || product.description || '';
@@ -493,33 +494,35 @@ export default function FeaturedProducts() {
                 <p className="text-sm text-brand-darkest mb-3 whitespace-pre-line line-clamp-4">
                   {product.description}
                 </p>
-                {/* Display variants/attributes if available */}
+                {/* Display variants/attributes if available - always show from WooCommerce */}
                 {'variants' in product && product.variants && product.variants.length > 0 && (
                   <div className="mb-3">
-                    <p className="text-xs font-semibold text-brand-dark mb-1">Variants:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {product.variants.slice(0, 3).map((variant, idx) => (
-                        <span key={idx} className="text-xs px-2 py-1 bg-brand-lightest text-brand-darkest rounded">
-                          {variant.attributes.map(a => a.option).join(', ')}
+                    <p className="text-sm font-semibold text-brand-dark mb-2">Available Variants:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {product.variants.map((variant, idx) => (
+                        <span key={idx} className="text-xs px-3 py-1.5 bg-brand-lightest text-brand-darkest rounded-full border border-brand-light">
+                          {variant.attributes.map(a => `${a.name || ''}: ${a.option}`).join(', ')}
+                          {variant.price && ` - $${parseFloat(variant.price).toFixed(2)}`}
                         </span>
                       ))}
-                      {product.variants.length > 3 && (
-                        <span className="text-xs px-2 py-1 bg-brand-lightest text-brand-darkest rounded">
-                          +{product.variants.length - 3} more
-                        </span>
-                      )}
                     </div>
                   </div>
                 )}
                 {'attributes' in product && product.attributes && product.attributes.length > 0 && (
                   <div className="mb-3">
-                    <p className="text-xs font-semibold text-brand-dark mb-1">Options:</p>
-                    <div className="flex flex-wrap gap-1">
+                    <p className="text-sm font-semibold text-brand-dark mb-2">Product Options:</p>
+                    <div className="space-y-2">
                       {product.attributes.map((attr, idx) => (
-                        <span key={idx} className="text-xs px-2 py-1 bg-brand-lightest text-brand-darkest rounded">
-                          {attr.name}: {attr.options.slice(0, 2).join(', ')}
-                          {attr.options.length > 2 && ` +${attr.options.length - 2}`}
-                        </span>
+                        <div key={idx} className="bg-brand-lightest rounded-lg p-2">
+                          <p className="text-xs font-semibold text-brand-darkest mb-1">{attr.name}:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {attr.options.map((option, optIdx) => (
+                              <span key={optIdx} className="text-xs px-2 py-1 bg-white text-brand-darkest rounded border border-brand-light">
+                                {option}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </div>

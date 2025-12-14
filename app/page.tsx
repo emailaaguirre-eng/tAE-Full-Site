@@ -7,6 +7,7 @@ import ProductCategories from "@/components/ProductCategories";
 import CardsSection from "@/components/CardsSection";
 import PrintsSection from "@/components/PrintsSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
+import CollectorsSection from "@/components/CollectorsSection";
 import CommissionedArt from "@/components/CommissionedArt";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
@@ -28,6 +29,7 @@ export default function Home() {
       <CardsSection />
       <PrintsSection />
       <FeaturedProducts />
+      <CollectorsSection />
       <CommissionedArt />
       <Testimonials />
       <Contact />

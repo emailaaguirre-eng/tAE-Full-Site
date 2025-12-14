@@ -8,7 +8,17 @@ import dynamic from "next/dynamic";
 // Dynamic import to avoid SSR issues with Fabric.js
 const PersonalizationStudio = dynamic(
   () => import("@/components/PersonalizationStudio"),
-  { ssr: false, loading: () => <div className="flex items-center justify-center h-96"><div className="animate-spin w-12 h-12 border-4 border-brand-medium border-t-transparent rounded-full"></div></div> }
+  { 
+    ssr: false, 
+    loading: () => (
+      <div className="fixed inset-0 bg-gray-950/95 z-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-12 h-12 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading Design Editor...</p>
+        </div>
+      </div>
+    )
+  }
 );
 
 interface DesignData {
@@ -59,13 +69,20 @@ function CustomizeContent() {
 
   // Auto-open design editor on load and load any existing ArtKey ID to reuse
   useEffect(() => {
-    setShowStudio(true);
+    // Small delay to ensure component is fully mounted
+    const timer = setTimeout(() => {
+      setShowStudio(true);
+      console.log('Design editor should now be visible');
+    }, 100);
+    
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("lastArtKeyId");
       if (stored) {
         setExistingArtKeyId(stored);
       }
     }
+    
+    return () => clearTimeout(timer);
   }, []);
   
   // Get selected size for studio
@@ -222,7 +239,10 @@ function CustomizeContent() {
             productType={productType as 'canvas' | 'print' | 'card' | 'poster' | 'photobook'}
             productSize={getStudioSize()}
             onComplete={handleDesignComplete}
-            onClose={() => setShowStudio(false)}
+            onClose={() => {
+              console.log('Closing design editor');
+              setShowStudio(false);
+            }}
           />
         )}
 

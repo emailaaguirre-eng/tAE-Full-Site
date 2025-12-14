@@ -44,19 +44,19 @@ export default function VideoSection() {
                 
                 {/* Portal Buttons */}
                 <div className="space-y-3">
-                  <button className="w-full bg-brand-dark text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-darkest transition-all shadow-md hover:shadow-lg text-left">
+                  <button className="w-full bg-brand-medium text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-dark transition-all shadow-md hover:shadow-lg text-left">
                     Share Your Interests
                   </button>
-                  <button className="w-full bg-brand-dark text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-darkest transition-all shadow-md hover:shadow-lg text-left">
+                  <button className="w-full bg-brand-medium text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-dark transition-all shadow-md hover:shadow-lg text-left">
                     Playlist
                   </button>
-                  <button className="w-full bg-brand-dark text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-darkest transition-all shadow-md hover:shadow-lg text-left">
+                  <button className="w-full bg-brand-medium text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-dark transition-all shadow-md hover:shadow-lg text-left">
                     Sign Guestbook
                   </button>
-                  <button className="w-full bg-brand-dark text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-darkest transition-all shadow-md hover:shadow-lg text-left">
+                  <button className="w-full bg-brand-medium text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-dark transition-all shadow-md hover:shadow-lg text-left">
                     Video Greeting
                   </button>
-                  <button className="w-full bg-brand-dark text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-darkest transition-all shadow-md hover:shadow-lg text-left">
+                  <button className="w-full bg-brand-medium text-white py-4 px-6 rounded-2xl font-semibold hover:bg-brand-dark transition-all shadow-md hover:shadow-lg text-left">
                     Image Gallery
                   </button>
                 </div>
@@ -140,7 +140,7 @@ export default function VideoSection() {
             </p>
             <a
               href="#products"
-              className="inline-block bg-brand-dark text-white px-10 py-4 rounded-full font-semibold hover:bg-brand-darkest transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="inline-block bg-brand-medium text-white px-10 py-4 rounded-full font-semibold hover:bg-brand-dark transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               Start Creating Now
             </a>

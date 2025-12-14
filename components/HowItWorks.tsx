@@ -14,87 +14,51 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        {/* Step 1 - Two Options Side by Side */}
-        <div className="mb-16">
-          <div className="grid md:grid-cols-3 gap-4 items-stretch">
-            {/* Option 1: Upload Your Image */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
-              <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                <Image
-                  src="/images/design-editor-screenshot.jpg"
-                  alt="Design Editor - Upload Your Image"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
-                  1
-                </div>
-                <h4 className="text-xl font-bold text-brand-darkest mb-2">
-                  Upload Your Image
-                </h4>
-                <p className="text-brand-darkest">
-                  Personalize your art with a message. Upload your own photo and transform it into a beautiful piece of art using our design editor.
-                </p>
-              </div>
+        {/* Steps 1-5 */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Step 1 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+            <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
+              <Image
+                src="/images/design-editor-screenshot.jpg"
+                alt="Upload Your Image or Choose from Library"
+                fill
+                className="object-cover"
+              />
             </div>
-
-            {/* OR Divider - Centered */}
-            <div className="flex items-center justify-center">
-              <div className="bg-brand-medium text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-xl shadow-lg">
-                OR
+            <div className="p-6">
+              <div className="inline-block bg-brand-medium text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+                1
               </div>
-            </div>
-
-            {/* Option 2: Choose from Gallery */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
-              <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                <Image
-                  src="/images/buyanexistingprint.jpg"
-                  alt="Choose art from gallery"
-                  fill
-                  className="object-cover"
-                  style={{ top: 0 }}
-                />
-              </div>
-              <div className="p-6">
-                <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
-                  1
-                </div>
-                <h4 className="text-xl font-bold text-brand-darkest mb-2">
-                  Choose Art from Our Online Gallery
-                </h4>
-                <p className="text-brand-darkest">
-                  Explore our unique art collection. Select from curated pieces by internationally recognized artists.
-                </p>
-              </div>
+              <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                Upload Your Image or Choose from our Library
+              </h4>
+              <p className="text-brand-darkest">
+                Upload a photo from your device or choose from our gallery of artist-created pieces.
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* Steps 2-4 */}
-        <div className="grid md:grid-cols-3 gap-8">
           {/* Step 2 */}
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
               <Image
-                src="/images/upload-media-screenshot.jpg"
-                alt="Upload your media"
+                src="/images/design-editor-screenshot.jpg"
+                alt="Design Editor"
                 fill
                 className="object-cover"
                 style={{ top: 0 }}
               />
             </div>
             <div className="p-6">
-              <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+              <div className="inline-block bg-brand-medium text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
                 2
               </div>
               <h4 className="text-xl font-bold text-brand-darkest mb-2">
-                Upload Your Media
+                Use Our Design Editor (Optional)
               </h4>
               <p className="text-brand-darkest">
-                Images, videos, music, gift certificate, or a time-released message. Add all the personal touches that make your gift unique.
+                Customize your image with our easy-to-use design tools, add text, filters, and effects.
               </p>
             </div>
           </div>
@@ -103,22 +67,22 @@ export default function HowItWorks() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
               <Image
-                src="/images/send-gift-boxes.jpg"
-                alt="Send the gift"
+                src="/images/upload-media-screenshot.jpg"
+                alt="Create Your ArtKey Portal"
                 fill
                 className="object-cover"
                 style={{ top: 0 }}
               />
             </div>
             <div className="p-6">
-              <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+              <div className="inline-block bg-brand-medium text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
                 3
               </div>
               <h4 className="text-xl font-bold text-brand-darkest mb-2">
-                Send the Gift
+                Create Your ArtKey Portal (upload images, videos, playlists)
               </h4>
               <p className="text-brand-darkest">
-                We&apos;ll carefully package and ship your personalized art. Your gift will arrive ready to be displayed and enjoyed.
+                Upload images, videos, and playlists to personalize your ArtKey. This creates a unique digital experience linked to your physical art.
               </p>
             </div>
           </div>
@@ -127,22 +91,46 @@ export default function HowItWorks() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
               <Image
-                src="/images/couch.jpg"
-                alt="Find the perfect place"
+                src="/images/send-gift-boxes.jpg"
+                alt="Send The Gift"
                 fill
                 className="object-cover"
                 style={{ top: 0 }}
               />
             </div>
             <div className="p-6">
-              <div className="inline-block bg-brand-dark text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+              <div className="inline-block bg-brand-medium text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
                 4
+              </div>
+              <h4 className="text-xl font-bold text-brand-darkest mb-2">
+                Send The Gift
+              </h4>
+              <p className="text-brand-darkest">
+                We print and ship your personalized art product, ready to be displayed and enjoyed.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 5 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all md:col-start-2">
+            <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
+              <Image
+                src="/images/couch.jpg"
+                alt="Interact with the ArtKey"
+                fill
+                className="object-cover"
+                style={{ top: 0 }}
+              />
+            </div>
+            <div className="p-6">
+              <div className="inline-block bg-brand-medium text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mb-4">
+                5
               </div>
               <h4 className="text-xl font-bold text-brand-darkest mb-2">
                 Interact with the ArtKey
               </h4>
               <p className="text-brand-darkest">
-                Find the perfect place for your art and interact with the ArtKey. Scan the discreetly placed QR code to unlock all the personalized content.
+                Recipients scan the ArtKey QR code to access all the special content you&apos;ve created.
               </p>
             </div>
           </div>

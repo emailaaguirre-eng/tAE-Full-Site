@@ -108,7 +108,7 @@ export default function PrintsSection() {
                   <p className="text-brand-darkest mb-4 text-center">
                     Use the ArtKey designer to enhance your image
                   </p>
-                  <button className="w-full bg-brand-dark text-white py-4 rounded-full font-semibold hover:bg-brand-darkest transition-all shadow-lg text-lg">
+                  <button className="w-full bg-brand-dark text-white py-4 rounded-full font-semibold hover:bg-brand-medium transition-all shadow-lg text-lg">
                     🎨 Open ArtKey Designer
                   </button>
                   <div className="mt-4 text-sm text-brand-darkest text-center">

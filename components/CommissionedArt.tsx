@@ -266,7 +266,7 @@ export default function CommissionedArt() {
 
               <button
                 type="submit"
-                className="w-full bg-brand-dark text-white py-4 rounded-lg font-semibold hover:bg-brand-darkest transition-all shadow-lg hover:shadow-xl"
+                className="w-full bg-brand-dark text-white py-4 rounded-lg font-semibold hover:bg-brand-medium transition-all shadow-lg hover:shadow-xl"
               >
                 Submit Commission Request
               </button>

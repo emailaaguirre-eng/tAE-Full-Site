@@ -10,7 +10,6 @@ import PrintsSection from "@/components/PrintsSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import CollectorsSection from "@/components/CollectorsSection";
 import CommissionedArt from "@/components/CommissionedArt";
-import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -24,7 +23,6 @@ export default function Home() {
       <WhatWeAre />
       <VideoSection />
       <GiftIdeas />
-      <HowItWorks />
       <AboutUs />
       <CoCreators />
       <CardsSection />

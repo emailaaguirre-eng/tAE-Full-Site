@@ -21,8 +21,14 @@ export default function WhatWeAre() {
         <div className="mb-16">
           <div className="rounded-2xl shadow-lg p-8 md:p-12" style={{ backgroundColor: '#ecece9' }}>
             <div className="text-center mb-8">
-              <div className="w-24 h-24 bg-brand-dark rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-5xl">🔑</span>
+              <div className="w-24 h-24 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-6">
+                <Image
+                  src="/images/artkey-icon.png"
+                  alt="ArtKey"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="text-3xl font-bold text-brand-darkest mb-4 font-playfair">
                 Every Product Includes ArtKey Technology
@@ -36,32 +42,62 @@ export default function WhatWeAre() {
             {/* ArtKey Features */}
             <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 mt-10">
               <div className="text-center">
-                <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-3xl">📸</span>
+                <div className="w-16 h-16 bg-brand-lightest rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Image
+                    src="/images/camera-icon.png"
+                    alt="Share Pictures"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
                 </div>
                 <p className="text-brand-darkest font-semibold">Share Pictures</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-3xl">🎬</span>
+                <div className="w-16 h-16 bg-brand-lightest rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Image
+                    src="/images/video-icon.png"
+                    alt="Upload Videos"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
                 </div>
                 <p className="text-brand-darkest font-semibold">Upload Videos</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-3xl">🎵</span>
+                <div className="w-16 h-16 bg-brand-lightest rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Image
+                    src="/images/music-icon.png"
+                    alt="Music Playlists"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
                 </div>
                 <p className="text-brand-darkest font-semibold">Music Playlists</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-3xl">✍️</span>
+                <div className="w-16 h-16 bg-brand-lightest rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Image
+                    src="/images/guestbook-icon.png"
+                    alt="Guestbook"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
                 </div>
                 <p className="text-brand-darkest font-semibold">Guestbook</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-3xl">💭</span>
+                <div className="w-16 h-16 bg-brand-lightest rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Image
+                    src="/images/interests-icon.png"
+                    alt="Share Interests"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
                 </div>
                 <p className="text-brand-darkest font-semibold">Share Interests</p>
               </div>
@@ -81,25 +117,26 @@ export default function WhatWeAre() {
               {/* Step 1 */}
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-brand-dark text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                  <div className="w-16 h-16 bg-brand-medium text-white rounded-full flex items-center justify-center text-2xl font-bold">
                     1
                   </div>
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h4 className="text-2xl font-bold text-brand-darkest mb-2">
-                    Order Online (PC or Mobile)
+                    Upload Your Image or Choose from our Library
                   </h4>
                   <p className="text-brand-darkest text-lg">
-                    Visit our website on your computer or smartphone to start your order
+                    Upload a photo from your device or choose from our gallery of artist-created pieces
                   </p>
                 </div>
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-brand-light rounded-lg flex items-center justify-center">
-                    <span className="text-2xl">💻</span>
-                  </div>
-                  <div className="w-12 h-12 bg-brand-light rounded-lg flex items-center justify-center">
-                    <span className="text-2xl">📱</span>
-                  </div>
+                <div className="w-24 h-24 md:w-32 md:h-32 bg-brand-lightest rounded-lg flex items-center justify-center overflow-hidden shadow-md">
+                  <Image
+                    src="/images/upload-media-screenshot.jpg"
+                    alt="Upload or Choose"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
 
@@ -111,20 +148,26 @@ export default function WhatWeAre() {
               {/* Step 2 */}
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-brand-dark text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                  <div className="w-16 h-16 bg-brand-medium text-white rounded-full flex items-center justify-center text-2xl font-bold">
                     2
                   </div>
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h4 className="text-2xl font-bold text-brand-darkest mb-2">
-                    Upload Your Image
+                    Use Our Design Editor (Optional)
                   </h4>
                   <p className="text-brand-darkest text-lg">
-                    Upload a photo from your device or choose from our gallery of artist-created pieces
+                    Customize your image with our easy-to-use design tools, add text, filters, and effects
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-brand-light rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">📤</span>
+                <div className="w-24 h-24 md:w-32 md:h-32 bg-brand-lightest rounded-lg flex items-center justify-center overflow-hidden shadow-md">
+                  <Image
+                    src="/images/design-editor-screenshot.jpg"
+                    alt="Design Editor"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
 
@@ -136,20 +179,26 @@ export default function WhatWeAre() {
               {/* Step 3 */}
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-brand-dark text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                  <div className="w-16 h-16 bg-brand-medium text-white rounded-full flex items-center justify-center text-2xl font-bold">
                     3
                   </div>
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h4 className="text-2xl font-bold text-brand-darkest mb-2">
-                    Use Our Design Editor (Optional)
+                    Create Your ArtKey Portal (upload images, videos, playlists)
                   </h4>
                   <p className="text-brand-darkest text-lg">
-                    Customize your image with our easy-to-use design tools, add text, filters, and effects
+                    Upload images, videos, and playlists to personalize your ArtKey. This creates a unique digital experience linked to your physical art.
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-brand-light rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">🎨</span>
+                <div className="w-24 h-24 md:w-32 md:h-32 bg-brand-lightest rounded-lg flex items-center justify-center overflow-hidden shadow-md">
+                  <Image
+                    src="/images/upload-media-screenshot.jpg"
+                    alt="ArtKey Portal"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
 
@@ -161,21 +210,26 @@ export default function WhatWeAre() {
               {/* Step 4 */}
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-brand-dark text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                  <div className="w-16 h-16 bg-brand-medium text-white rounded-full flex items-center justify-center text-2xl font-bold">
                     4
                   </div>
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h4 className="text-2xl font-bold text-brand-darkest mb-2">
-                    Create Your ArtKey Portal
+                    Send The Gift
                   </h4>
                   <p className="text-brand-darkest text-lg">
-                    Personalize your ArtKey by adding pictures, videos, music playlists, a guestbook for signatures, 
-                    and share your interests. This creates a unique digital experience linked to your physical art.
+                    We print and ship your personalized art product, ready to be displayed and enjoyed.
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-brand-light rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">🔑</span>
+                <div className="w-24 h-24 md:w-32 md:h-32 bg-brand-lightest rounded-lg flex items-center justify-center overflow-hidden shadow-md">
+                  <Image
+                    src="/images/send-gift-boxes.jpg"
+                    alt="Send The Gift"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
 
@@ -187,21 +241,26 @@ export default function WhatWeAre() {
               {/* Step 5 */}
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-brand-dark text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                  <div className="w-16 h-16 bg-brand-medium text-white rounded-full flex items-center justify-center text-2xl font-bold">
                     5
                   </div>
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h4 className="text-2xl font-bold text-brand-darkest mb-2">
-                    Receive Your Art
+                    Interact with the ArtKey
                   </h4>
                   <p className="text-brand-darkest text-lg">
-                    We print and ship your personalized art product. Recipients scan the ArtKey QR code 
-                    to access all the special content you&apos;ve created.
+                    Recipients scan the ArtKey QR code to access all the special content you&apos;ve created.
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-brand-light rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">📦</span>
+                <div className="w-24 h-24 md:w-32 md:h-32 bg-brand-lightest rounded-lg flex items-center justify-center overflow-hidden shadow-md">
+                  <Image
+                    src="/images/couch.jpg"
+                    alt="Interact with ArtKey"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
             </div>

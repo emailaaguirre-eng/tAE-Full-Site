@@ -17,6 +17,8 @@ interface WooCommerceProduct {
   rating_count?: number;
   on_sale?: boolean;
   permalink?: string;
+  variations?: Array<{ id: number; attributes: Array<{ name: string; option: string }>; price: string }>;
+  attributes?: Array<{ id: number; name: string; options: string[] }>;
 }
 
 export default function FeaturedProducts() {
@@ -229,8 +231,20 @@ export default function FeaturedProducts() {
     const imageUrl = product.images?.[0]?.src || null;
     const description = product.short_description || product.description || '';
     
-    // Extract description (remove HTML tags)
-    const cleanDescription = description.replace(/<[^>]*>/g, '').substring(0, 100);
+    // Extract description (remove HTML tags) - show full description, not truncated
+    const cleanDescription = description.replace(/<[^>]*>/g, '');
+    
+    // Extract variants/attributes
+    const variants = product.variations?.map(v => ({
+      id: v.id,
+      attributes: v.attributes || [],
+      price: v.price || price,
+    })) || [];
+    
+    const attributes = product.attributes?.map(attr => ({
+      name: attr.name,
+      options: attr.options || [],
+    })) || [];
     
     return {
       id: product.id,
@@ -243,6 +257,8 @@ export default function FeaturedProducts() {
       description: cleanDescription || 'Premium quality product',
       permalink: product.permalink,
       onSale: product.on_sale || false,
+      variants: variants,
+      attributes: attributes,
     };
   };
 
@@ -388,9 +404,40 @@ export default function FeaturedProducts() {
                 <h3 className="text-lg font-bold text-brand-darkest mb-2">
                   {product.name}
                 </h3>
-                <p className="text-sm text-brand-darkest mb-3">
+                <p className="text-sm text-brand-darkest mb-3 line-clamp-3">
                   {product.description}
                 </p>
+                {/* Display variants/attributes if available */}
+                {'variants' in product && product.variants && product.variants.length > 0 && (
+                  <div className="mb-3">
+                    <p className="text-xs font-semibold text-brand-dark mb-1">Variants:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {product.variants.slice(0, 3).map((variant, idx) => (
+                        <span key={idx} className="text-xs px-2 py-1 bg-brand-lightest text-brand-darkest rounded">
+                          {variant.attributes.map(a => a.option).join(', ')}
+                        </span>
+                      ))}
+                      {product.variants.length > 3 && (
+                        <span className="text-xs px-2 py-1 bg-brand-lightest text-brand-darkest rounded">
+                          +{product.variants.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {'attributes' in product && product.attributes && product.attributes.length > 0 && (
+                  <div className="mb-3">
+                    <p className="text-xs font-semibold text-brand-dark mb-1">Options:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {product.attributes.map((attr, idx) => (
+                        <span key={idx} className="text-xs px-2 py-1 bg-brand-lightest text-brand-darkest rounded">
+                          {attr.name}: {attr.options.slice(0, 2).join(', ')}
+                          {attr.options.length > 2 && ` +${attr.options.length - 2}`}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-center gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
                     <span key={i} className={i < product.rating ? "text-yellow-400" : "text-gray-300"}>

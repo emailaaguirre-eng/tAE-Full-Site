@@ -41,6 +41,16 @@ export default function FeaturedProducts() {
                    name.includes('wall art');
           });
           
+          // Debug: Log all products and filtered results
+          console.log('All WooCommerce products:', data.map((p: WooCommerceProduct) => ({ name: p.name, id: p.id })));
+          console.log('Filtered shop products:', shopProducts.map((p: WooCommerceProduct) => ({ 
+            name: p.name, 
+            id: p.id, 
+            hasImage: !!p.images?.[0]?.src,
+            imageUrl: p.images?.[0]?.src,
+            description: p.description || p.short_description
+          })));
+          
           // If no products found, log for debugging
           if (shopProducts.length === 0) {
             console.log('No shop products found. Available products:', data.map((p: WooCommerceProduct) => p.name));
@@ -241,18 +251,34 @@ export default function FeaturedProducts() {
     const description = product.short_description || product.description || '';
     
     // Clean description: remove HTML tags, decode entities, preserve line breaks
-    let cleanDescription = description
-      .replace(/<br\s*\/?>/gi, '\n') // Convert <br> to newlines
-      .replace(/<\/p>/gi, '\n\n') // Convert </p> to double newlines
-      .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
-      .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
-      .replace(/&amp;/g, '&') // Decode &amp;
-      .replace(/&lt;/g, '<') // Decode &lt;
-      .replace(/&gt;/g, '>') // Decode &gt;
-      .replace(/&quot;/g, '"') // Decode &quot;
-      .replace(/&#39;/g, "'") // Decode &#39;
-      .replace(/\n\s*\n\s*\n/g, '\n\n') // Remove excessive newlines
-      .trim();
+    let cleanDescription = description;
+    
+    if (cleanDescription && typeof window !== 'undefined') {
+      // Client-side: Use DOM to decode HTML entities properly
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = cleanDescription;
+      cleanDescription = tempDiv.textContent || tempDiv.innerText || cleanDescription;
+    }
+    
+    if (cleanDescription) {
+      // Clean up HTML tags and normalize
+      cleanDescription = cleanDescription
+        .replace(/<br\s*\/?>/gi, '\n') // Convert <br> to newlines
+        .replace(/<\/p>/gi, '\n\n') // Convert </p> to double newlines
+        .replace(/<p[^>]*>/gi, '') // Remove opening <p> tags
+        .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
+        .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
+        .replace(/&amp;/g, '&') // Decode &amp;
+        .replace(/&lt;/g, '<') // Decode &lt;
+        .replace(/&gt;/g, '>') // Decode &gt;
+        .replace(/&quot;/g, '"') // Decode &quot;
+        .replace(/&#39;/g, "'") // Decode &#39;
+        .replace(/&#8217;/g, "'") // Decode apostrophe
+        .replace(/&#8220;/g, '"') // Decode left double quote
+        .replace(/&#8221;/g, '"') // Decode right double quote
+        .replace(/\n\s*\n\s*\n/g, '\n\n') // Remove excessive newlines
+        .trim();
+    }
     
     // Extract variants/attributes
     const variants = product.variations?.map(v => ({

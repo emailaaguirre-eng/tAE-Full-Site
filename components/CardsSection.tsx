@@ -46,7 +46,7 @@ export default function CardsSection() {
                 }`}
               >
                 <div className="text-5xl mb-4">🖼️</div>
-                <div className="font-bold text-xl mb-2">Choose From Gallery</div>
+                <div className="font-bold text-xl mb-2">Choose From Library</div>
                 <p className={uploadMethod === "gallery" ? "text-white" : "text-brand-darkest"}>
                   Browse our collection
                 </p>

@@ -15,7 +15,7 @@ export default function VideoSection() {
             Where soul-stirring art and images become a living portal.
           </h2>
           <div className="w-24 h-1 bg-brand-medium mx-auto mb-6"></div>
-          <div className="text-lg text-brand-darkest max-w-3xl mx-auto space-y-4">
+          <div className="text-lg text-brand-darkest max-w-3xl mx-auto space-y-4 text-left">
             <p>
               Give a gift that will never be forgotten, even if that gift is for you.
             </p>

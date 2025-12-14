@@ -15,7 +15,6 @@ export default function Hero() {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [shareMessage, setShareMessage] = useState("I wanted to share moments with you");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
   
   // Use hero content from JSON file (editable via Visual Editor)
   const [heroContent, setHeroContent] = useState<HeroContent>(heroData);
@@ -31,20 +30,13 @@ export default function Hero() {
       });
   }, []);
 
-  // Generate QR code when images are selected
-  useEffect(() => {
-    if (selectedImages.length > 0) {
-      // Generate QR code URL (you can use a QR code API or library)
-      const shareUrl = `${window.location.origin}/share/${Date.now()}`;
-      setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(shareUrl)}`);
-    }
-  }, [selectedImages]);
-
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) {
-      const imageUrls = Array.from(files).map(file => URL.createObjectURL(file));
-      setSelectedImages(prev => [...prev, ...imageUrls].slice(0, 3)); // Max 3 images
+    if (files && files.length > 0) {
+      // Only allow one photo at this stage
+      const file = files[0];
+      const mediaUrl = URL.createObjectURL(file);
+      setSelectedImages([mediaUrl]); // Replace with single image
     }
   };
 
@@ -71,11 +63,8 @@ export default function Hero() {
           <div className="space-y-8">
             <div className="space-y-2">
               <h1 className="text-7xl md:text-9xl font-normal text-brand-dark leading-[0.9] tracking-tight font-playfair">
-                {heroContent.headline1}
+                {heroContent.headline1} {heroContent.headline2}
               </h1>
-              <h2 className="text-[3.15rem] md:text-[5.6rem] font-normal text-brand-darkest leading-[0.85] tracking-tighter font-playfair">
-                {heroContent.headline2}
-              </h2>
             </div>
             
             <div className="pl-2 border-l-4 border-brand-medium space-y-4">
@@ -137,7 +126,18 @@ export default function Hero() {
           <div className="relative">
             {selectedOption === "upload" ? (
               <div className="bg-brand-lightest/95 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-brand-light animate-fade-in min-h-[500px]">
-                <h3 className="text-lg font-bold text-brand-darkest mb-6 font-playfair">Select and Photos</h3>
+                <h3 className="text-lg font-bold text-brand-darkest mb-4 font-playfair">Select Photo</h3>
+                
+                {/* Instructions */}
+                <div className="mb-6 p-4 bg-white/80 rounded-lg border border-brand-light">
+                  <p className="text-sm text-brand-darkest leading-relaxed font-playfair">
+                    Choose the photo that speaks to your heart—the one you'd love to share as a gift. 
+                    In the Design Editor, you can create beautiful collages by adding more photos, 
+                    or enhance this single image with artistic touches. Remember, you'll also be able 
+                    to add photos to your ArtKey Portal, so select the image that truly captures 
+                    the moment you want to gift.
+                  </p>
+                </div>
                 
                 <div className="grid grid-cols-12 gap-4 h-full">
                   {/* Left: Action buttons sidebar */}
@@ -155,64 +155,71 @@ export default function Hero() {
                       ref={fileInputRef}
                       type="file"
                       accept="image/*"
-                      multiple
                       onChange={handleImageSelect}
                       className="hidden"
                     />
+                    {selectedImages.length > 0 && (
+                      <button
+                        onClick={() => {
+                          // Navigate to customize page with selected image
+                          const params = new URLSearchParams({
+                            images: selectedImages.join(','),
+                            message: shareMessage,
+                            from_hero: 'true',
+                          });
+                          window.location.href = `/customize?${params}`;
+                        }}
+                        className="w-full bg-brand-dark text-white px-4 py-3 rounded-xl font-medium hover:bg-brand-darkest transition-colors flex items-center justify-center gap-2 shadow-md"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Customize
+                      </button>
+                    )}
                     <button
-                      onClick={() => setSelectedOption(null)}
+                      onClick={() => {
+                        setSelectedOption(null);
+                        setSelectedImages([]);
+                      }}
                       className="w-full bg-white text-brand-dark px-4 py-3 rounded-xl font-medium border border-brand-light hover:bg-brand-lightest transition-colors"
                     >
                       Back
                     </button>
                   </div>
 
-                  {/* Center: Image thumbnails (stacked vertically) */}
+                  {/* Center: Single photo placeholder or selected image */}
                   <div className="col-span-5 space-y-3 flex flex-col">
                     {selectedImages.length > 0 ? (
-                      selectedImages.map((img, index) => (
-                        <div key={index} className="relative group flex-shrink-0">
-                          <img
-                            src={img}
-                            alt={`Selected ${index + 1}`}
-                            className="w-full h-36 object-cover rounded-lg border-2 border-white shadow-md"
-                          />
-                          <button
-                            onClick={() => handleRemoveImage(index)}
-                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-sm"
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))
+                      <div className="relative group flex-shrink-0">
+                        <img
+                          src={selectedImages[0]}
+                          alt="Selected photo"
+                          className="w-full h-96 object-cover rounded-lg border-2 border-white shadow-md"
+                        />
+                        <button
+                          onClick={() => setSelectedImages([])}
+                          className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-lg font-bold"
+                        >
+                          ×
+                        </button>
+                      </div>
                     ) : (
-                      <div className="space-y-3 flex-1 flex flex-col">
-                        {[1, 2, 3].map((i) => (
-                          <div key={i} className="flex-1 min-h-[120px] bg-white border-2 border-brand-light rounded-lg flex items-center justify-center shadow-sm">
-                            <span className="text-brand-dark/20 text-xs">Photo {i}</span>
-                          </div>
-                        ))}
+                      <div className="flex-1 min-h-[384px] bg-white border-2 border-brand-light rounded-lg flex items-center justify-center shadow-sm">
+                        <span className="text-brand-dark/20 text-sm font-playfair">Photo</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Right: Share section with QR code */}
+                  {/* Right: Share message section */}
                   <div className="col-span-4 bg-brand-lightest/60 rounded-lg p-4 space-y-4 flex flex-col">
                     <textarea
                       value={shareMessage}
                       onChange={(e) => setShareMessage(e.target.value)}
                       className="w-full bg-transparent text-brand-darkest text-sm resize-none border-none focus:outline-none font-playfair flex-1"
-                      rows={3}
+                      rows={6}
                       placeholder="I wanted to share moments with you"
                     />
-                    {selectedImages.length > 0 && qrCodeUrl && (
-                      <div className="flex flex-col items-center space-y-2 mt-auto">
-                        <img src={qrCodeUrl} alt="QR Code" className="w-40 h-40 bg-white p-3 rounded-lg shadow-md" />
-                        <p className="text-xs text-brand-dark/60 text-center font-playfair">
-                          Scan to explore
-                        </p>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

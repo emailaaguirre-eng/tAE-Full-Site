@@ -19,7 +19,7 @@ export default function WhatWeAre() {
 
         {/* ArtKey Technology */}
         <div className="mb-16">
-          <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+          <div className="rounded-2xl shadow-lg p-8 md:p-12" style={{ backgroundColor: '#ecece9' }}>
             <div className="text-center mb-8">
               <div className="w-24 h-24 bg-brand-dark rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-5xl">🔑</span>
@@ -71,7 +71,7 @@ export default function WhatWeAre() {
 
         {/* How It Works - Process Flow */}
         <div className="mb-16">
-          <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+          <div className="rounded-2xl shadow-lg p-8 md:p-12" style={{ backgroundColor: '#ecece9' }}>
             <h3 className="text-3xl font-bold text-brand-darkest mb-8 text-center font-playfair">
               How It Works
             </h3>

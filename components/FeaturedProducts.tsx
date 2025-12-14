@@ -248,13 +248,9 @@ export default function FeaturedProducts() {
     const price = product.sale_price || product.price || '0.00';
     const originalPrice = product.on_sale && product.regular_price ? product.regular_price : null;
     
-    // Get image URL - use fallback for collage if WooCommerce doesn't have one
+    // Get image URL from WooCommerce
     let imageUrl = product.images?.[0]?.src || null;
     const productNameLower = product.name.toLowerCase();
-    // Always use fallback image for collage product
-    if (productNameLower.includes('collage')) {
-      imageUrl = imageUrl || '/images/collage-product.png';
-    }
     
     const description = product.short_description || product.description || '';
     
@@ -269,8 +265,10 @@ export default function FeaturedProducts() {
     }
     
     if (cleanDescription) {
-      // Clean up HTML tags and normalize
+      // Clean up HTML tags and normalize - handle Divi Builder and other shortcodes
       cleanDescription = cleanDescription
+        .replace(/\[et_pb[^\]]*\][\s\S]*?\[\/et_pb[^\]]*\]/gi, '') // Remove Divi Builder shortcodes
+        .replace(/\[[^\]]+\]/g, '') // Remove any remaining shortcodes
         .replace(/<br\s*\/?>/gi, '\n') // Convert <br> to newlines
         .replace(/<\/p>/gi, '\n\n') // Convert </p> to double newlines
         .replace(/<p[^>]*>/gi, '') // Remove opening <p> tags
@@ -285,6 +283,7 @@ export default function FeaturedProducts() {
         .replace(/&#8220;/g, '"') // Decode left double quote
         .replace(/&#8221;/g, '"') // Decode right double quote
         .replace(/\n\s*\n\s*\n/g, '\n\n') // Remove excessive newlines
+        .replace(/\s+/g, ' ') // Replace multiple spaces with single space
         .trim();
     }
     
@@ -494,39 +493,7 @@ export default function FeaturedProducts() {
                 <p className="text-sm text-brand-darkest mb-3 whitespace-pre-line line-clamp-4">
                   {product.description}
                 </p>
-                {/* Display variants/attributes if available - always show from WooCommerce */}
-                {'variants' in product && product.variants && product.variants.length > 0 && (
-                  <div className="mb-3">
-                    <p className="text-sm font-semibold text-brand-dark mb-2">Available Variants:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {product.variants.map((variant, idx) => (
-                        <span key={idx} className="text-xs px-3 py-1.5 bg-brand-lightest text-brand-darkest rounded-full border border-brand-light">
-                          {variant.attributes.map(a => `${a.name || ''}: ${a.option}`).join(', ')}
-                          {variant.price && ` - $${parseFloat(variant.price).toFixed(2)}`}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {'attributes' in product && product.attributes && product.attributes.length > 0 && (
-                  <div className="mb-3">
-                    <p className="text-sm font-semibold text-brand-dark mb-2">Product Options:</p>
-                    <div className="space-y-2">
-                      {product.attributes.map((attr, idx) => (
-                        <div key={idx} className="bg-brand-lightest rounded-lg p-2">
-                          <p className="text-xs font-semibold text-brand-darkest mb-1">{attr.name}:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {attr.options.map((option, optIdx) => (
-                              <span key={optIdx} className="text-xs px-2 py-1 bg-white text-brand-darkest rounded border border-brand-light">
-                                {option}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                {/* Variants and attributes are only shown after clicking Customize */}
                 <div className="flex items-center gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
                     <span key={i} className={i < product.rating ? "text-yellow-400" : "text-gray-300"}>

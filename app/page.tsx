@@ -27,7 +27,6 @@ export default function Home() {
       <HowItWorks />
       <AboutUs />
       <CoCreators />
-      <ProductCategories />
       <CardsSection />
       <PrintsSection />
       <FeaturedProducts />

@@ -39,12 +39,18 @@ function CustomizeContent() {
   const productType = searchParams.get("product_type") || "print";
   const productName = searchParams.get("product_name") || "Product";
   const basePrice = parseFloat(searchParams.get("price") || "0");
+  const fromHero = searchParams.get("from_hero") === "true";
+  const heroImages = searchParams.get("images")?.split(',').filter(Boolean) || [];
+  const heroMessage = searchParams.get("message") || "";
 
   // Step tracking
   const [currentStep, setCurrentStep] = useState(1);
   
   // Design data from Gelato editor
   const [designData, setDesignData] = useState<DesignData | null>(null);
+  
+  // Initial images from hero
+  const [initialImages, setInitialImages] = useState<string[]>(heroImages);
 
   // State for customization options
   const [selectedSize, setSelectedSize] = useState<string | null>("8x10");
@@ -67,22 +73,14 @@ function CustomizeContent() {
     return result;
   };
 
-  // Auto-open design editor on load and load any existing ArtKey ID to reuse
+  // Load any existing ArtKey ID to reuse (but don't auto-open design editor)
   useEffect(() => {
-    // Small delay to ensure component is fully mounted
-    const timer = setTimeout(() => {
-      setShowStudio(true);
-      console.log('Design editor should now be visible');
-    }, 100);
-    
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("lastArtKeyId");
       if (stored) {
         setExistingArtKeyId(stored);
       }
     }
-    
-    return () => clearTimeout(timer);
   }, []);
   
   // Get selected size for studio
@@ -239,6 +237,8 @@ function CustomizeContent() {
             productType={productType as 'canvas' | 'print' | 'card' | 'poster' | 'photobook'}
             productSize={getStudioSize()}
             onComplete={handleDesignComplete}
+            initialImages={initialImages}
+            initialMessage={heroMessage}
             onClose={() => {
               console.log('Closing design editor');
               setShowStudio(false);
@@ -249,12 +249,25 @@ function CustomizeContent() {
         {/* Step 1: Design editor opens first; size can be adjusted and reopened */}
         {currentStep === 1 && (
           <div className="space-y-6">
+            {/* If coming from hero with images, auto-open studio */}
+            {fromHero && initialImages.length > 0 && !showStudio && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                <p className="text-brand-dark mb-4">Opening design editor with your selected images...</p>
+                <button
+                  onClick={() => setShowStudio(true)}
+                  className="px-6 py-3 rounded-full font-semibold bg-brand-dark text-white hover:bg-brand-darkest transition-all shadow-md"
+                >
+                  Open Design Editor
+                </button>
+              </div>
+            )}
+            
             {/* Size Selection (optional before/after editing) */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-brand-darkest mb-4 font-playfair">
                 Choose Your Size (defaults to 8x10)
               </h2>
-              <p className="text-brand-dark mb-4">Design editor opens automatically. Adjust size and reopen if needed.</p>
+              <p className="text-brand-dark mb-4">Choose your size, then click the button below to open the design editor.</p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {printSizes.map((size) => (
                   <button
@@ -283,7 +296,7 @@ function CustomizeContent() {
                   onClick={() => setShowStudio(true)}
                   className="px-6 py-3 rounded-full font-semibold bg-brand-dark text-white hover:bg-brand-darkest transition-all shadow-md"
                 >
-                  Reopen Design Editor
+                  {fromHero && initialImages.length > 0 ? 'Reopen Design Editor' : 'Open Design Editor'}
                 </button>
               </div>
             </div>

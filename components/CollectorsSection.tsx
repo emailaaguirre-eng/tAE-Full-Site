@@ -48,23 +48,6 @@ export default function CollectorsSection() {
                 elegance and artistic excellence.
               </p>
             </div>
-            <div className="relative w-full h-64 md:h-80 bg-brand-lightest">
-              {/* Placeholder for ocean wave painting - user will provide actual image */}
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-brand-medium text-lg mb-2">Ocean Wave Painting</p>
-                  <p className="text-brand-medium text-sm">(Image to be provided)</p>
-                </div>
-              </div>
-              {/* Uncomment when image is available:
-              <Image
-                src="/images/ocean-wave-painting.jpg"
-                alt="Ocean wave painting"
-                fill
-                className="object-cover"
-              />
-              */}
-            </div>
           </div>
 
           {/* Commissions Section */}
@@ -82,23 +65,6 @@ export default function CollectorsSection() {
                 our commission service allows you to collaborate with artists to bring your unique ideas to life. 
                 Perfect for special occasions, corporate spaces, or one-of-a-kind pieces that tell your story.
               </p>
-            </div>
-            <div className="relative w-full h-64 md:h-80 bg-brand-lightest">
-              {/* Placeholder for living room image - user will provide actual image */}
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-brand-medium text-lg mb-2">Living Room Image</p>
-                  <p className="text-brand-medium text-sm">(Image to be provided)</p>
-                </div>
-              </div>
-              {/* Uncomment when image is available:
-              <Image
-                src="/images/living-room-commission.jpg"
-                alt="Living room with commissioned art"
-                fill
-                className="object-cover"
-              />
-              */}
             </div>
           </div>
         </div>

@@ -80,6 +80,8 @@ interface StudioProps {
   productSize: { width: number; height: number; name: string };
   onComplete: (designData: DesignOutput) => void;
   onClose?: () => void;
+  initialImages?: string[];
+  initialMessage?: string;
 }
 
 interface DesignOutput {
@@ -300,7 +302,9 @@ export default function PersonalizationStudio({
   productType = 'canvas',
   productSize = { width: 8, height: 10, name: '8x10' },
   onComplete,
-  onClose
+  onClose,
+  initialImages = [],
+  initialMessage = ''
 }: StudioProps) {
   // Canvas refs
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -309,7 +313,7 @@ export default function PersonalizationStudio({
   // State
   const [activeTab, setActiveTab] = useState<'templates' | 'images' | 'text' | 'stickers' | 'frames' | 'filters' | 'ai' | 'magic'>('templates');
   const [selectedTemplate, setSelectedTemplate] = useState<CollageTemplate>(collageTemplates[0]);
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [uploadedImages, setUploadedImages] = useState<string[]>(initialImages);
   const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(null);
   const [zoom, setZoom] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState('#ffffff');
@@ -359,6 +363,14 @@ export default function PersonalizationStudio({
     
     return () => { canvas.dispose(); };
   }, [canvasWidth, canvasHeight, backgroundColor]);
+  
+  // Load initial images when component mounts
+  useEffect(() => {
+    if (initialImages.length > 0 && fabricRef.current && uploadedImages.length === 0) {
+      // Auto-add first image to canvas if provided
+      addImageToCanvas(initialImages[0]);
+    }
+  }, [initialImages, fabricRef.current]);
   
   // =============================================================================
   // IMAGE HANDLING
@@ -650,25 +662,25 @@ export default function PersonalizationStudio({
   // =============================================================================
   
   return (
-    <div className="fixed inset-0 bg-gray-950/95 z-50 flex">
+    <div className="fixed inset-0 bg-brand-dark/95 z-50 flex">
       {/* Left Sidebar - Tools */}
-      <div className="w-80 bg-white border-r border-gray-200 flex flex-col shadow-2xl">
+      <div className="w-80 bg-white border-r border-brand-light flex flex-col shadow-2xl">
         {/* Header */}
-        <div className="p-5 border-b border-gray-100 bg-gradient-to-r from-gray-900 to-gray-800">
+        <div className="p-5 border-b border-brand-light bg-gradient-to-r from-brand-dark to-brand-darkest">
           <h2 className="text-xl font-bold text-white font-playfair tracking-wide">Design Editor</h2>
-          <p className="text-gray-400 text-sm mt-1">{productSize.name}&quot; {productType}</p>
+          <p className="text-brand-light text-sm mt-1">{productSize.name}&quot; {productType}</p>
         </div>
         
         {/* Tool Tabs - Professional Grid */}
-        <div className="grid grid-cols-4 gap-1 p-2 bg-gray-50 border-b border-gray-200">
+        <div className="grid grid-cols-4 gap-1 p-2 bg-brand-lightest border-b border-brand-light">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
               className={`flex flex-col items-center justify-center py-3 px-2 rounded-lg transition-all ${
                 activeTab === tab.id 
-                  ? 'bg-white text-gray-900 shadow-md border border-gray-200' 
-                  : 'text-gray-500 hover:bg-white hover:text-gray-700'
+                  ? 'bg-white text-brand-darkest shadow-md border border-brand-light' 
+                  : 'text-brand-medium hover:bg-white hover:text-brand-darkest'
               }`}
             >
               {tab.icon}
@@ -684,7 +696,7 @@ export default function PersonalizationStudio({
           {activeTab === 'templates' && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-brand-darkest mb-3 flex items-center gap-2">
                   <LayoutTemplate className="w-4 h-4" />
                   Collage Layouts
                 </h3>
@@ -695,19 +707,19 @@ export default function PersonalizationStudio({
                       onClick={() => setSelectedTemplate(template)}
                       className={`aspect-square border rounded-xl p-2 transition-all flex flex-col items-center justify-center gap-1 ${
                         selectedTemplate.id === template.id 
-                          ? 'border-gray-900 bg-gray-50 shadow-md' 
-                          : 'border-gray-200 hover:border-gray-400 hover:bg-gray-50'
+                          ? 'border-brand-darkest bg-brand-lightest shadow-md' 
+                          : 'border-brand-light hover:border-brand-medium hover:bg-brand-lightest'
                       }`}
                     >
-                      <div className="text-gray-600">{template.icon}</div>
-                      <span className="text-[9px] text-gray-500 font-medium">{template.name}</span>
+                      <div className="text-brand-medium">{template.icon}</div>
+                      <span className="text-[9px] text-brand-darkest font-medium">{template.name}</span>
                     </button>
                   ))}
                 </div>
               </div>
               
-              <div className="pt-4 border-t border-gray-100">
-                <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <div className="pt-4 border-t border-brand-light">
+                <h3 className="text-sm font-semibold text-brand-darkest mb-3 flex items-center gap-2">
                   <Palette className="w-4 h-4" />
                   Background
                 </h3>
@@ -717,7 +729,7 @@ export default function PersonalizationStudio({
                       key={color}
                       onClick={() => { setBackgroundColor(color); if (fabricRef.current) { fabricRef.current.backgroundColor = color; fabricRef.current.renderAll(); } }}
                       className={`w-8 h-8 rounded-lg border-2 transition-all hover:scale-110 ${
-                        backgroundColor === color ? 'border-gray-900 shadow-md scale-110' : 'border-gray-200'
+                        backgroundColor === color ? 'border-brand-darkest shadow-md scale-110' : 'border-brand-light'
                       }`}
                       style={{ backgroundColor: color }}
                     />
@@ -983,48 +995,48 @@ export default function PersonalizationStudio({
       </div>
       
       {/* Main Canvas Area */}
-      <div className="flex-1 flex flex-col bg-gray-900">
+      <div className="flex-1 flex flex-col bg-brand-darkest">
         {/* Toolbar */}
-        <div className="bg-gray-800 px-4 py-3 flex items-center gap-4 border-b border-gray-700">
+        <div className="bg-brand-dark px-4 py-3 flex items-center gap-4 border-b border-brand-medium">
           <div className="flex gap-1">
-            <button className="p-2.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all" title="Undo">
+            <button className="p-2.5 text-brand-light hover:text-white hover:bg-brand-medium rounded-lg transition-all" title="Undo">
               <Undo2 className="w-5 h-5" />
             </button>
-            <button className="p-2.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all" title="Redo">
+            <button className="p-2.5 text-brand-light hover:text-white hover:bg-brand-medium rounded-lg transition-all" title="Redo">
               <Redo2 className="w-5 h-5" />
             </button>
           </div>
           
-          <div className="w-px h-6 bg-gray-700" />
+          <div className="w-px h-6 bg-brand-medium" />
           
           <div className="flex gap-1">
-            <button onClick={deleteSelected} className="p-2.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all" title="Delete">
+            <button onClick={deleteSelected} className="p-2.5 text-brand-light hover:text-white hover:bg-brand-medium rounded-lg transition-all" title="Delete">
               <Trash2 className="w-5 h-5" />
             </button>
-            <button onClick={duplicateSelected} className="p-2.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all" title="Duplicate">
+            <button onClick={duplicateSelected} className="p-2.5 text-brand-light hover:text-white hover:bg-brand-medium rounded-lg transition-all" title="Duplicate">
               <Copy className="w-5 h-5" />
             </button>
           </div>
           
-          <div className="w-px h-6 bg-gray-700" />
+          <div className="w-px h-6 bg-brand-medium" />
           
           <div className="flex items-center gap-2">
-            <button onClick={() => setZoom(z => Math.max(0.5, z - 0.1))} className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all">
+            <button onClick={() => setZoom(z => Math.max(0.5, z - 0.1))} className="p-2 text-brand-light hover:text-white hover:bg-brand-medium rounded-lg transition-all">
               <ZoomOut className="w-5 h-5" />
             </button>
-            <span className="text-sm text-gray-400 w-14 text-center font-medium">{Math.round(zoom * 100)}%</span>
-            <button onClick={() => setZoom(z => Math.min(2, z + 0.1))} className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all">
+            <span className="text-sm text-brand-light w-14 text-center font-medium">{Math.round(zoom * 100)}%</span>
+            <button onClick={() => setZoom(z => Math.min(2, z + 0.1))} className="p-2 text-brand-light hover:text-white hover:bg-brand-medium rounded-lg transition-all">
               <ZoomIn className="w-5 h-5" />
             </button>
           </div>
           
           <div className="flex-1" />
           
-          <button onClick={onClose} className="px-4 py-2 text-gray-400 hover:text-white transition-all flex items-center gap-2">
+          <button onClick={onClose} className="px-4 py-2 text-brand-light hover:text-white transition-all flex items-center gap-2">
             <X className="w-4 h-4" />
             Cancel
           </button>
-          <button onClick={exportDesign} className="px-5 py-2.5 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-all flex items-center gap-2 shadow-lg">
+          <button onClick={exportDesign} className="px-5 py-2.5 bg-white text-brand-darkest rounded-lg font-semibold hover:bg-brand-lightest transition-all flex items-center gap-2 shadow-lg">
             <Check className="w-4 h-4" />
             Continue
           </button>
@@ -1038,12 +1050,12 @@ export default function PersonalizationStudio({
         </div>
         
         {/* Footer */}
-        <div className="bg-gray-800 px-4 py-3 flex items-center justify-between text-sm border-t border-gray-700">
-          <div className="flex items-center gap-4 text-gray-400">
+        <div className="bg-brand-dark px-4 py-3 flex items-center justify-between text-sm border-t border-brand-medium">
+          <div className="flex items-center gap-4 text-brand-light">
             <span>{productSize.width}&quot; × {productSize.height}&quot;</span>
-            <span className="w-px h-4 bg-gray-700" />
+            <span className="w-px h-4 bg-brand-medium" />
             <span>{canvasWidth} × {canvasHeight}px</span>
-            <span className="w-px h-4 bg-gray-700" />
+            <span className="w-px h-4 bg-brand-medium" />
             <span>300 DPI</span>
           </div>
           <div className="flex items-center gap-2 text-green-400">

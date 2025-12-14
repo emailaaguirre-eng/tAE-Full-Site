@@ -139,10 +139,10 @@ export default function HowItWorks() {
                 4
               </div>
               <h4 className="text-xl font-bold text-brand-darkest mb-2">
-                Interact with the Art Key
+                Interact with the ArtKey
               </h4>
               <p className="text-brand-darkest">
-                Find the perfect place for your art and interact with the key. Scan the discreetly placed QR code to unlock all the personalized content.
+                Find the perfect place for your art and interact with the ArtKey. Scan the discreetly placed QR code to unlock all the personalized content.
               </p>
             </div>
           </div>

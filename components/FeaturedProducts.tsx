@@ -26,20 +26,26 @@ export default function FeaturedProducts() {
   const [wooProducts, setWooProducts] = useState<WooCommerceProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products from WordPress/WooCommerce - collage, test product, and wall art
+  // Fetch products from WordPress/WooCommerce - all products, but prioritize collage, test product, and wall art
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/products?limit=100');
         if (response.ok) {
           const data = await response.json();
-          // Filter to show collage, test product, and wall art
+          // Filter to show collage, test product, and wall art as featured products
           const shopProducts = data.filter((product: WooCommerceProduct) => {
             const name = product.name.toLowerCase();
             return name.includes('collage') || 
                    name.includes('test product') || 
                    name.includes('wall art');
           });
+          
+          // If no products found, log for debugging
+          if (shopProducts.length === 0) {
+            console.log('No shop products found. Available products:', data.map((p: WooCommerceProduct) => p.name));
+          }
+          
           setWooProducts(shopProducts);
         }
       } catch (error) {
@@ -280,29 +286,46 @@ export default function FeaturedProducts() {
   const getCurrentProducts = () => {
     if (wooProducts.length > 0) {
       const transformed = wooProducts.map(transformWooProduct);
+      
+      // Featured products: collage, test product, and wall art - always show these first
+      const featuredProducts = transformed.filter(p => {
+        const name = p.name.toLowerCase();
+        return name.includes('collage') || 
+               name.includes('test product') || 
+               name.includes('wall art');
+      });
+      
+      // Other products (non-featured)
+      const otherProducts = transformed.filter(p => {
+        const name = p.name.toLowerCase();
+        return !name.includes('collage') && 
+               !name.includes('test product') && 
+               !name.includes('wall art');
+      });
 
       if (activeTab === 'sale') {
-        return transformed.filter(p => p.onSale).slice(0, 8);
+        // Show featured products first, then sale products
+        const saleProducts = otherProducts.filter(p => p.onSale);
+        return [...featuredProducts, ...saleProducts].slice(0, 8);
       } else if (activeTab === 'new') {
-        // For new, show first 8 products (you can sort by date if available)   
-        return transformed.slice(0, 8);
+        // Show featured products first, then other products
+        return [...featuredProducts, ...otherProducts].slice(0, 8);
       } else if (activeTab === 'cards') {
         // Filter products that contain "card" or "invitation" in name
-        const cardProducts = transformed.filter(p => 
+        const cardProducts = otherProducts.filter(p => 
           p.name.toLowerCase().includes('card') || 
           p.name.toLowerCase().includes('invitation') ||
           p.name.toLowerCase().includes('announcement')
         );
-        // If no card products from WooCommerce, use fallback
-        if (cardProducts.length === 0) {
+        // Show featured products first, then card products
+        if (cardProducts.length === 0 && featuredProducts.length === 0) {
           return fallbackProducts.cards;
         }
-        return cardProducts.slice(0, 8);
+        return [...featuredProducts, ...cardProducts].slice(0, 8);
       } else {
-        // For bestsellers, show products with highest ratings
-        return transformed
-          .sort((a, b) => b.rating - a.rating)
-          .slice(0, 8);
+        // For bestsellers, show featured products first, then sorted by rating
+        const sorted = otherProducts.sort((a, b) => b.rating - a.rating);
+        return [...featuredProducts, ...sorted].slice(0, 8);
       }
     }
 

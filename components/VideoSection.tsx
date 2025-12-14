@@ -28,45 +28,10 @@ export default function VideoSection() {
           </div>
         </div>
 
-        {/* Three-Column Layout: Physical Items | ArtKey Portal | Options */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16 items-start">
-          {/* Left: Physical Items Stack */}
-          <div className="flex flex-col items-center lg:items-end space-y-0 relative">
-            <div className="relative z-10 transform rotate-2 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg shadow-2xl p-6 w-52 h-72 flex flex-col items-center justify-center border-2 border-amber-300">
-                <div className="absolute top-3 left-1/2 transform -translate-x-1/2">
-                  <div className="w-14 h-14 bg-blue-400 rounded-full flex items-center justify-center shadow-md">
-                    <div className="w-10 h-10 bg-blue-500 rounded-full"></div>
-                  </div>
-                </div>
-                <p className="text-amber-900 text-3xl mt-12 font-playfair italic">Invitation</p>
-              </div>
-            </div>
-            <div className="relative z-20 transform -rotate-2 hover:rotate-0 transition-transform duration-300 -mt-6">
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg shadow-2xl p-6 w-52 h-72 flex flex-col items-center justify-center border-2 border-pink-300">
-                <div className="absolute inset-6 flex items-center justify-center">
-                  <div className="w-36 h-36 rounded-full border-4 border-pink-400 flex items-center justify-center shadow-inner">
-                    <p className="text-pink-800 text-2xl font-playfair italic">Thank You</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative z-30 transform rotate-1 hover:rotate-0 transition-transform duration-300 -mt-6">
-              <div className="bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg shadow-2xl w-52 h-56 overflow-hidden border-2 border-slate-400">
-                <div className="w-full h-full bg-gradient-to-br from-orange-300 via-pink-300 to-purple-300 flex items-center justify-center relative">
-                  <div className="absolute inset-0 opacity-80">
-                    <div className="w-full h-1/3 bg-gradient-to-b from-orange-500/50 to-transparent"></div>
-                    <div className="w-full h-1/3 bg-gradient-to-b from-transparent via-pink-500/30 to-transparent"></div>
-                    <div className="w-full h-1/3 bg-gradient-to-t from-purple-500/50 to-transparent"></div>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-slate-800/60 to-transparent"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Center: ArtKey Portal Smartphone */}
-          <div className="flex flex-col items-center justify-center relative">
+        {/* Two-Column Layout: ArtKey Portal | Combined Options */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-16 items-center">
+          {/* Left: ArtKey Portal Smartphone */}
+          <div className="flex flex-col items-center justify-center">
             <div className="relative bg-gray-900 rounded-[3rem] p-2 shadow-2xl max-w-[280px] w-full">
               {/* Phone Notch */}
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-gray-900 rounded-b-2xl z-10"></div>
@@ -99,19 +64,23 @@ export default function VideoSection() {
             </div>
           </div>
 
-          {/* Right: Purchase and Upload Options */}
-          <div className="space-y-8">
+          {/* Right: Combined Purchase and Upload Options */}
+          <div className="bg-gradient-to-br from-brand-lightest to-white rounded-2xl shadow-lg p-8 border border-brand-light">
+            <h3 className="text-2xl font-bold text-brand-darkest mb-6 font-playfair">
+              Your Purchase & Upload Options
+            </h3>
+            
             {/* Purchase Options */}
-            <div className="bg-gradient-to-br from-brand-lightest to-white rounded-2xl shadow-lg p-6 border border-brand-light">
-              <h3 className="text-2xl font-bold text-brand-darkest mb-4">
-                Here Are Your Two Purchase Options:
-              </h3>
+            <div className="mb-8">
+              <h4 className="text-lg font-semibold text-brand-darkest mb-4">
+                Purchase Options:
+              </h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <span className="text-2xl font-bold text-brand-medium">1.</span>
+                  <span className="text-xl font-bold text-brand-medium mt-1">1.</span>
                   <div className="flex-1">
                     <p className="text-brand-darkest font-semibold mb-2">
-                      Either upload your own image
+                      Upload your own image
                     </p>
                     <div className="bg-white rounded-lg p-3 border border-gray-200 flex items-center gap-2">
                       <div className="flex-1 h-8 bg-gray-100 rounded"></div>
@@ -124,12 +93,12 @@ export default function VideoSection() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-2xl font-bold text-brand-medium">2.</span>
+                  <span className="text-xl font-bold text-brand-medium mt-1">2.</span>
                   <div className="flex-1">
                     <p className="text-brand-darkest font-semibold mb-2">
                       Select from our gallery
                     </p>
-                    <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center border-2 border-brand-medium mx-auto">
+                    <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center border-2 border-brand-medium">
                       <span className="text-3xl text-brand-medium">+</span>
                     </div>
                   </div>
@@ -137,22 +106,25 @@ export default function VideoSection() {
               </div>
             </div>
 
+            {/* Divider */}
+            <div className="border-t border-brand-light my-8"></div>
+
             {/* Upload Options */}
-            <div className="bg-gradient-to-br from-brand-lightest to-white rounded-2xl shadow-lg p-6 border border-brand-light">
-              <h3 className="text-2xl font-bold text-brand-darkest mb-4">
+            <div>
+              <h4 className="text-lg font-semibold text-brand-darkest mb-4">
                 Upload Options:
-              </h3>
+              </h4>
               <ul className="space-y-3 text-brand-darkest">
                 <li className="flex items-start gap-3">
-                  <span className="text-brand-medium text-xl mt-1">•</span>
+                  <span className="text-brand-medium text-lg mt-1">•</span>
                   <span>Short video</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-brand-medium text-xl mt-1">•</span>
+                  <span className="text-brand-medium text-lg mt-1">•</span>
                   <span>Music/Playlist (Apple/Spotify)</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-brand-medium text-xl mt-1">•</span>
+                  <span className="text-brand-medium text-lg mt-1">•</span>
                   <span>You can even upload an e-gift certificate</span>
                 </li>
               </ul>
